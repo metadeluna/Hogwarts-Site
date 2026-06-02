@@ -30,14 +30,72 @@
 
         </div>
 
-        <!-- QUADROS -->
+           <!-- QUADROS -->
+           <!-- Ajuste aqui cada máscara com variáveis CSS:
+               --mask-left/--mask-top/--mask-width/--mask-height controlam a área da máscara
+               --mask-image-left/--mask-image-top/--mask-image-width/--mask-image-height controlam o conteúdo dentro da máscara
+               --mask-image-crop-left/--mask-image-crop-top/--mask-image-crop-width/--mask-image-crop-height também podem ser usados para recortar a imagem -->
 
-        <img src="src/quadro1.png" class="quadro quadro1">
-        <img src="src/quadro2.png" class="quadro quadro2">
-        <img src="src/quadro3.png" class="quadro quadro3">
-        <img src="src/quadro4.png" class="quadro quadro4">
-        <img src="src/quadro5.png" class="quadro quadro5">
-        <img src="src/quadro6.png" class="quadro quadro6">
+        <div class="quadro quadro1 hover-left" data-title="Mural" style="--mask-left:25%; --mask-top:20%; --mask-width:64%; --mask-height:64%; --mask-image-fit:cover; --mask-image-position:center center;">
+            <div class="quadro-mask">
+                <div class="mask-inner">
+                    <img src="" class="mask-image" alt="Conteúdo do quadro 1">
+                </div>
+            </div>
+            <img src="src/mural.png" class="quadro-frame" alt="Quadro 1 frame">
+        </div>
+
+        <div class="quadro quadro2 hover-right" data-title="Memorandos" style="--mask-left:6%; --mask-top:17%; --mask-width:100%; --mask-height:65%; --mask-image-fit:cover; --mask-image-position:center center; --mask-image-crop-bottom:-40%; --mask-image-crop-left:-14%; --border-radius:70%;">
+            <div class="quadro-mask">
+                <div class="mask-inner">
+                    <img src="src/gifs/memorando.gif" class="mask-image" alt="Conteúdo do quadro 2">
+                </div>
+            </div>
+            <img src="src/quadro2.png" class="quadro-frame" alt="Quadro 2 frame">
+        </div>
+
+        <div class="site-hover-title quadro1-banner">Mural</div>
+        <div class="site-hover-title quadro2-banner">Memorandos</div>
+
+        <div class="quadro quadro3" data-title="Biblioteca" style="--mask-left:13%; --mask-top:16%; --mask-width:75%; --mask-height:75%; --mask-image-left:0; --mask-image-top:0; --mask-image-width:100%; --mask-image-height:100%; --mask-image-fit:cover; --mask-image-position:center center;">
+            <div class="quadro-mask">
+                <div class="mask-inner">
+                    <img src="src/gifs/biblioteca.gif" class="mask-image" alt="Conteúdo do quadro 3">
+                </div>
+            </div>
+            <img src="src/quadro3.png" class="quadro-frame" alt="Quadro 3 frame">
+            <div class="site-hover-title">Biblioteca</div>
+        </div>
+
+        <div class="quadro quadro4" data-title="Sistemas" style="--mask-left:6%; --mask-top:2%; --mask-width:89%; --mask-height:85%; --mask-image-fit:cover; --mask-image-position:center center; --mask-image-crop-top:10%; --mask-image-crop-bottom:-20%;">
+            <div class="quadro-mask">
+                <div class="mask-inner">
+                    <img src="src/gifs/sistemas2.gif" class="mask-image" alt="Conteúdo do quadro 4">
+                </div>
+            </div>
+            <img src="src/quadro4.png" class="quadro-frame" alt="Quadro 4 frame">
+            <div class="site-hover-title">Sistemas</div>
+        </div>
+
+        <div class="quadro quadro5" data-title="Indefinido" style="--mask-left:0; --mask-top:0; --mask-width:100%; --mask-height:100%; --mask-image-fit:cover; --mask-image-position:center center;">
+            <div class="quadro-mask">
+                <div class="mask-inner">
+                    <img src="src/fill5.gif" class="mask-image" alt="Conteúdo do quadro 5">
+                </div>
+            </div>
+            <img src="src/quadro5.png" class="quadro-frame" alt="Quadro 5 frame">
+            <div class="site-hover-title">Indefinido</div>
+        </div>
+
+        <div class="quadro quadro6" data-title="Mercado Mágico" style="--mask-left:9%; --mask-top:2%; --mask-width:75%; --mask-height:75%; --mask-image-crop-left: 5% ;--mask-image-crop-top: 27%;--mask-image-fit:cover; --mask-image-position:center center;">
+            <div class="quadro-mask">
+                <div class="mask-inner">
+                    <img src="src/gifs/beco.gif" class="mask-image" alt="Conteúdo do quadro 6">
+                </div>
+            </div>
+            <img src="src/quadro6.png" class="quadro-frame" alt="Quadro 6 frame">
+            <div class="site-hover-title">Mercado Mágico</div>
+        </div>
 
         <!-- PERGAMINHO -->
         <img src="src/pergaminho.png" class="layer pergaminho">
@@ -95,7 +153,248 @@
 
         </div>
 
-    
+        <div class="vitrola" role="button" aria-label="Tocar vitrola">
+            <img src="src/vitrola.png" class="vitrola-img" alt="Vitrola">
+        </div>
+
+        <button class="vitrola-next site-arrow-button" aria-label="Próxima música"></button>
+
+        <audio id="vinyl-audio" src="src/hogsmeade.mp3" preload="auto"></audio>
+
+    </div>
+
+    <div id="page-biblioteca" class="page-panel" aria-hidden="true"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        const vitrola = document.querySelector('.vitrola');
+        const nextBtn = document.querySelector('.vitrola-next');
+        const audio = document.getElementById('vinyl-audio');
+        const tracks = ['hogsmeade.mp3', 'becodiagonal.mp3', 'housecup.mp3', 'overtue.mp3'];
+        const trackBasePath = 'src/';
+        let currentTrackIndex = 0;
+
+        function updateNextButton() {
+            nextBtn.classList.toggle('visible', !audio.paused && audio.src);
+        }
+
+        function getTrackUrl(index) {
+            const normalized = ((index % tracks.length) + tracks.length) % tracks.length;
+            return `${trackBasePath}${tracks[normalized]}`;
+        }
+
+        function setTrack(index) {
+            currentTrackIndex = ((index % tracks.length) + tracks.length) % tracks.length;
+            const url = getTrackUrl(currentTrackIndex);
+            if (!audio.src.includes(tracks[currentTrackIndex])) {
+                audio.src = url;
+                audio.load();
+            }
+        }
+
+        async function playTrack(reset = false) {
+            if (!audio.src || !audio.src.includes(tracks[currentTrackIndex])) {
+                setTrack(currentTrackIndex);
+            }
+            if (reset) {
+                audio.currentTime = 0;
+            }
+            try {
+                await audio.play();
+            } catch (error) {
+                console.warn('Falha ao iniciar a reprodução:', error);
+            }
+        }
+
+        function togglePlayback() {
+            setTrack(currentTrackIndex);
+            if (audio.paused) {
+                playTrack();
+            } else {
+                audio.pause();
+            }
+        }
+
+        function nextTrack() {
+            setTrack(currentTrackIndex + 1);
+            playTrack(true);
+            if (currentTrackIndex === 0) {
+                launchLoopFireworks();
+            }
+        }
+
+        const scene = document.getElementById('scene');
+        const pageBiblioteca = document.getElementById('page-biblioteca');
+        const bibliotecaQuadro = document.querySelector('.quadro3');
+
+        async function loadBibliotecaPage() {
+            try {
+                const response = await fetch('biblioteca-page.html');
+                if (response.ok) {
+                    pageBiblioteca.innerHTML = await response.text();
+                } else {
+                    throw new Error('Não foi possível carregar a página da biblioteca');
+                }
+            } catch (error) {
+                pageBiblioteca.innerHTML = `
+                    <div class="library-page">
+                        <div class="library-header">
+                            <div>
+                                <h1>Biblioteca de Hogwarts</h1>
+                                <p>Explore livros interativos sem recarregar a página.</p>
+                            </div>
+                            <button id="back-to-main" class="library-back-button">Voltar</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            initializeLibraryPage();
+        }
+
+        function initializeLibraryPage() {
+            const backButton = pageBiblioteca.querySelector('#back-to-main');
+            const pdfViewer = pageBiblioteca.querySelector('#pdf-viewer');
+            const viewerEmpty = pageBiblioteca.querySelector('.viewer-empty');
+            const viewerTitle = pageBiblioteca.querySelector('.viewer-title');
+            const viewerClose = pageBiblioteca.querySelector('.viewer-close');
+            const pdfOpenNew = pageBiblioteca.querySelector('#pdf-open-new');
+            const bookLinks = pageBiblioteca.querySelectorAll('.book[data-pdf]');
+
+            let currentPdfPath = '';
+
+            function resetViewer() {
+                if (viewerEmpty) {
+                    viewerEmpty.style.display = 'flex';
+                }
+                if (pdfViewer) {
+                    pdfViewer.style.display = 'none';
+                    pdfViewer.src = '';
+                }
+                if (viewerTitle) {
+                    viewerTitle.textContent = 'Nenhum livro aberto';
+                }
+                if (pdfOpenNew) {
+                    pdfOpenNew.style.display = 'none';
+                    pdfOpenNew.href = '#';
+                }
+                currentPdfPath = '';
+            }
+
+            function openPdf(path, title) {
+                if (!pdfViewer || !viewerEmpty) return;
+                currentPdfPath = path;
+                pdfViewer.src = `${currentPdfPath}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`;
+                viewerEmpty.style.display = 'none';
+                pdfViewer.style.display = 'block';
+                if (viewerTitle) {
+                    viewerTitle.textContent = title;
+                }
+                if (pdfOpenNew) {
+                    pdfOpenNew.href = path;
+                    pdfOpenNew.style.display = 'inline-flex';
+                }
+            }
+
+            if (backButton) {
+                backButton.addEventListener('click', closeLibraryPage);
+            }
+
+            if (viewerClose) {
+                viewerClose.addEventListener('click', resetViewer);
+            }
+
+            bookLinks.forEach(book => {
+                book.addEventListener('click', () => {
+                    const path = book.dataset.pdf;
+                    const title = book.dataset.title || book.textContent.trim() || 'Livro';
+                    openPdf(path, title);
+                });
+            });
+
+            resetViewer();
+        }
+
+        function openLibraryPage() {
+            gsap.to(scene, {
+                x: '100%',
+                duration: 0.8,
+                ease: 'power2.inOut'
+            });
+
+            pageBiblioteca.style.visibility = 'visible';
+            pageBiblioteca.style.pointerEvents = 'auto';
+            pageBiblioteca.setAttribute('aria-hidden', 'false');
+
+            gsap.fromTo(pageBiblioteca,
+                { x: '-100%', opacity: 0 },
+                { x: '0%', opacity: 1, duration: 0.8, ease: 'power2.inOut' }
+            );
+        }
+
+        function closeLibraryPage() {
+            gsap.to(pageBiblioteca, {
+                x: '-100%',
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power2.inOut',
+                onComplete: () => {
+                    pageBiblioteca.style.visibility = 'hidden';
+                    pageBiblioteca.style.pointerEvents = 'none';
+                    pageBiblioteca.setAttribute('aria-hidden', 'true');
+                }
+            });
+
+            gsap.to(scene, {
+                x: '0%',
+                duration: 0.8,
+                ease: 'power2.inOut'
+            });
+        }
+
+        loadBibliotecaPage();
+        bibliotecaQuadro.addEventListener('click', openLibraryPage);
+
+        function launchLoopFireworks() {
+            if (typeof confetti !== 'function') return;
+            confetti({
+                particleCount: 40,
+                spread: 70,
+                startVelocity: 25,
+                origin: { x: 0.5, y: 0.3 },
+                colors: ['#f8d96f', '#ff8aa3', '#8fd9ff', '#f3a1ff']
+            });
+        }
+
+        vitrola.addEventListener('click', togglePlayback);
+        nextBtn.addEventListener('click', nextTrack);
+        audio.addEventListener('ended', nextTrack);
+        audio.addEventListener('error', () => {
+            console.warn('Falha de áudio detectada. Tentar novamente.');
+            setTimeout(() => playTrack(true), 500);
+        });
+
+        const vitrolaImg = document.querySelector('.vitrola-img');
+        vitrola.addEventListener('mouseenter', () => {
+            gsap.to(vitrolaImg, { y: -4, duration: 0.2, ease: 'power1.out' });
+        });
+        vitrola.addEventListener('mouseleave', () => {
+            gsap.to(vitrolaImg, { y: 0, duration: 0.2, ease: 'power1.in' });
+        });
+
+        audio.addEventListener('play', () => {
+            vitrola.classList.add('playing');
+            updateNextButton();
+        });
+
+        audio.addEventListener('pause', () => {
+            vitrola.classList.remove('playing');
+            updateNextButton();
+        });
+
+        setTrack(currentTrackIndex);
+    </script>
 
 </body>
 
