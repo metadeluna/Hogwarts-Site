@@ -5,169 +5,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guidebook Hogwarts</title>
-    <!-- Tailwind CDN (rápido para protótipo/responsividade) -->
+    <!-- Tailwind CDN para estilização rápida e adaptativa -->
     <script src="https://cdn.tailwindcss.com"></script>
-
     <link rel="stylesheet" href="style.css">
+    <!-- Dependência do GSAP para transições mágicas e fluidas de tela -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 
 <body>
 
     <div id="scene">
-
         <!-- FUNDO -->
-        <img src="src/background.png" class="layer background">
+        <img src="src/background.png" class="layer background" alt="Cenário de Hogwarts">
 
-        <!-- GIFS / MÓDULOS FUTUROS -->
-        <div class="gifs">
+        <!-- MÓDULOS DE INTERACTION / QUADROS -->
+        <div class="gifs"></div>
 
-            <!-- Exemplo -->
-            <!--
-            <div class="gif gif-1">
-                <img src="src/GIFS/gif1.gif">
-            </div>
-            -->
-
-        </div>
-
-           <!-- QUADROS -->
-           <!-- Ajuste aqui cada máscara com variáveis CSS:
-               --mask-left/--mask-top/--mask-width/--mask-height controlam a área da máscara
-               --mask-image-left/--mask-image-top/--mask-image-width/--mask-image-height controlam o conteúdo dentro da máscara
-               --mask-image-crop-left/--mask-image-crop-top/--mask-image-crop-width/--mask-image-crop-height também podem ser usados para recortar a imagem -->
-
-        <div class="quadro quadro1 hover-left" data-title="Mural" style="--mask-left:25%; --mask-top:20%; --mask-width:64%; --mask-height:64%; --mask-image-fit:cover; --mask-image-position:center center;">
-            <div class="quadro-mask">
-                <div class="mask-inner">
-                    <img src="" class="mask-image" alt="Conteúdo do quadro 1">
+        <!-- Layout Central de Quadros do seu RPG -->
+        <div class="quadros-container flex justify-center items-center h-screen gap-6">
+            <div class="quadro quadro1 hover-left" data-title="Mural" style="--mask-left:25%; --mask-top:20%; --mask-width:64%; --mask-height:64%; --mask-image-fit:cover; --mask-image-position:center center;">
+                <div class="quadro-mask">
+                    <div class="mask-inner">
+                        <img src="" class="mask-image" alt="Conteúdo do quadro 1">
+                    </div>
                 </div>
+                <img src="src/mural.png" class="quadro-frame" alt="Quadro 1 frame">
             </div>
-            <img src="src/mural.png" class="quadro-frame" alt="Quadro 1 frame">
-        </div>
 
-        <div class="quadro quadro2 hover-right" data-title="Memorandos" style="--mask-left:6%; --mask-top:17%; --mask-width:100%; --mask-height:65%; --mask-image-fit:cover; --mask-image-position:center center; --mask-image-crop-bottom:-40%; --mask-image-crop-left:-14%; --border-radius:70%;">
-            <div class="quadro-mask">
-                <div class="mask-inner">
-                    <img src="src/GIFS/memorando.gif" class="mask-image" alt="Conteúdo do quadro 2">
+            <div class="quadro quadro2 hover-right" data-title="Memorandos" style="--mask-left:6%; --mask-top:17%; --mask-width:100%; --mask-height:65%; --mask-image-fit:cover; --mask-image-position:center center; --mask-image-crop-bottom:-40%; --mask-image-crop-left:-14%; --border-radius:70%;">
+                <div class="quadro-mask">
+                    <div class="mask-inner">
+                        <img src="src/GIFS/memorando.gif" class="mask-image" alt="Conteúdo do quadro 2">
+                    </div>
                 </div>
+                <img src="src/quadro2.png" class="quadro-frame" alt="Quadro 2 frame">
             </div>
-            <img src="src/quadro2.png" class="quadro-frame" alt="Quadro 2 frame">
-        </div>
 
-        <div class="site-hover-title quadro1-banner">Mural</div>
-        <div class="site-hover-title quadro2-banner">Memorandos</div>
+            <div class="site-hover-title quadro1-banner">Mural</div>
+            <div class="site-hover-title quadro2-banner">Memorandos</div>
 
-        <div class="quadro quadro3" data-title="Biblioteca" style="--mask-left:13%; --mask-top:16%; --mask-width:75%; --mask-height:75%; --mask-image-left:0; --mask-image-top:0; --mask-image-width:100%; --mask-image-height:100%; --mask-image-fit:cover; --mask-image-position:center center;">
-            <div class="quadro-mask">
-                <div class="mask-inner">
-                    <img src="src/GIFS/biblioteca.gif" class="mask-image" alt="Conteúdo do quadro 3">
+            <div class="quadro quadro3" data-title="Biblioteca" style="--mask-left:13%; --mask-top:16%; --mask-width:75%; --mask-height:75%; --mask-image-left:0; --mask-image-top:0; --mask-image-width:100%; --mask-image-height:100%; --mask-image-fit:cover; --mask-image-position:center center;">
+                <div class="quadro-mask">
+                    <div class="mask-inner">
+                        <img src="src/GIFS/biblioteca.gif" class="mask-image" alt="Conteúdo do quadro 3">
+                    </div>
                 </div>
+                <img src="src/quadro3.png" class="quadro-frame" alt="Quadro 3 frame">
+                <div class="site-hover-title">Biblioteca</div>
             </div>
-            <img src="src/quadro3.png" class="quadro-frame" alt="Quadro 3 frame">
-            <div class="site-hover-title">Biblioteca</div>
-        </div>
 
-        <div class="quadro quadro4" data-title="Sistemas" style="--mask-left:6%; --mask-top:2%; --mask-width:89%; --mask-height:85%; --mask-image-fit:cover; --mask-image-position:center center; --mask-image-crop-top:10%; --mask-image-crop-bottom:-20%;">
-            <div class="quadro-mask">
-                <div class="mask-inner">
-                    <img src="src/GIFS/sistemas2.gif" class="mask-image" alt="Conteúdo do quadro 4">
+            <div class="quadro quadro4" data-title="Sistemas" style="--mask-left:6%; --mask-top:2%; --mask-width:89%; --mask-height:85%; --mask-image-fit:cover; --mask-image-position:center center; --mask-image-crop-top:10%; --mask-image-crop-bottom:-20%;">
+                <div class="quadro-mask">
+                    <div class="mask-inner">
+                        <img src="src/GIFS/sistemas2.gif" class="mask-image" alt="Conteúdo do quadro 4">
+                    </div>
                 </div>
+                <img src="src/quadro4.png" class="quadro-frame" alt="Quadro 4 frame">
+                <div class="site-hover-title">Sistemas</div>
             </div>
-            <img src="src/quadro4.png" class="quadro-frame" alt="Quadro 4 frame">
-            <div class="site-hover-title">Sistemas</div>
-        </div>
 
-        <div class="quadro quadro5" data-title="Indefinido" style="--mask-left:0; --mask-top:0; --mask-width:100%; --mask-height:100%; --mask-image-fit:cover; --mask-image-position:center center;">
-            <div class="quadro-mask">
-                <div class="mask-inner">
-                    <img src="src/fill5.gif" class="mask-image" alt="Conteúdo do quadro 5">
+            <div class="quadro quadro5" data-title="Maestrias" style="--mask-left:0; --mask-top:0; --mask-width:100%; --mask-height:100%; --mask-image-fit:cover; --mask-image-position:center center; cursor: pointer;">
+                <div class="quadro-mask">
+                    <div class="mask-inner">
+                        <img src="src/fill5.gif" class="mask-image" alt="Maestrias de RPG">
+                    </div>
                 </div>
+                <img src="src/quadro5.png" class="quadro-frame" alt="Quadro 5 frame">
+                <div class="site-hover-title">Maestrias</div>
             </div>
-            <img src="src/quadro5.png" class="quadro-frame" alt="Quadro 5 frame">
-            <div class="site-hover-title">Indefinido</div>
-        </div>
 
-        <div class="quadro quadro6" data-title="Mercado Mágico" style="--mask-left:9%; --mask-top:2%; --mask-width:75%; --mask-height:75%; --mask-image-crop-left: 5% ;--mask-image-crop-top: 27%;--mask-image-fit:cover; --mask-image-position:center center;">
-            <div class="quadro-mask">
-                <div class="mask-inner">
-                    <img src="src/GIFS/beco.gif" class="mask-image" alt="Conteúdo do quadro 6">
+            <div class="quadro quadro6" data-title="Mercado Mágico" style="--mask-left:9%; --mask-top:2%; --mask-width:75%; --mask-height:75%; --mask-image-crop-left: 5% ;--mask-image-crop-top: 27%;--mask-image-fit:cover; --mask-image-position:center center;">
+                <div class="quadro-mask">
+                    <div class="mask-inner">
+                        <img src="src/GIFS/beco.gif" class="mask-image" alt="Conteúdo do quadro 6">
+                    </div>
                 </div>
+                <img src="src/quadro6.png" class="quadro-frame" alt="Quadro 6 frame">
+                <div class="site-hover-title">Mercado Mágico</div>
             </div>
-            <img src="src/quadro6.png" class="quadro-frame" alt="Quadro 6 frame">
-            <div class="site-hover-title">Mercado Mágico</div>
         </div>
 
-        <!-- PERGAMINHO -->
-        <img src="src/pergaminho.png" class="layer pergaminho">
+        <!-- PERGAMINHO PRINCIPAL LATERAL -->
+        <img src="src/pergaminho.png" class="layer pergaminho" alt="Pergaminho de Informações">
 
-        <!-- LOGO -->
-        <img src="src/logo.png" class="logo">
+        <!-- LOGO DO SITE -->
+        <img src="src/logo.png" class="logo" alt="Hogwarts Logo">
 
-        <!-- ÁREA INVISÍVEL DO PERGAMINHO -->
+        <!-- ÁREA INVISÍVEL DO PERGAMINHO PARA TEXTO FLUTUANTE -->
         <div class="scroll-area">
-
-            <!-- CONTEÚDO DO SITE -->
             <div class="content">
-
                 <h1>Hogwarts</h1>
-
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus autem doloremque accusamus ipsum minima. Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus autem doloremque accusamus ipsum minima. Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus autem doloremque accusamus ipsum minima. Lorem ipsum dolor sit amet consectetur adipisicing elit.Doloribus autem doloremque accusamus ipsum minima.
-                </p>
-
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Doloribus autem doloremque accusamus ipsum minima. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Doloribus autem doloremque accusamus ipsum minima. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Doloribus autem doloremque accusamus ipsum minima. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Doloribus autem doloremque accusamus ipsum minima.
-                </p>
-
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Doloribus autem doloremque accusamus ipsum minima.
-                </p>
-
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Doloribus autem doloremque accusamus ipsum minima.
-                </p>
-
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Doloribus autem doloremque accusamus ipsum minima.
-                </p>
-
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Doloribus autem doloremque accusamus ipsum minima.
-                </p>
-
-                <!-- EXEMPLO DE IMAGEM -->
-
-                <!--
-                <img src="src/exemplo.png" alt="">
-                -->
-
+                <p>Explore as lendas, regras e as novas diretrizes do RPG de Hogwarts. Desbloqueie sua maestria e domine feitiços táticos no campo de batalha.</p>
+                <p>Navegue através dos quadros interativos da sala comum para abrir a biblioteca antiga ou consultar seus registros de evolução.</p>
             </div>
-
         </div>
 
         <div class="vitrola" role="button" aria-label="Tocar vitrola">
             <img src="src/vitrola.png" class="vitrola-img" alt="Vitrola">
         </div>
-
         <button class="vitrola-next site-arrow-button" aria-label="Próxima música"></button>
-
         <audio id="vinyl-audio" src="src/hogsmeade.mp3" preload="auto"></audio>
-
     </div>
 
+    <!-- PAINÉIS LATERAIS DE CARREGAMENTO ASSÍNCRONO -->
     <div id="page-biblioteca" class="page-panel" aria-hidden="true"></div>
+    <div id="page-maestrias" class="page-panel" aria-hidden="true"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
+        // ==========================================
+        // SISTEMA DE AUDIO E TRILHAS DA VITROLA
+        // ==========================================
         const vitrola = document.querySelector('.vitrola');
         const nextBtn = document.querySelector('.vitrola-next');
         const audio = document.getElementById('vinyl-audio');
@@ -224,10 +173,377 @@
             }
         }
 
+        function launchLoopFireworks() {
+            if (typeof confetti !== 'function') return;
+            confetti({
+                particleCount: 40,
+                spread: 70,
+                startVelocity: 25,
+                origin: { x: 0.5, y: 0.3 },
+                colors: ['#f8d96f', '#ff8aa3', '#8fd9ff', '#f3a1ff']
+            });
+        }
+
+        vitrola.addEventListener('click', togglePlayback);
+        nextBtn.addEventListener('click', nextTrack);
+        audio.addEventListener('ended', nextTrack);
+        audio.addEventListener('error', () => {
+            console.warn('Falha de áudio detectada. Tentar novamente.');
+            setTimeout(() => playTrack(true), 500);
+        });
+
+        const vitrolaImg = document.querySelector('.vitrola-img');
+        vitrola.addEventListener('mouseenter', () => {
+            gsap.to(vitrolaImg, { y: -4, duration: 0.2, ease: 'power1.out' });
+        });
+        vitrola.addEventListener('mouseleave', () => {
+            gsap.to(vitrolaImg, { y: 0, duration: 0.2, ease: 'power1.in' });
+        });
+
+        audio.addEventListener('play', () => {
+            vitrola.classList.add('playing');
+            updateNextButton();
+        });
+
+        audio.addEventListener('pause', () => {
+            vitrola.classList.remove('playing');
+            updateNextButton();
+        });
+
+        setTrack(currentTrackIndex);
+
+        // ==========================================
+        // BANCO DE DADOS DAS MAESTRIAS DO RPG
+        // ==========================================
+        const maestriasData = {
+            defesa: {
+                title: "Defesa Contra as Trevas",
+                desc: "Esta maestria é voltada para os bruxos que desejam se posicionar na linha de frente. Focada no estudo de contra-feitiços, táticas de duelo e feitiços de proteção, ela ensina o bruxo a antecipar ameaças e neutralizar feitiços hostis. Conforme evolui, o jogador se torna um duelista formidável, capaz de erguer escudos impenetráveis, repelir ataques em área e desarmar ou incapacitar oponentes com reflexos cirúrgicos.",
+                banner: "https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=800&auto=format&fit=crop",
+                levels: [
+                    { 
+                        name: "TEÓRICO DE DEFESA", 
+                        descHTML: `<p>Desbloqueia os aprimoramentos dos feitiços <strong>Protego I</strong> e <strong>Verdimillious</strong>.</p>`,
+                        img: "src/miniaturas/dcat_1.jpg" // Imagem manual para este nível
+                    },
+                    { 
+                        name: "DUELISTA APRENDIZ", 
+                        descHTML: `<p>Desbloqueia os aprimoramentos do feitiço <strong>Kadabrus Duo</strong>.</p>`,
+                        img: "src/miniaturas/dcat_2.jpg"
+                    },
+                    { 
+                        name: "SENTINELA DE CAMPO", 
+                        descHTML: `<p>Desbloqueia os aprimoramentos dos feitiços <strong>Protego II</strong> e <strong>Scarlatum Duo</strong>.</p>`,
+                        img: "src/miniaturas/dcat_1.jpg" 
+                    },
+                    { 
+                        name: "ROMPE-CERCO", 
+                        descHTML: `<p>Desbloqueia os aprimoramentos dos feitiços <strong>Impedimenta</strong> e <strong>Expelliarmus</strong>.</p>`,
+                        img: "src/miniaturas/dcat_4.jpg"
+                    },
+                    { 
+                        name: "PROTETOR DA VANGUARDA", 
+                        descHTML: `<p>Desbloqueia os aprimoramentos dos feitiços <strong>Eletricus Duo</strong> e <strong>Expecto Patronum</strong>.</p>`,
+                        img: "src/miniaturas/dcat_5.jpg"
+                    },
+                    { 
+                        name: "DUELISTA DE ELITE", 
+                        descHTML: `<p>Desbloqueia os aprimoramentos dos feitiços <strong>Rictusempra</strong>, <strong>Estupefaça</strong> e <strong>Reducto</strong>.</p>`,
+                        img: "src/miniaturas/dcat_6.jpg" 
+                    },
+                    { 
+                        name: "ESPECIALISTA DO ESQUADRÃO", 
+                        descHTML: `
+                            <p><strong>Zona de Supressão:</strong> O especialista expande sua energia mágica ao limite para criar um perímetro defensivo tático e intransponível.</p>
+                            <p>Ao ativar a habilidade, você ergue uma cúpula de proteção translúcida e pós-luminescente que engloba um raio de 4x4 quadrados centralizados na sua posição (protegendo você e qualquer aliado dentro dessa área). Durante 1 turno, essa barreira intercepta e absorve o impacto de qualquer feitiço hostil vindo de fora.</p>
+                            <img src="src/ui/divisoria.png" class="magical-divider" alt="Divisor Rúnico" />
+                            <p>Em vez de simplesmente dissipar a magia inimiga, a Zona de Supressão canaliza a energia dos ataques recebidos e a explode para fora no final do turno, empurrando todos os oponentes adjacentes à barreira para trás e aplicando o efeito de atordoamento físico neles devido à onda de choque.</p>
+                            <ul class="custom-level-list">
+                                <li><strong>Frequência:</strong> Uma vez por cena.</li>
+                                <li><strong>Gatilho:</strong> No início de um turno em que você ou um aliado adjacente sejam alvos de múltiplos feitiços hostis na mesma rodada.</li>
+                            </ul>
+                        `,
+                        img: "src/miniaturas/dcat_7.jpg"
+                    }
+                ]
+            },
+            feitiços: {
+                title: "Feitiços",
+                desc: "A maestria em Feitiços representa a versatilidade da magia aplicada ao cotidiano e à resolução de problemas. Abrange desde encantamentos de movimentação e alteração física de propriedades (como levitação e atração) até magias elementais complexas (fogo, água, luz). O progresso nesta área expande drasticamente o leque de possibilidades criativas do jogador, permitindo que ele manipule o ambiente ao seu redor e resolva enigmas com precisão.",
+                banner: "https://images.unsplash.com/photo-1519074002996-a69e7ac46a42?q=80&w=800&auto=format&fit=crop",
+                levels: [
+                    { 
+                        name: "ROMPE-GRAVIDADE", 
+                        descHTML: `<p>Desbloqueia os aprimoramentos dos feitiços <strong>Wingardium Leviosa</strong> e <strong>Waddiwasi</strong>.</p>`,
+                        img: "src/miniaturas/feiticos_1.jpg" 
+                    },
+                    { 
+                        name: "FEITICEIRO FORMIDÁVEL", 
+                        descHTML: `<p>Desbloqueia os aprimoramentos dos feitiços <strong>Diffindo Duo, Arresto Momentum, Immobulus e Vermillious Duo</strong>.</p>`,
+                        img: "src/miniaturas/feiticos_2.jpg"  
+                    },
+                    { 
+                        name: "FEITICEIRO TECELÃO", 
+                        descHTML: `<p>Desbloqueia os aprimoramentos dos feitiços <strong>Nox, Ventus e Incarcerous I</strong>.</p>`,
+                        img: "src/miniaturas/feiticos_3.jpg"  
+                    },
+                    { 
+                        name: "FEITICEIRO TAGARELA", 
+                        descHTML: `<p>Desbloqueia o aprimoramentos do feitiço <strong>Alarte</strong>.</p>`,
+                        img: "src/miniaturas/feiticos_4.jpg"  
+                    },
+                    { 
+                        name: "FEITICEIRO MESTRE", 
+                        descHTML: `<p>Desbloqueia os aprimoramentos dos feitiços <strong>Reparo, Depulso, Incarcerous II</strong>.</p>`,
+                        img: "src/miniaturas/feiticos_5.jpg"  
+                    },
+                    { 
+                        name: "BRUXO ESPALHAFATOSO", 
+                        descHTML: `<p>Desbloqueia os aprimoramentos dos feitiços <strong>Bombarda Maxima, Estupefaça</strong>.</p>
+                                   <p><strong>Feitiço de Extensão Indetectável:</strong> Um dos feitiços mais complexos do Ministério da Magia. Ele altera as dimensões internas de um espaço interno (como uma bolsa ou uma tenda) sem modificar o seu exterior. Exige um cálculo mágico preciso para que o espaço expandido não colapse sobre si mesmo, quebrando as leis da física tridimensional.`,
+                        img: "src/miniaturas/feiticos_6.jpg"   
+                    },
+                    { 
+                        name: "MANIPULADOR DA REALIDADE", 
+                        descHTML: `
+                            <p><strong>Dobra Dimensional:</strong> Aplicando o conceito do Feitiço de Extensão Indetectável diretamente no campo de batalha, o bruxo consegue esticar ou encurtar o espaço físico entre dois pontos do ambiente por 1 turno. Você escolhe um alvo (um aliado, você mesmo ou um inimigo) e altera a distância em relação a outro ponto do mapa:</p>
+                            <p><strong>Rota de Fuga (Encurtar):</strong> Você aproxima dois pontos. Um alvo (ou você) consegue se mover de um ponto a outro instantaneamente, ignorando os quadrados do meio do caminho. O espaço é praticamente comprimido e é puxado para a sua direção. Excelente para retirar alguém da linha de fogo ou alcançar uma saída de emergência em apenas um movimento.</p>
+                            <p><strong>Distanciamento (Alongar):</strong> Você afasta um perigo. O espaço sob os pés de um inimigo se expande de forma anômala, esticando-se para longe. O oponente é empurrado até 10 quadrados para trás no mapa, e no próximo turno ele precisará gastar o dobro de movimento para conseguir avançar novamente, ficando isolado pela diferença do mapa movido.</p>
+                            <img src="src/ui/divisoria.png" class="magical-divider" alt="Divisor Rúnico" />
+                            <ul class="custom-level-list">
+                                <li><strong>Frequência:</strong> Uma vez por cena.</li>
+                                <li><strong>Gatilho:</strong> Em situações de fuga, corrida ou desvios.</li>
+                            </ul>
+                        `,
+                        img: "src/miniaturas/feiticos_7.jpg"   
+                    }
+                ]
+            },
+            herbologia: {
+                title: "Herbologia",
+                desc: "Focada no ecossistema mágico, esta maestria transforma a flora do mundo bruxo em uma extensão do arsenal do jogador. O especialista aprende a cultivar, colher e utilizar plantas mágicas perigosas ou utilitárias diretamente em campo. Níveis mais altos permitem que o bruxo use sementes e vinhas para prender inimigos, manipular a vegetação e para criar barreiras naturais tóxicas, extrair matérias-primas raras e utilizar fungos ou esporos para causar efeitos nos oponentes.",
+                banner: "https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=800&auto=format&fit=crop",
+                levels: [
+                    { 
+                        name: "JARDINEIRO DA ESTUFA", 
+                        descHTML: `<p>O tempo extra passado nas Estufas faz com que o pequeno bruxo aprenda a manipular e crescer a vegetação existente ao seu favor, fazendo brotar raízes profundas, galhos mais duros e troncos gordos.</p>
+                                 <p>Desbloqueia o feitiços <strong>Herbivicus</strong> (influência no crescimento acelerado de vegetação. Observa-se que as plantas adquirem a capacidade de agarrar, prender e até mesmo chicotear. Um turno para o crescimento das plantas, e um segundo para manipulações adicionais.)</p>`,
+                        img: "src/miniaturas/herbologia_1.jpg"  
+                    },
+                    { 
+                        name: "PODADOR DE CAMPO", 
+                        descHTML: `<p>Aprendendo novas técnicas de tratamento de grãos, bagos e caroços, o bruxo agora consegue cultivar sementes especiais que podem ser ativadas não-verbalmente com <strong>Herbivicus</strong> na hora da batalha. Essas sementes instantâneas são ótimas aliadas em combates.</p>
+                                    <p>Desbloqueia o aprimoramento do feitiço <strong>Diffindo</strong></p>
+                                    <p><strong>Vagem de Polpa:</strong> O bruxo arremessa feijões rosados na direção de um alvo (alcance de 6 quadrados). Ao colidir contra qualquer superfície sólida, demorando um turno para germinar após a ativação não-verbal. A seguir, os feijões explodem em uma névoa espessa de esporos e flores. Todos os alvos no quadrado afetado e num raio adjacente de 8x8 quadrados ficam cegos e atordoados por 1 turno, sendo empurrados para trás. A névoa some depois de um tempo.</p>`,
+                        img: "src/miniaturas/herbologia_2.jpg"  
+                    },
+                    { 
+                        name: "BOTÃNICO DE CULTIVO RÁPIDO", 
+                        descHTML: `<p><strong>Repolho Glutão Chinês:</strong> Ao ser lançado no campo de batalha, este pequeno broto (que pode ser armazenado em frascos) ganha vida instantaneamente e passa a agir de forma independente. A planta move-se até 2 quadrados por turno em direção ao oponente mais próximo para desferir mordidas agressivas com sua bocarra. Ela causa dano físico e contínuo, rasgando vestes, limitando as capacidades defensivas do alvo até ser destruída. O glutão tem capacidade de escalar seres e possuem grande habilidade para desferir saltos. O bruxo pode controlar o Repolho Glutão Chinês com Herbivicus, podendo gastar um turno inteiro para aumentar seu tamanho ou mudar seus alvos com o feitiço.</p>`,
+                        img: "src/miniaturas/herbologia_3.jpg"  
+                    },
+                    { 
+                        name: "PROTETOR DA ESTUFA",
+                        descHTML: `<p><strong>Armadilha de Visgo-Do-Diabo:</strong> A semente do Visgo-Do-Diabo precisa ser plantada em terra. Assim, o usuário lança as sementes modificadas que geram gavinhas escuras instantâneas por baixo do chão em uma área de 4x4 quadrados após a ativação com Herbivicus (duração de 1 turno para crescimento). Qualquer oponente que pisar ou iniciar o turno nessa região fica completamente imobilizado e sufocado pelas vinhas. A armadilha é destruída imediatamente caso receba feitiços de fogo em direção ao solo. Se a armadilha não for utilizada nos próximos turnos, as vinhas continuarão crescendo, tendo sua área de ativação gradativamente aumentada. Aliados também podem se confundir e cair na armadilha. Por esse motivo, lembre-se de desativar a armadilha quando achar necessário.</p>
+                        <p><strong>Sentinela de Tentácula Venenosa:</strong> A semente ou o broto da Tentácula Venenosa precisa ser plantada em terra. Quando seu crescimento é ativado com Herbivicus (1 turno), a planta é invocada como sentinela estática em um ponto fixo. Ela é capaz de vigiar um raio de 8x8 quadrados ao seu redor. Sempre que um inimigo se move dentro desta área de cobertura, a Tentácula dispara vinhas e espinhos venenosos que destroem escudos mágicos no impacto e causam envenenamento. A sentinela pode ser móvel se plantada em vasos fortificados, possibilitando a realocação ou carregamento.</p>`,
+                        img: "src/miniaturas/herbologia_4.jpg"  
+                    },
+                    { 
+                        name: "AMANTE DE FERTILIZANTES", 
+                        descHTML: `
+                            <p><strong>Ativação Anômala:</strong> O bruxo força um surto biológico temporário que altera o comportamento da flora. A planta alvo dobra de tamanho por 4 turnos: se for o Visgo, Mandrágora ou Tentácula, seu raio de alcance aumenta em dobro; se for o Repolho, ele ganha +2 de quadrados de movimentação por turno. Após o término do efeito, a planta murcha e morre pelo esforço anômalo.</p>
+                            <img src="src/ui/divisoria.png" class="magical-divider" alt="Divisor Rúnico" />
+                            <ul class="custom-level-list">
+                                <li><strong>Frequência:</strong> Uma vez por encontro.</li>
+                                <li><strong>Gatilho:</strong> No início do seu turno, ao verter algum tipo de estimulante para vegetação (poções ou fertilizantes mágicos) sobre uma de suas plantas no mapa.</li>
+                            </ul>`,
+                        img: "src/miniaturas/herbologia_5.jpg" 
+                    },
+                    { 
+                        name: "ESPECIALISTA EM FLORA LETAl",
+                        descHTML: `
+                            <p><strong>Mandrágora Adulta:</strong> O bruxo enterra uma raiz modificada da planta no chão ou em um vaso, ativando o seu crescimento com Herbivicus (1 turno). Ao emergir ou ser puxada para fora, a criatura solta seu grito fatal em uma raio de 8x8 de distância a partir de sua posição. Todos os alvos na área que não estiverem utilizando abafadores de ouvido caem instantaneamente em estado de inconsciência e coma, sendo removidos do combate. Pode-se utilizar de forma furtiva, quando ativada sem ser visto pelo seu oponente. Isso significa que ele cairá de forma inconsciente sem resistência. No entanto, seus aliados precisam tapar seus ouvidos e você precisa estar obrigatoriamente equipado com abafadores se não quiser entrar em coma.</p> `,
+                        img: "src/miniaturas/herbologia_7.jpg" 
+                    },
+                    { 
+                        name: "ESPECIALISTA EM ECOSSISTEMA",
+                        descHTML: `
+                            <p><strong>Minhas Amigas Plantas:</strong> O ápice da simbiose botânica. O bruxo quebra frascos de super-fertilizantes no solo, fazendo com que uma floresta mortal de raízes grossas, gavinhas de Visgo-Do-Diabo e brotos de Tentáculas Venenosas surja instantaneamente em um raio de 4x4 quadrados centralizados em si. O terreno torna-se intransitável para inimigos por 3 turnos. Durante o efeito, o herbólogo move-se livremente pela área e pode comandar todas as plantas recém-ativas no ambiente como se estivesse surfando por cima delas, para onde quiser.</p>
+                            <img src="src/ui/divisoria.png" class="magical-divider" alt="Divisor Rúnico" />
+                            <ul class="custom-level-list">
+                                <li><strong>Frequência:</strong> Uma vez por encontro.</li>
+                                <li><strong>Gatilho:</strong> Quando o personagem estiver em desvantagem numérica severa ou encurralado.</li>
+                            </ul>`,
+                        img: "src/miniaturas/herbologia_7.jpg" 
+                    }
+                ]
+            },
+            medibruxaria: {
+                title: "Medibruxaria",
+                desc: "A arte da cura mágica é vital para a longevidade de qualquer grupo. Esta maestria foca na anatomia bruxa, na reversão de feitiços debilitantes e na regeneração física e espiritual. O jogador se torna capaz de estancar sangramentos, emendar ossos instantaneamente e purificar venenos ou maldições persistentes. No topo de sua evolução, o Medibruxo consegue canalizar fluxos vitais para manter aliados caídos de pé mesmo nas situações mais desesperadoras.",
+                banner: "https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=800&auto=format&fit=crop",
+                levels: [
+                    { 
+                        name: "SOCORRISTA INICIANTE", 
+                        descHTML: `<p>O estudante compreende os primeiros socorros da anatomia bruxa, focando em traumas superficiais e pequenos bloqueios mágicos.</p>
+                        <p>Desbloqueia os feitiços <strong>Emendo</strong> (corrige pequenas fraturas externas em ossos curtos) e <strong>Reparifors</strong> (cura paralisias leves ou envenenamentos superficiais).</p>`,
+                        img: "src/miniaturas/medibruxaria_1.jpg" 
+                    },
+                    { 
+                        name: "ENFERMEIRO-JÚNIOR DA ALA HOSPITALAR", 
+                      descHTML: `<p>Com mais prática de campo, o bruxo torna-se capaz de conter hemorragias e imobilizar membros gravemente danificados no calor do momento.</p>
+                        <p>Desbloqueia os feitiços <strong>Ferula</strong> (conjura bandagens e talas rígidas, devolvendo a mobilidade do alvo no mapa) e <strong>Sutura</strong> (costura cortes simples com uma linha mágica invisível).</p>`,                        
+                        img: "src/miniaturas/medibruxaria_2.jpg"  
+                    },
+                    { 
+                        name: "ENFERMEIRO DE CAMPO", 
+                        descHTML: `<p>Preparado para situações de risco, o enfermeiro sabe intervir em vias aéreas bloqueadas e acelerar o fechamento de tecidos celulares sob pressão.</p>
+                        <p>Desbloqueia os feitiços <strong>Anapneo</strong> (desobstrui as vias respiratórias instantaneamente, limpando engasgos) e <strong>Cicatriccio</strong> (acelera a cicatrização).</p>`,                        
+                        img: "src/miniaturas/medibruxaria_3.jpg"  
+                    },
+                    { 
+                        name: "MEDIBRUXO RESIDENTE", 
+                        descHTML: `<p>Já considerado um profissional em treinamento avançado, o curandeiro consegue reverter traumas de impacto moderado e trazer aliados nocauteados de volta à consciência.</p>
+                        <p>Desbloqueia os feitiços <strong>Episkey</strong> (curar ferimentos moderados, como narizes quebrados ou lábios partidos) e <strong>Rennervate</strong> (desperta aliados e seres inconscientes).</p>`,   
+                        img: "src/miniaturas/medibruxaria_4.jpg"  
+                    },
+                    { 
+                        name: "ESPECIALISTA DE PLANTÃO", 
+                        descHTML: `
+                            <p><strong>Cuidados Prolongados:</strong> O curandeiro assume o controle total do estado do paciente. Ao manter contato físico contínuo, ele estabiliza suas funções biológicas. Enquanto a habilidade estiver ativa, o paciente fica imune à morte por sangramento ou falência de órgãos. O Medibruxo pode tratar sequelas severas ou queimaduras graves progressivamente através da narração, desde que ambos permaneçam imóveis no mesmo lugar. O Medibruxo não pode estar duelando para executar esses cuidados paliativos.</p>
+                            <img src="src/ui/divisoria.png" class="magical-divider" alt="Divisor Rúnico" />
+                            <ul class="custom-level-list">
+                                <li><strong>Frequência:</strong> Uma vez por cena.</li>
+                                <li><strong>Gatilho:</strong> Ao gastar seu turno inteiro prestando, de forma focada, socorro a um ou dois aliados severamente feridos em um raio de quatro quadrados.</li>
+                            </ul>`,                           
+                        img: "src/miniaturas/medibruxaria_5.jpg"  
+                    },
+                    { 
+                        name: "CIRURGIÃO DO ST. MUNGUS.", 
+                        descHTML: `<p>O ápice técnico da medicina bruxa. O especialista domina o tratamento de traumas letais, infecções mágicas profundas e reanimação pulmonar de emergência.</p>
+                        <p>Desbloqueia os feitiços <strong>Vulnera Sanentur</strong> (feitiço que regenera cortes profundos e feridas de magia negra) e <strong>Pulmo Flate</strong> (força mecanicamente a expansão dos pulmões de um alvo sufocado ou realiza massagem cardíaca).</p>`,   
+                        img: "src/miniaturas/medibruxaria_6.jpg"  
+                    },
+                    { 
+                        name: "MEDIBRUXO GRADUADO", 
+                        descHTML: `<p>O título máximo da maestria, onde o bruxo compreende que salvar uma vida pode exigir o sacrifício da própria em casos extremos.</p>
+                        <p>Desbloqueia o feitiço <strong>Vitam Transscribere</strong> (transfusão de energia vital em tempo real entre dois seres vivos, ajudando em situações emergenciais para manter alguém vivo por um pouco mais de tempo. A vitalidade flui do doador para o paciente).</p>`,   
+                        img: "src/miniaturas/medibruxaria_7.jpg"  
+                    }
+                ]
+            },
+            pocoes: {
+                title: "Poções",
+                desc: "A ciência de destilar venenos, óleos inflamáveis e fumaças densas ricas em reforços mágicos. O mestre pocionista antecipa as necessidades do grupo por meio do preparo de frascos elementares táticos.",
+                banner: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop",
+                levels: [
+                    { 
+                        name: "INICIADO DO CALDEIRÃO", 
+                        descHTML: `<p>Desbloqueia o preparo perfeito da <strong>Poção Wiggenweld</strong> de cura rápida.</p>`,
+                        img: "src/miniaturas/pocoes_1.jpg"  
+                    },
+                    { 
+                        name: "DESTILADOR DE FÓRMULAS", 
+                        descHTML: `<p>Desbloqueia os aprimoramentos da <strong>Poção Herbovitalizante</strong>.</p>`,
+                        img: "src/miniaturas/pocoes_2.jpg"   
+                    },
+                    { 
+                        name: "PREPARADOR DE ELIXIRES", 
+                        descHTML: `<p>Desbloqueia a infusão de <strong>Poções do Sono</strong> e antídotos mundanos de amplo espectro.</p>`,
+                        img: "src/miniaturas/pocoes_3.jpg"   
+                    },
+                    { 
+                        name: "ALQUIMISTA TÁTICO", 
+                        descHTML: `<p>Desbloqueia la destilação de <strong>Poções de Fogo</strong> e óleos de blindagem física.</p>`,
+                        img: "src/miniaturas/pocoes_4.jpg"   
+                    },
+                    { 
+                        name: "CRIADOR DE TOXINAS", 
+                        descHTML: `<p>Desbloqueia a infusão do <strong>Elixir de Força de Gigante</strong> e fumaças paralisantes.</p>`,
+                        img: "src/miniaturas/pocoes_5.jpg"   
+                    },
+                    { 
+                        name: "MESTRE ALQUIMISTA", 
+                        descHTML: `<p>Desbloqueia a síntese refinada de poções de invisibilidade e catalisadores aceleradores.</p>`,
+                        img: "src/miniaturas/pocoes_6.jpg"   
+                    },
+                    { 
+                        name: "CATÁLISE ELEMENTAR MÁXIMA", 
+                        descHTML: `
+                            <p><strong>Detonação Ácida Extrema:</strong> O alquimista joga um frasco super-concentrado de substância instável no centro do combate.</p>
+                            <p>A explosão inicial derrete barreiras mágicas ativas e espalha uma nuvem ácida de 3x3 metros. Inimigos na área sofrem queimaduras contínuas de fogo alquímico.</p>
+                            <img src="src/ui/divisoria.png" class="magical-divider" alt="Divisor Rúnico" />
+                            <ul class="custom-level-list">
+                                <li><strong>Frequência:</strong> Uma vez por cena.</li>
+                                <li><strong>Gatilho:</strong> Como ação bônus de fase tática no seu turno.</li>
+                            </ul>
+                        `,
+                        img: "src/miniaturas/pocoes_7.jpg"   
+                    }
+                ]
+            },
+            transfiguracao: {
+                title: "Transfiguração",
+                desc: "A ciência de reordenar o tecido molecular da matéria. Do nada criar barreiras sólidas, animar objetos inertes para combater sob seu comando ou transformar ameaças letais em folhas secas.",
+                banner: "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800&auto=format&fit=crop",
+                levels: [
+                    { 
+                        name: "APRENDIZ DE FORMAS", 
+                        descHTML: `<p>Desbloqueia os aprimoramentos imediatos do feitiço de transfiguração biológica simples <strong>Flintifors</strong>.</p>`,
+                        img: "src/miniaturas/transfiguracao_1.jpg"   
+                    },
+                    { 
+                        name: "MOLDADOR DE MATÉRIA", 
+                        descHTML: `<p>Desbloqueia o uso veloz do feitiço de prevenção ou contenção física <strong>Incarcerous Duo</strong>.</p>`,
+                        img: "src/miniaturas/transfiguracao_2.jpg"    
+                    },
+                    { 
+                        name: "ARQUITETO DE AREIA", 
+                        descHTML: `<p>Desbloqueia os aprimoramentos do feitiço petrificador <strong>Duro</strong> e lamaçais localizados.</p>`,
+                        img: "src/miniaturas/transfiguracao_3.jpg"    
+                    },
+                    { 
+                        name: "CONJURADOR DE OBJETOS", 
+                        descHTML: `<p>Desbloqueia as manipulações estruturais avançadas de <strong>Vera Verto</strong> e <strong>Evanesco Duo</strong>.</p>`,
+                        img: "src/miniaturas/transfiguracao_4.jpg"    
+                    },
+                    { 
+                        name: "ANIMADOR DE GÁRGOULAS", 
+                        descHTML: `<p>Desbloqueia os ritos de animação de estátuas pequenas ou objetos inanimados pesados de pedra.</p>`,
+                        img: "src/miniaturas/transfiguracao_5.jpg"   
+                    },
+                    { 
+                        name: "MESTRE TRANSFIGURADOR", 
+                        descHTML: `<p>Desbloqueia transfigurações completas de animais grandes e criação instantânea de muralhas de granito sólidas.</p>`,
+                        img: "src/miniaturas/transfiguracao_6.jpg"   
+                    },
+                    { 
+                        name: "GRÃO-MOLDADOR ATÔMICO", 
+                        descHTML: `
+                            <p><strong>Singularidade Transfigurativa:</strong> O mestre altera temporariamente o estado molecular de um projétil ou barreira hostil.</p>
+                            <p>Transfigura instantaneamente qualquer feitiço destrutivo vindo em sua direção em uma revoada inofensiva de borboletas ou folhas secas, neutralizando o ataque integralmente.</p>
+                            <img src="src/ui/divisoria.png" class="magical-divider" alt="Divisor Rúnico" />
+                            <p>Se o alvo for uma criatura biológica hostil, ela é transformada em uma pequena estatueta de argila inerte durante 1 rodada.</p>
+                            <ul class="custom-level-list">
+                                <li><strong>Frequência:</strong> Uma vez por duelo.</li>
+                                <li><strong>Gatilho:</strong> Ao se tornar alvo direto de um feitiço de alta escala de dano.</li>
+                            </ul>
+                        `,
+                        img: "src/miniaturas/transfiguracao_7.jpg"   
+                    }
+                ]
+            }
+        };
+
         const scene = document.getElementById('scene');
         const pageBiblioteca = document.getElementById('page-biblioteca');
+        const pageMaestrias = document.getElementById('page-maestrias');
         const bibliotecaQuadro = document.querySelector('.quadro3');
+        const maestriasQuadro = document.querySelector('.quadro5');
 
+        // ==========================================
+        // CARREGAMENTO & CONTROLE DA BIBLIOTECA
+        // ==========================================
         async function loadBibliotecaPage() {
             try {
                 const response = await fetch('biblioteca-page.html');
@@ -237,19 +553,17 @@
                     throw new Error('Não foi possível carregar a página da biblioteca');
                 }
             } catch (error) {
+                console.error(error);
                 pageBiblioteca.innerHTML = `
                     <div class="library-page">
-                        <div class="library-header">
-                            <div>
-                                <h1>Biblioteca de Hogwarts</h1>
-                                <p>Explore livros interativos sem recarregar a página.</p>
-                            </div>
-                            <button id="back-to-main" class="library-back-button">Voltar</button>
+                        <div class="library-header" style="background:#2a1a0f; padding:3rem; text-align:center; border:8px solid #5a3c1e;">
+                            <h1 style="color:#ffd88a; font-family:Georgia, serif; font-size:2rem;">Biblioteca de Hogwarts</h1>
+                            <p style="color:#d9c7a3; margin-top:1rem;">Explore livros mágicos sem recarregar a página.</p>
+                            <button id="back-to-main" style="margin:20px auto; padding:10px 20px; background:#664c30; color:#fff; border-radius:4px;">Voltar</button>
                         </div>
                     </div>
                 `;
             }
-
             initializeLibraryPage();
         }
 
@@ -265,16 +579,12 @@
             let currentPdfPath = '';
 
             function resetViewer() {
-                if (viewerEmpty) {
-                    viewerEmpty.style.display = 'flex';
-                }
+                if (viewerEmpty) viewerEmpty.style.display = 'flex';
                 if (pdfViewer) {
                     pdfViewer.style.display = 'none';
                     pdfViewer.src = '';
                 }
-                if (viewerTitle) {
-                    viewerTitle.textContent = 'Nenhum livro aberto';
-                }
+                if (viewerTitle) viewerTitle.textContent = 'Nenhum livro aberto';
                 if (pdfOpenNew) {
                     pdfOpenNew.style.display = 'none';
                     pdfOpenNew.href = '#';
@@ -288,22 +598,15 @@
                 pdfViewer.src = `${currentPdfPath}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`;
                 viewerEmpty.style.display = 'none';
                 pdfViewer.style.display = 'block';
-                if (viewerTitle) {
-                    viewerTitle.textContent = title;
-                }
+                if (viewerTitle) viewerTitle.textContent = title;
                 if (pdfOpenNew) {
                     pdfOpenNew.href = path;
                     pdfOpenNew.style.display = 'inline-flex';
                 }
             }
 
-            if (backButton) {
-                backButton.addEventListener('click', closeLibraryPage);
-            }
-
-            if (viewerClose) {
-                viewerClose.addEventListener('click', resetViewer);
-            }
+            if (backButton) backButton.addEventListener('click', closeLibraryPage);
+            if (viewerClose) viewerClose.addEventListener('click', resetViewer);
 
             bookLinks.forEach(book => {
                 book.addEventListener('click', () => {
@@ -353,49 +656,211 @@
             });
         }
 
-        loadBibliotecaPage();
-        bibliotecaQuadro.addEventListener('click', openLibraryPage);
+        // ==========================================
+        // CARREGAMENTO & CONTROLE DE MAESTRIAS
+        // ==========================================
+        async function loadMaestriasPage() {
+            try {
+                const response = await fetch('maestrias-page.html');
+                if (response.ok) {
+                    pageMaestrias.innerHTML = await response.text();
+                } else {
+                    throw new Error('Não foi possível carregar a página de maestrias');
+                }
+            } catch (error) {
+                console.error(error);
+                pageMaestrias.innerHTML = `
+                    <div class="maestrias-page">
+                        <div style="background:#fff8e0; border:12px solid #5a3c1e; padding:3rem; text-align:center; border-radius:10px;">
+                            <h1 style="font-family:Georgia,serif;color:#3b2410;font-size:2rem;">Erro ao Abrir o Pergaminho</h1>
+                            <p style="margin:1rem 0;">Certifique-se de que o arquivo "maestrias-page.html" está no mesmo diretório do index.html.</p>
+                            <button id="back-from-maestrias" style="margin:20px auto; padding:10px 20px; background:#4a2f13; color:#fff; border-radius:4px;">Voltar</button>
+                        </div>
+                    </div>
+                `;
+            }
+            initializeMaestriasPage();
+        }
 
-        function launchLoopFireworks() {
-            if (typeof confetti !== 'function') return;
-            confetti({
-                particleCount: 40,
-                spread: 70,
-                startVelocity: 25,
-                origin: { x: 0.5, y: 0.3 },
-                colors: ['#f8d96f', '#ff8aa3', '#8fd9ff', '#f3a1ff']
+        function initializeMaestriasPage() {
+            const backButton = pageMaestrias.querySelector('#back-from-maestrias');
+            if (backButton) {
+                backButton.addEventListener('click', closeMaestriasPage);
+            }
+
+            const tabs = pageMaestrias.querySelectorAll('.maestria-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    const maestriaId = tab.dataset.maestria;
+                    updateMaestriaContent(maestriaId);
+                });
+            });
+
+            // Ativa o primeiro conteúdo renderizável por padrão
+            updateMaestriaContent('defesa');
+        }
+
+        function updateMaestriaContent(maestriaId) {
+            const data = maestriasData[maestriaId];
+            if (!data) return;
+
+            const displayTitle = pageMaestrias.querySelector('#maestria-display-title');
+            const displayDesc = pageMaestrias.querySelector('#maestria-display-desc');
+            const displayBanner = pageMaestrias.querySelector('#maestria-display-banner');
+            const container = pageMaestrias.querySelector('#levels-display-container');
+            const scrollableParchment = pageMaestrias.querySelector('.parchment-scroll');
+            const innerWrapper = pageMaestrias.querySelector('#parchment-inner-wrapper');
+
+            if (innerWrapper) {
+                // Sequência requintada: Desliza ligeiramente para baixo e esvanece suavemente
+                gsap.to(innerWrapper, {
+                    opacity: 0,
+                    y: 20,
+                    duration: 0.25,
+                    ease: 'power2.in',
+                    onComplete: () => {
+                        // Injeta os novos dados
+                        if (displayTitle) displayTitle.textContent = data.title;
+                        if (displayDesc) displayDesc.textContent = data.desc;
+                        
+                        if (displayBanner) {
+                            displayBanner.src = data.banner;
+                            displayBanner.alt = "Banner de " + data.title;
+                        }
+
+                        if (container) {
+                            container.innerHTML = '';
+data.levels.forEach((lvl, index) => {
+    const currentLevel = index + 1;
+    // Lógica: se 'lvl.img' existir, usa ele; senão, monta o caminho automático
+    const imgSrc = lvl.img || `src/miniaturas/${maestriaId}_${currentLevel}.jpg`;
+    
+    const block = document.createElement('div');
+    block.className = 'level-block';
+    block.innerHTML = `
+        <div class="level-block-decor-tl"></div>
+        <div class="level-block-decor-tr"></div>
+        <div class="level-block-decor-bl"></div>
+        <div class="level-block-decor-br"></div>
+        <div class="level-block-header">
+            <div class="level-thumbnail">
+                <img src="${imgSrc}" alt="Miniatura Nível ${currentLevel}" onerror="this.src='https://via.placeholder.com/70'">
+            </div>
+            <div class="level-header-text">
+                <span class="level-badge">Nível ${currentLevel} / 7</span>
+                <h4 class="level-title">${lvl.name}</h4>
+            </div>
+        </div>
+        <div class="level-description-content">
+            ${lvl.descHTML}
+        </div>
+    `;
+    container.appendChild(block);
+});
+                        }
+
+                        // Reseta a rolagem interna de volta para o topo de forma limpa
+                        if (scrollableParchment) {
+                            scrollableParchment.scrollTop = 0;
+                        }
+
+                        // Revelação mágica: Desliza de cima e ressurge triunfante
+                        gsap.fromTo(innerWrapper,
+                            { opacity: 0, y: -20 },
+                            { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }
+                        );
+                    }
+                });
+            } else {
+                // Fallback caso o wrapper interno não exista
+                if (displayTitle) displayTitle.textContent = data.title;
+                if (displayDesc) displayDesc.textContent = data.desc;
+                if (displayBanner) displayBanner.src = data.banner;
+                if (container) {
+                    container.innerHTML = '';
+                    data.levels.forEach((lvl, index) => {
+                        const currentLevel = index + 1;
+                        const block = document.createElement('div');
+                        block.className = 'level-block';
+                        block.innerHTML = `
+                            <div class="level-block-decor-tl"></div>
+                            <div class="level-block-decor-tr"></div>
+                            <div class="level-block-decor-bl"></div>
+                            <div class="level-block-decor-br"></div>
+                            <div class="level-block-header">
+                                <div class="level-thumbnail">
+                                    <img src="https://picsum.photos/70/70?random=${maestriaId}_l${currentLevel}" alt="Miniatura Nível ${currentLevel}">
+                                </div>
+                                <div class="level-header-text">
+                                    <span class="level-badge">Nível ${currentLevel} / 7</span>
+                                    <h4 class="level-title">${lvl.name}</h4>
+                                </div>
+                            </div>
+                            <div class="level-description-content">
+                                ${lvl.descHTML}
+                            </div>
+                        `;
+                        container.appendChild(block);
+                    });
+                }
+            }
+        }
+
+        function openMaestriasPage() {
+            gsap.to(scene, {
+                x: '100%',
+                duration: 0.8,
+                ease: 'power2.inOut'
+            });
+
+            pageMaestrias.style.visibility = 'visible';
+            pageMaestrias.style.pointerEvents = 'auto';
+            pageMaestrias.setAttribute('aria-hidden', 'false');
+
+            gsap.fromTo(pageMaestrias,
+                { x: '-100%', opacity: 0 },
+                { x: '0%', opacity: 1, duration: 0.8, ease: 'power2.inOut' }
+            );
+        }
+
+        function closeMaestriasPage() {
+            gsap.to(pageMaestrias, {
+                x: '-100%',
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power2.inOut',
+                onComplete: () => {
+                    pageMaestrias.style.visibility = 'hidden';
+                    pageMaestrias.style.pointerEvents = 'none';
+                    pageMaestrias.setAttribute('aria-hidden', 'true');
+                }
+            });
+
+            gsap.to(scene, {
+                x: '0%',
+                duration: 0.8,
+                ease: 'power2.inOut'
             });
         }
 
-        vitrola.addEventListener('click', togglePlayback);
-        nextBtn.addEventListener('click', nextTrack);
-        audio.addEventListener('ended', nextTrack);
-        audio.addEventListener('error', () => {
-            console.warn('Falha de áudio detectada. Tentar novamente.');
-            setTimeout(() => playTrack(true), 500);
-        });
+        // ==========================================
+        // DISPARADORES DE CARREGAMENTO INICIAL
+        // ==========================================
+        loadBibliotecaPage();
+        loadMaestriasPage();
 
-        const vitrolaImg = document.querySelector('.vitrola-img');
-        vitrola.addEventListener('mouseenter', () => {
-            gsap.to(vitrolaImg, { y: -4, duration: 0.2, ease: 'power1.out' });
-        });
-        vitrola.addEventListener('mouseleave', () => {
-            gsap.to(vitrolaImg, { y: 0, duration: 0.2, ease: 'power1.in' });
-        });
+        if (bibliotecaQuadro) {
+            bibliotecaQuadro.addEventListener('click', openLibraryPage);
+        }
 
-        audio.addEventListener('play', () => {
-            vitrola.classList.add('playing');
-            updateNextButton();
-        });
-
-        audio.addEventListener('pause', () => {
-            vitrola.classList.remove('playing');
-            updateNextButton();
-        });
-
-        setTrack(currentTrackIndex);
+        if (maestriasQuadro) {
+            maestriasQuadro.removeAttribute('onclick'); 
+            maestriasQuadro.addEventListener('click', openMaestriasPage);
+        }
     </script>
-
 </body>
 
 </html>

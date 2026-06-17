@@ -1,0 +1,609 @@
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* CONTAINER GERAL DO MÓDULO COM REDUÇÃO DE ESCALA EM 30% */
+.maestrias-page {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* Efeito de vinheta refinado - escuridão suave apenas nas bordas extremas */
+  background: radial-gradient(circle at center, rgba(5, 3, 1, 0.1) 20%, rgba(5, 3, 1, 0.72) 75%, rgba(5, 3, 1, 0.98) 100%), url('src/background.png') center center / cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.8rem;
+  overflow: hidden;
+  font-family: 'Hogwarts-SubTitulo', serif;
+  color: #130600; /* Fonte global para marrom-nanquim profundo */
+}
+
+/* Proporção compacta simulando zoom de 70%, empurrada para a esquerda para abrir espaço ao Banner flutuante no canto superior direito */
+.maestrias-wrapper {
+  position: relative;
+  width: min(1080px, 95%);
+  max-width: 1080px;
+  height: calc(100vh - 4rem);
+  display: flex;
+  justify-content: flex-start; /* Alinhado à esquerda */
+  align-items: center;
+  gap: 1.8rem;
+  padding-right: 290px; /* Espaço para dar suporte perfeito à bandeira maior */
+  z-index: 10;
+  transition: transform 0.3s ease;
+}
+
+.maestrias-sidebar {
+  flex: 0 0 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  justify-content: center;
+}
+
+.maestria-tab {
+  position: relative;
+  width: 100%;
+  min-height: 58px;
+  /* !important adicionado para sobrepor resets agressivos de botões do Tailwind */
+  background: url('src/ui/banner-titulo.png') no-repeat center center !important;
+  background-size: 100% 100% !important;
+  border: none !important;
+  border-radius: 4px;
+  padding: 0.5rem 1.2rem;
+  color: #f7e6ca;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.05rem;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.45);
+}
+
+.maestria-tab h3 {
+  font-size: 0.8rem;
+  color: #ffd88a;
+  text-shadow: 1px 1.5px 2px rgba(0, 0, 0, 0.85);
+  font-weight: bold;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  font-family: 'Hogwarts-SubTitulo', serif;
+}
+
+.maestria-tab span {
+  font-size: 0.55rem;
+  color: #ffffff;
+  text-shadow: 1px 1px 1.5px rgba(0, 0, 0, 0.9);
+  font-style: italic;
+  font-family: 'Hogwarts-Paragrafo', sans-serif;
+}
+
+.maestria-tab:hover {
+  transform: scale(1.03) translateX(4px);
+  filter: brightness(1.2) drop-shadow(0 0 6px rgba(255, 215, 122, 0.4));
+}
+
+.maestria-tab.active {
+  transform: scale(1.06) translateX(8px);
+  filter: brightness(1.35) drop-shadow(0 0 10px rgba(255, 222, 140, 0.6));
+}
+
+/* PERGAMINHO PRINCIPAL COM PROPORÇÃO ORIGINAL E ALTURA DE 150% */
+.parchment-scroll {
+  flex: 1;
+  width: 120%;
+  max-width: 600px;
+  height: 160%; 
+  background-image: radial-gradient(rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.12) 100%), url('src/ui/banner_quadrado.png');
+  background-size: 100% 100%; 
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+  
+  /* PADDING GENEROSO CONTRA CORTE: O pergaminho continua alto e cortado na tela, mas o texto flui sempre protegido */
+  padding: 8.5rem 3.8rem; 
+  
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* Rolagem completa por dentro */
+  border-image: url('src/ui/banner_titulo.png') 35 round;
+}
+
+/* Custom Scrollbar no Pergaminho Completo */
+.parchment-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.parchment-scroll::-webkit-scrollbar-track {
+  background: rgba(59, 36, 16, 0.04);
+  margin: 7.5rem 0.5rem; /* Scrollbar restrita para não encostar nas bordas rasgadas */
+}
+.parchment-scroll::-webkit-scrollbar-thumb {
+  background: #54391e;
+  border-radius: 4px;
+}
+
+/* Wrapper interno que sofre a belíssima transição GSAP */
+#parchment-inner-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.banner-container {
+  position: relative;
+  width: 100%;
+  height: 98px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.9rem;
+  flex-shrink: 0;
+}
+
+.feathered-banner {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(0.3) contrast(1.15) brightness(0.8);
+  -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 100%);
+  mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 100%);
+}
+
+.parchment-header {
+  padding-bottom: 0.8rem;
+  margin-bottom: 0.8rem;
+  flex-shrink: 0;
+}
+
+.parchment-header h1 {
+  font-size: 1.6rem;
+  color: #ffd88a;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-weight: 800;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.85);
+  text-align: center;
+  margin-bottom: 0.4rem;
+  font-family: 'Hogwarts-SubTitulo', serif;
+}
+
+.parchment-header p {
+  font-size: 0.8rem;
+  color: #ffffff;
+  font-style: italic;
+  line-height: 1.4;
+  text-align: justify;
+  font-family: 'Hogwarts-Paragrafo', sans-serif;
+}
+
+/* DIVISÓRIA PRINCIPAL ENTRE CABEÇALHO E BLOCO DE NÍVEIS */
+.main-divider {
+  display: block;
+  width: 90%;
+  max-width: 200px;
+  height: auto;
+  margin: 0.4rem auto 1.2rem auto;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+/* CONTAINER DOS NÍVEIS CEDE A ROLAGEM AO PAI (PERGAMINHO) */
+.levels-container {
+  flex: none;
+  overflow: visible; /* Deixa esticar livremente para o pergaminho rolar tudo */
+  padding-right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+@keyframes magicalMistDrift {
+  0% {
+    transform: translate(-3%, -3%) scale(1.0) rotate(0deg);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(3%, 3%) scale(1.18) rotate(3deg);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate(-3%, -3%) scale(1.0) rotate(0deg);
+    opacity: 0.6;
+  }
+}
+
+/* BLOCOS DE NÍVEL: COLUNAS DIRECIONAIS PARA EVITAR RECUO DA DESCRIÇÃO */
+.level-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  position: relative;
+  overflow: hidden; /* Essencial para manter a névoa mágica contida nos limites do quadrado */
+  
+  /* Gradiente de fundo luxuoso em preto-carbono profundo com espectro de azul místico escuro */
+  background: linear-gradient(135deg, #07092c 0%, #020517 100%);
+  
+  /* Borda sutil de ouro velho e haste lateral reluzente */
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-left: 5px solid #d4af37; /* Haste lateral dourada mais expressiva */
+  
+  border-radius: 5px;
+  padding: 1.2rem;
+  
+  /* Sombras profundas, embaçadas e místicas (Blur de Energia Azul) */
+  box-shadow: 
+    0 5px 16px rgba(0, 0, 0, 0.7),
+    0 0 18px rgba(12, 15, 80, 0.6), /* Blur mágico azul externo */
+    inset 0 0 15px rgba(212, 175, 55, 0.05);
+    
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.level-block-header {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  z-index: 2;
+  width: 100%;
+}
+
+.level-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  z-index: 2;
+}
+
+/* Camada Interna de Névoa Mágica (Drifting Fog) */
+.level-block::before {
+  content: '';
+  position: absolute;
+  width: 130%;
+  height: 130%;
+  top: -15%;
+  left: -15%;
+  background: 
+    radial-gradient(circle at 20% 25%, rgba(12, 15, 80, 0.45) 0%, transparent 45%),
+    radial-gradient(circle at 80% 75%, rgba(212, 175, 55, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255, 222, 140, 0.04) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: screen;
+  animation: magicalMistDrift 15s ease-in-out infinite alternate;
+  transition: opacity 0.4s ease;
+}
+
+/* CANTONEIRAS EM ARABESCOS GEOMÉTRICOS DOURADOS (SVG Injetados para Sofisticação Extrema) */
+.level-block-decor-tl, .level-block-decor-tr, .level-block-decor-bl, .level-block-decor-br {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  opacity: 0.65;
+  z-index: 3;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease;
+}
+
+.level-block-decor-tl {
+  top: 3px; left: 3px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d4af37' stroke-width='1.8'%3E%3Cpath d='M2 12V2h10 M6 6h6 M6 6v6 M2 2l8 8'/%3E%3Ccircle cx='2' cy='2' r='1' fill='%23d4af37'/%3E%3C/svg%3E");
+}
+.level-block-decor-tr {
+  top: 3px; right: 3px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d4af37' stroke-width='1.8'%3E%3Cpath d='M22 12V2H12 M18 6h-6 M18 6v6 M22 2l-8 8'/%3E%3Ccircle cx='22' cy='2' r='1' fill='%23d4af37'/%3E%3C/svg%3E");
+}
+.level-block-decor-bl {
+  bottom: 3px; left: 3px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d4af37' stroke-width='1.8'%3E%3Cpath d='M2 12v10h10 M6 18h6 M6 18v-6 M2 22l8-8'/%3E%3Ccircle cx='2' cy='22' r='1' fill='%23d4af37'/%3E%3C/svg%3E");
+}
+.level-block-decor-br {
+  bottom: 3px; right: 3px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d4af37' stroke-width='1.8'%3E%3Cpath d='M22 12v10H12 M18 18h-6 M18 18v-6 M22 22l-8-8'/%3E%3Ccircle cx='22' cy='22' r='1' fill='%23d4af37'/%3E%3C/svg%3E");
+}
+
+.level-block:hover {
+  /* Ativa o brilho dourado e altera levemente o comportamento no foco */
+  background: linear-gradient(135deg, #0c0f45 0%, #03061f 100%);
+  border-color: rgba(212, 175, 55, 0.7);
+  border-left-color: #ffd88a; /* Acende a haste em ouro luminoso */
+  transform: translateY(-2px);
+  
+  box-shadow: 
+    0 8px 22px rgba(0, 0, 0, 0.8),
+    0 0 24px rgba(12, 15, 80, 0.9), /* Blur azul expandido no hover */
+    inset 0 0 18px rgba(212, 175, 55, 0.08);
+}
+
+.level-block:hover::before {
+  opacity: 1;
+  animation-duration: 9s; /* Agita sutilmente o fluxo da névoa ao interagir */
+}
+
+/* Animação expansiva das cantoneiras ao aproximar o mouse */
+.level-block:hover .level-block-decor-tl { transform: translate(-2px, -2px) scale(1.1); opacity: 1; }
+.level-block:hover .level-block-decor-tr { transform: translate(2px, -2px) scale(1.1); opacity: 1; }
+.level-block:hover .level-block-decor-bl { transform: translate(-2px, 2px) scale(1.1); opacity: 1; }
+.level-block:hover .level-block-decor-br { transform: translate(2px, 2px) scale(1.1); opacity: 1; }
+
+.level-thumbnail {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2; /* Mantém os elementos estruturais acima da névoa flutuante */
+}
+
+.level-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.level-badge {
+  font-size: 0.65rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #ffd88a;
+  letter-spacing: 0.08em;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  font-family: 'Hogwarts-SubTitulo', serif;
+}
+
+.level-title {
+  font-size: 1.05rem;
+  color: #ffd88a;
+  font-weight: bold;
+  margin: 0.1rem 0 0;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+  font-family: 'Hogwarts-SubTitulo', serif;
+}
+
+/* Suporte aos blocos de textos ricos e divisores dinâmicos */
+.level-description-content {
+  font-size: 0.8rem;
+  color: #ffffff;
+  line-height: 1.45;
+  text-align: justify;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);
+  font-family: 'Hogwarts-Paragrafo', sans-serif;
+  z-index: 2;
+  width: 100%;
+}
+
+.level-description-content p {
+  margin-bottom: 0.6rem;
+}
+
+.level-description-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Divisórias Internas de Níveis na Proporção Correta */
+.magical-divider {
+  display: block;
+  background: url('src/ui/divisoria.png');
+  max-width: 120px;
+  height: auto;
+  margin: 0.8rem auto;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* Listas internas formatadas rústicas */
+.custom-level-list {
+  margin-left: 1.2rem;
+  margin-top: 0.4rem;
+  margin-bottom: 0.6rem;
+  list-style-type: square;
+}
+
+.custom-level-list li {
+  margin-bottom: 0.25rem;
+  color: #ffffff;
+  font-family: 'Hogwarts-Paragrafo', sans-serif;
+}
+
+#back-from-maestrias {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  width: 4rem;
+  height: 4rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 100;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+#back-from-maestrias:hover {
+  transform: translateY(-50%) scale(1.1);
+  filter: brightness(1.25);
+}
+
+#back-from-maestrias::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('src/ui/banner-seta.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 145%;
+  z-index: 1;
+}
+
+#back-from-maestrias::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('src/ui/seta-aponta-direita.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50%;
+  z-index: 2;
+}
+
+/* BANNER DE CANTO SUPERIOR DIREITO - AUMENTADO EM 40% */
+.hanging-banner {
+  position: absolute;
+  right: 130px; /* Ajustado para afastar pelo menos 100px da borda extrema direita */
+  top: 1.5rem;
+  width: 260px; /* Aumentado proporcionalmente de 185px (aproximadamente +40%) */
+  height: 380px; /* Aumentado proporcionalmente de 270px (aproximadamente +40%) */
+  background: url('src/ui/Banner_bandeira.png') no-repeat center center;
+  background-size: 100% 100%;
+  z-index: 25;
+  padding: 4.5rem 1.6rem 1.6rem 1.6rem; /* Ajuste interno proporcional para não encavalar com o topo */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.55);
+  border-radius: 0 0 6px 6px;
+  animation: bannerSway 6s ease-in-out infinite; /* Sutil animação de balanço ao vento */
+  transform-origin: top center;
+}
+
+@keyframes bannerSway {
+  0%, 100% { transform: rotate(0.4deg); }
+  50% { transform: rotate(-0.4deg); }
+}
+
+.hanging-banner h2 {
+  font-size: 1.25rem; /* Ajustado proporcionalmente de 0.95rem */
+  color: #ffd88a;
+  text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.95);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  font-family: 'Hogwarts-SubTitulo', serif;
+}
+
+.hanging-banner p {
+  font-size: 0.8rem; /* Ajustado proporcionalmente de 0.62rem */
+  color: #ffffff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+  line-height: 1.45;
+  font-style: italic;
+  font-family: 'Hogwarts-Paragrafo', sans-serif;
+}
+
+/* RESPONSIVIDADE ADAPTATIVA */
+@media (max-width: 1024px) {
+  .maestrias-wrapper {
+    flex-direction: column;
+    height: auto;
+    max-height: calc(100vh - 2rem);
+    gap: 1rem;
+    padding-right: 0; /* Desfaz o deslocamento em telas menores */
+  }
+  .maestrias-sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex: none;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .maestria-tab {
+    min-height: 52px;
+    padding: 0.4rem 0.8rem;
+    flex: 1 1 150px;
+  }
+  .maestria-tab:hover {
+    transform: translateY(-2px);
+  }
+  .maestria-tab.active {
+    transform: translateY(-4px);
+  }
+  .parchment-scroll {
+    max-width: 100%;
+    padding: 4.5rem 2rem; /* Margem menor em telas reduzidas */
+  }
+  .hanging-banner {
+    display: none; /* Oculta a bandeira flutuante em tablets/mobiles para preservar espaço útil */
+  }
+}
+</style>
+
+<div class="maestrias-page">
+  <!-- BANNER DE DESTAQUE SUPERIOR DIREITO (FÉ DA TEXTURA) -->
+  <div class="hanging-banner">
+    <h2>Maestrias</h2>
+    <p>Todo bruxo possui uma área de proficiência natural escolhida desde a criação do personagem: a MAESTRIA. A evolução ocorre organicamente através de aulas, atividades práticas da área de foco e uso de PMs, seguindo uma progressão de sete níveis. Avançar nessas etapas libera habilidades especiais e feitiços exclusivos, evoluindo e desenvolvendo o repertório mágico de todos os jogadores.</p>
+  </div>
+
+  <div class="maestrias-wrapper">
+    
+    <!-- MENU DE SELEÇÃO DE MAESTRIAS (6 BOTÕES) -->
+    <nav class="maestrias-sidebar" aria-label="Menu de Seleção de Maestrias">
+      <button class="maestria-tab active" data-maestria="defesa">
+        <h3>Defesa Contra as Trevas</h3>
+        <span>Combates, Proteção e Reação.</span>
+      </button>
+      <button class="maestria-tab" data-maestria="feitiços">
+        <h3>Feitiços</h3>
+        <span>Utilidade e Encantamentos.</span>
+      </button>
+      <button class="maestria-tab" data-maestria="herbologia">
+        <h3>Herbologia</h3>
+        <span>Flora Oculta e Controle.</span>
+      </button>
+      <button class="maestria-tab" data-maestria="medibruxaria">
+        <h3>Medibruxaria</h3>
+        <span>Cura, Suporte e Vigor</span>
+      </button>
+      <button class="maestria-tab" data-maestria="pocoes">
+        <h3>Poções</h3>
+        <span>Alquimia e Preparos.</span>
+      </button>
+      <button class="maestria-tab" data-maestria="transfiguracao">
+        <h3>Transfiguração</h3>
+        <span>Modelagem de Matéria.</span>
+      </button>
+    </nav>
+
+    <!-- ÁREA DO PERGAMINHO REATIVO -->
+    <main class="parchment-scroll">
+      <!-- Container interno que sofre a belíssima transição GSAP -->
+      <div id="parchment-inner-wrapper">
+      
+        <!-- Banner com Borda Esfumaçada -->
+        <div class="banner-container">
+          <img id="maestria-display-banner" class="feathered-banner" src="" alt="Banner Ilustrativo">
+        </div>
+
+        <div class="parchment-header">
+          <h1 id="maestria-display-title">Alquimia Elementar</h1>
+          <p id="maestria-display-desc">Aguardando dados rúnicos...</p>
+        </div>
+
+        <!-- DIVISÓRIA PRINCIPAL PARA SEPARAR OS CABEÇALHOS DOS NÍVEIS -->
+        <img src="src/ui/divisoria.png" class="main-divider" alt="Divisor Rúnico Principal" />
+
+        <!-- Espaço de Inserção dos 7 Níveis Complexos -->
+        <div class="levels-container" id="levels-display-container">
+          <!-- Injetado via Javascript do index.html -->
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <button id="back-from-maestrias" aria-label="Voltar para a seleção principal"></button>
+</div>
