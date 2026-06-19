@@ -61,7 +61,7 @@ def main():
             
             # Tentar abrir o navegador automaticamente (opcional)
             try:
-                webbrowser.open(f"http://localhost:{PORT}/ficha.html")
+                webbrowser.open(f"http://localhost:{PORT}/index.html")
                 print("🌐 Abrindo navegador...")
             except:
                 pass

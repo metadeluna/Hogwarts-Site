@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vantagens — Hogwarts</title>
+    <!-- Tailwind CSS para estruturação responsiva básica -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP para animações mágicas de transição -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+            font-family: 'Georgia', serif;
+        }
+
+        /* =========================================================================
+           FONTES PERSONALIZADAS COM FALLBACK SEGURO
+           ========================================================================= */
+        @font-face {
+            font-family: 'Hogwarts-Titulo';
+            src: url('src/fonts/CitadelofBlackrose.ttf') format('truetype'); 
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Hogwarts-Paragrafo'; 
+            src: url('src/fonts/Philosopher-Regular.ttf') format('truetype'); 
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Hogwarts-SubTitulo'; 
+            src: url('src/fonts/OPTIColumna-Solid.otf') format('truetype'); 
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .hogwarts-title {
+            font-family: 'Hogwarts-Titulo', 'Georgia', serif;
+        }
+
+        .hogwarts-subtitle {
+            font-family: 'Hogwarts-SubTitulo', 'Times New Roman', serif;
+            letter-spacing: 2px;
+        }
+
+        .hogwarts-paragraph {
+            font-family: 'Hogwarts-Paragrafo', 'Georgia', serif;
+        }
+
+        /* =========================================================================
+           CENA PRINCIPAL E REVESTIMENTO
+           ========================================================================= */
+        #scene {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .layer,
+        .gifs,
+        .logo,
+        .scroll-area {
+            position: absolute;
+        }
+
+        .background {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            left: 0;
+            top: 0;
+            object-position: center center;
+            z-index: 1;
+        }
+
+        .gifs {
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* =========================================================================
+           STREAMING_CHUNK:Styling the hanging banner and back button...
+           BANDEIRA FLUTUANTE DE CABEÇALHO (CANTO SUPERIOR ESQUERDO)
+           ========================================================================= */
+        .hanging-banner {
+            position: absolute;
+            left: 2vw; /* Posicionado no canto superior esquerdo */
+            top: 1.5rem;
+            width: 260px;
+            height: 320px; /* Reduzido para evitar qualquer tipo de colisão com o botão de voltar */
+            background: url('src/ui/Banner_bandeira.png') no-repeat center center;
+            background-size: 100% 100%;
+            z-index: 25;
+            padding: 4.2rem 1.6rem 1.6rem 1.6rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-radius: 0 0 6px 6px;
+            animation: bannerSway 6s ease-in-out infinite;
+            transform-origin: top center;
+        }
+
+        @keyframes bannerSway {
+            0%, 100% { transform: rotate(0.4deg); }
+            50% { transform: rotate(-0.4deg); }
+        }
+
+        .hanging-banner h2 {
+            font-size: 1.25rem;
+            color: #ffd88a;
+            text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.95);
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+            font-family: 'Hogwarts-SubTitulo', serif;
+        }
+
+        .hanging-banner p {
+            font-size: 0.8rem;
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+            line-height: 1.45;
+            font-style: italic;
+            font-family: 'Hogwarts-Paragrafo', sans-serif;
+        }
+
+        /* BOTÃO DE VOLTAR - AMPLIADO E CENTRALIZADO NO MEIO VERTICAL ESQUERDO */
+        #back-from-maestrias {
+            position: absolute;
+            left: 2vw;
+            top: 60%; /* Centralizado perfeitamente no meio vertical da tela */
+            transform: translateY(-50%) rotate(180deg); /* Mantém rotação de volta e centralização */
+            width: 5.2rem; /* Ampliado a pedido */
+            height: 5.2rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.25s ease;
+        }
+
+        #back-from-maestrias:hover {
+            transform: translateY(-50%) rotate(180deg) scale(1.12); /* Preserva a centralização vertical no hover */
+            filter: brightness(1.25);
+        }
+
+        #back-from-maestrias::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('src/ui/banner-seta.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 145%;
+            z-index: 1;
+        }
+
+        #back-from-maestrias::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('src/ui/seta-aponta-direita.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 50%;
+            z-index: 2;
+        }
+
+        /* =========================================================================
+           STREAMING_CHUNK:Styling the sidebar menu and active transitions...
+           MENU VERTICAL DE SELEÇÃO DE HABILIDADES (ESQUERDA - AJUSTADO E CORRIGIDO)
+           ========================================================================= */
+        .habilidades-sidebar {
+            position: absolute;
+            left: 24%; /* Mantém perto do pergaminho */
+            top: 11vh;
+            width: 20vw;
+            height: 75vh;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            justify-content: space-between;
+            overflow: visible; /* Mantém visible para evitar cortes na lateral dos botões */
+            padding-left: 20px; /* Buffer de segurança para os efeitos de escala */
+            z-index: 15;
+        }
+
+        /* Botão principal */
+        .maestria-tab {
+            position: relative;
+            width: 100%;
+            flex: 1;
+            max-height: 52px;
+            background: url('src/ui/banner-titulo.png') no-repeat center center !important;
+            background-size: 100% 100% !important;
+            background-color: transparent !important; 
+            border: none !important;
+            padding: 0.2rem 1.2rem;
+            color: #f7e6ca;
+            text-align: center;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform-origin: left center; /* O alinhamento e ancoragem partem da esquerda */
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+        }
+
+        .maestria-tab h3 {
+            font-size: 0.72rem;
+            color: #ffd88a;
+            text-shadow: 1px 1.5px 2px rgba(0, 0, 0, 0.95);
+            font-weight: bold;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            line-height: 1.1;
+            font-family: 'Hogwarts-SubTitulo', serif;
+        }
+
+        .maestria-tab span {
+            font-size: 0.52rem;
+            color: #ffffff;
+            opacity: 0.8;
+            text-shadow: 1px 1px 1.5px rgba(0, 0, 0, 0.95);
+            font-style: italic;
+            font-family: 'Hogwarts-Paragrafo', sans-serif;
+            margin-top: 1px;
+            white-space: nowrap;
+        }
+
+        /* Efeito hover apenas nos inativos */
+        .maestria-tab:hover:not(.active) {
+            transform: scale(1.02) translateX(8px); /* Sutil avanço para a direita */
+            filter: brightness(1.2) drop-shadow(0 0 6px rgba(255, 215, 122, 0.35));
+        }
+
+        /* Alinhamento acentuado para a direita na seleção (Ativo) */
+        .maestria-tab.active {
+            transform: scale(1.04) translateX(22px); /* Deslocamento proeminente para a direita */
+            filter: brightness(1.35) drop-shadow(0 0 10px rgba(255, 222, 140, 0.6));
+        }
+
+        /* =========================================================================
+           STREAMING_CHUNK:Styling the parchment container and typography...
+           PERGAMINHO & ÁREA DE CONTEÚDO (DIREITA)
+           ========================================================================= */
+        .pergaminho {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            object-position: center center;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        .scroll-area {
+            z-index: 6;
+            left: 53.5%;
+            top: 10vh;
+            width: 26.5vw;
+            height: 76vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 15px;
+            scrollbar-gutter: stable;
+        }
+
+        .scroll-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scroll-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .scroll-area::-webkit-scrollbar-thumb {
+            background: #8e6c43;
+            border-radius: 10px;
+            border: 2px solid transparent;
+        }
+
+        /* Fontes envelhecidas e escurecidas de alta leitura em pergaminho (Escurecidas ao limite para contraste) */
+        .content {
+            width: 100%;
+            height: auto;
+            padding: 5px 10px 50px 10px;
+            color: #120802; /* Marrom-café quase preto, legibilidade extrema */
+            font-size: clamp(12px, 1.05vw, 16px);
+            line-height: 1.55;
+            text-align: justify;
+        }
+
+        /* =========================================================================
+           ESTILIZAÇÃO DE ARTIGO DE HABILIDADE (INSPIRADO EM image_20acc3.png)
+           ========================================================================= */
+        .skill-header {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .skill-number {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: clamp(3.2rem, 4.2vw, 5.5rem);
+            font-style: italic;
+            font-weight: 900;
+            color: #120802;
+            line-height: 0.8;
+            display: inline-block;
+            margin-right: 8px;
+            letter-spacing: -2px;
+        }
+
+        .skill-title {
+            font-family: 'Hogwarts-SubTitulo', 'Georgia', serif;
+            font-size: clamp(1.4rem, 1.8vw, 2.3rem);
+            font-weight: bold;
+            color: #120802;
+            text-transform: uppercase;
+            display: inline;
+            vertical-align: middle;
+            line-height: 0.95;
+            letter-spacing: 0.5px;
+        }
+
+        .skill-restriction {
+            display: block;
+            font-family: 'Georgia', serif;
+            font-size: clamp(0.65rem, 0.75vw, 0.9rem);
+            font-weight: bold;
+            color: #3b200e;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 4px;
+            margin-left: 2px;
+            border-bottom: 1px solid rgba(40, 22, 8, 0.35);
+            padding-bottom: 8px;
+        }
+
+        .skill-banner-container {
+            width: 100%;
+            border-radius: 0px;
+            overflow: hidden;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 3px 6px rgba(0,0,0,0.15);
+            margin: 1.2rem 0;
+            background: #201711;
+        }
+
+        .skill-banner-img {
+            width: 100%;
+            height: auto;
+            max-height: 180px;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(0.2) sepia(0.2) contrast(1.1);
+        }
+
+        .drop-cap {
+            float: left;
+            font-family: 'Georgia', serif;
+            font-size: clamp(3.8rem, 4.8vw, 5.8rem);
+            line-height: 0.75;
+            padding-top: 6px;
+            padding-right: 12px;
+            padding-left: 2px;
+            color: #241906;
+            font-weight: bold;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.25);
+        }
+
+        .skill-body-text {
+            font-family: 'Hogwarts-Paragrafo', 'Georgia', serif;
+            margin-bottom: 1.8rem;
+            color: #1e0e03;
+            clear: none;
+        }
+
+        .magical-divider {
+            width: 80%;
+            max-width: 220px;
+            height: auto;
+            margin: 1rem auto;
+            display: block;
+        }
+
+        /* =========================================================================
+           STREAMING_CHUNK:Styling level cards and parchment elements...
+           ESTILO DOS CARDS DE NÍVEIS DE HABILIDADE (LIVRES DE DESALINHAMENTO POR JUSTIFY)
+           ========================================================================= */
+        .levels-section-title {
+            font-family: 'Hogwarts-SubTitulo', serif;
+            font-size: 1.15rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #3b200e;
+            text-align: center;
+            margin-bottom: 1.2rem;
+            border-bottom: 2px double rgba(40, 22, 8, 0.45);
+            padding-bottom: 6px;
+        }
+
+        .level-card {
+            background: rgba(246, 237, 219, 0.65);
+            border: 1px solid rgba(92, 65, 46, 0.45);
+            border-radius: 6px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            text-align: left !important; /* CRÍTICO: Previne justificação herdada de .content! */
+        }
+
+        .level-card:hover {
+            background: rgba(246, 237, 219, 0.9);
+            border-color: rgba(92, 65, 46, 0.75);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(92, 65, 46, 0.2);
+        }
+
+        /* HEADER DOS CARDS EXCLUSIVO EM DUAS COLUNAS */
+        .level-card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 0.8rem;
+            text-align: left !important;
+        }
+
+        /* ALGARISMO ROMANO ELEGANTE E GIGANTE */
+        .roman-number {
+            font-family: 'Georgia', 'Times New Roman', Times, serif;
+            font-size: clamp(2.2rem, 2.5vw, 3rem);
+            font-weight: 800;
+            font-style: italic;
+            color: #b38530; /* Dourado medieval */
+            line-height: 0.9;
+            min-width: 48px;
+            text-align: center !important;
+            border-right: 2px solid rgba(92, 65, 46, 0.25);
+            padding-right: 12px;
+            margin-right: 4px;
+            display: inline-block;
+            flex-shrink: 0;
+            user-select: none;
+        }
+
+        .level-header-title-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: left !important;
+        }
+
+        /* Subtítulo discreto acima do título */
+        .level-tier-subtitle {
+            font-family: 'Hogwarts-SubTitulo', sans-serif;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            color: #5c412e;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 1px;
+            font-weight: bold;
+        }
+
+        .level-title {
+            font-family: 'Hogwarts-SubTitulo', serif;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #120802;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin: 0;
+            letter-spacing: 0.5px;
+            text-align: left !important;
+        }
+
+        /* Suporte para múltiplos parágrafos dentro da descrição do nível */
+        .level-desc-p {
+            font-family: 'Hogwarts-Paragrafo', 'Georgia', serif;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #1f0f04;
+            margin-bottom: 0.6rem;
+            text-align: left !important; /* CRÍTICO: Ragged-right para colunas estreitas é muito mais elegante e evita gaps */
+        }
+
+        .level-desc-p:last-child {
+            margin-bottom: 0;
+        }
+
+        .level-card.special-tier {
+            border-left: 4px solid #b38530;
+            background: rgba(253, 246, 228, 0.95);
+        }
+
+        .pergaminho-footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(92, 65, 46, 0.9);
+            margin-top: 3rem;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="scene">
+        <!-- BANDEIRA FLUTUANTE DE DETALHES (CABEÇALHO) -->
+        <div class="hanging-banner">
+            <h2>Vantagens</h2>
+            <p>As vantagens oferecem novas perspectivas e caminhos para o seu personagem. Diferente de habilidades ou aptidões técnicas, elas representam seu status e prestígio social no mundo bruxo, refletindo sua posição e influência na sociedade.</p>
+        </div>
+
+        <!-- BOTÃO VOLTAR PERSONALIZADO (#back-from-maestrias) -->
+        <button id="back-from-maestrias" onclick="window.location.href='index.html'" aria-label="Voltar para o menu principal de Hogwarts"></button>
+
+        <!-- FUNDO INTEGRADO AO RPG -->
+        <img src="src/background.png" class="layer background" alt="Cenário do Salão Comunal" onerror="this.src='https://placehold.co/1920x1080/1a120b/d4a359?text=Salao+Comunal+Hogwarts'">
+
+        <div class="gifs"></div>
+
+        <!-- MENU VERTICAL DE SELEÇÃO DE HABILIDADES (ESQUERDA) -->
+        <nav class="habilidades-sidebar" aria-label="Menu de Seleção de Habilidades">
+            <button class="maestria-tab active" data-skill-id="01">
+                <h3>Patronagem de Familiar Mágico</h3>
+                <span></span>
+            </button>
+            <button class="maestria-tab" data-skill-id="02">
+                <h3>Riqueza</h3>
+                <span></span>
+            </button>
+            <button class="maestria-tab" data-skill-id="03">
+                <h3>Reconhecimento</h3>
+                <span></span>
+            </button>
+        
+        </nav>
+
+        <!-- PERGAMINHO DE CONTEÚDO (DIREITA) -->
+        <img src="src/pergaminho.png" class="layer pergaminho" alt="Pergaminho Fundo" onerror="this.src='https://placehold.co/1920x1080/faf2db/ffffff?text=Pergaminho+Fundo'">
+
+        <!-- ÁREA DE ROLAGEM INTERNA DO PERGAMINHO -->
+        <div class="scroll-area" id="parchment-scroll-area">
+            <div class="content" id="skills-container">
+                <!-- Injetado dinamicamente via JavaScript -->
+            </div>
+        </div>
+
+        <!-- VITROLA MUSICAL -->
+        <div class="vitrola" role="button" aria-label="Tocar vitrola clássica de Hogwarts">
+            <img src="src/vitrola.png" class="vitrola-img" alt="Vitrola Vintage" onerror="this.src='https://placehold.co/150x150/d4a359/000000?text=Vitrola'">
+        </div>
+        <button class="vitrola-next site-arrow-button" aria-label="Passar para próxima música do vinil"></button>
+        <audio id="vinyl-audio" src="src/hogsmeade.mp3" preload="auto"></audio>
+    </div>
+
+    <script>
+        // =========================================================================
+        // BANCO DE DADOS DE 9 HABILIDADES COMPLETO E DETALHADO DO RPG
+        // =========================================================================
+        const habilidadesDatabase = {
+            "01": {
+                id: "01",
+                title: "PATRONAGEM DE FAMILIAR MÁGICO",
+                restriction: "RESTRITO POR FORMULÁRIO",
+                bannerUrl: "https://i.imgur.com/KjNpmug.jpg", 
+                dropCap: "M",
+                desc: " uitos bruxos possuem seus próprios mascotes e familiares desde a sua entrada em Hogwarts, já que isso é requisitado na carta de admissão da escola. Apenas corujas, gatos ou sapos são permitidos durante o primeiro ano. Embora a Escola de Magia e Bruxaria de Hogwarts prefira centrar o cuidado com animais mágicos apenas nas aulas de Trato das Criaturas Mágicas, a partir do terceiro ano, alguns estudantes decidem ultrapassar essa barreira e passam a domesticar, dentro do castelo, suas próprias criaturas mágicas como companhia para toda a vida escolar e adulta.",
+                levels: [
+                    { tier: "Nível I", name: "Animal Mágico", desc: "Mecanicamente, o personagem só poderá adquirir via Mercado Mágico (por compra) estas criaturas listadas abaixo. No entanto, durante o roleplay, é possível a domestificação de outros animais. \n\n <strong>Agoureiro, Amasso, Briba, Claberto, Crupe, Dedo-Duro, Diabinho, Diabrete, Dilátex, Fada, Fiuum, Gnomo, Hinkypunk, Lesmalenta, Leprechaun, Oraqui-Oralá, Ouriço, Pocotó, Pufoso, Tronquilho.</strong>" },
+
+                ]
+            },
+            "02": {
+                id: "02",
+                title: "RIQUEZA",
+                restriction: "RESTRITO POR FORMULÁRIO",
+                bannerUrl: "https://i.imgur.com/lc6tKBe.jpg", 
+                dropCap: "E",
+                desc: " xistem diferentes motivos pelos quais uma família bruxa se torna abastada: desde a sorte em loterias ou até a fundação de um negócio de sucesso e renome. No entanto, na maior parte dos casos, a riqueza provém de fortunas herdadas de antepassados. Apesar da rigidez e do controle estrito do Banco Gringotts, a inflação mágica não segue os mesmos parâmetros do mundo trouxa. Ainda assim, as falhas do sistema econômico geram uma profunda desigualdade entre as famílias do Reino Unido. Isso, automaticamente, cria um certo status para os bruxos que portam grandes riquezas — principalmente em Hogwarts, um ambiente escolar onde as aparências e a influência contam desde cedo. \n\n Um bruxo de família rica desfruta de privilégios que vão além do ouro em espécie. Em Hogwarts, isso se traduz em equipamentos de alta qualidade e primeira mão (como caldeirões superiores ou vassouras de última geração), acesso facilitado a ingredientes e materiais raros, e maior facilidade para influenciar ou subornar outros estudantes para alcançar seus próprios interesses.",
+                levels: [
+                    { tier: "Nível I", name: "Riqueza", desc: "<strong>Mecanicamente, os personagens de famílias bruxas que adquirirem esta vantagem receberão, todos os dias, uma renda de galeões significativamente superior à das famílias mais desafortunadas.</strong>" },
+
+                ]
+            },
+            "03": {
+                id: "03",
+                title: "RECONHECIMENTO",
+                restriction: "RESTRITO POR FORMULÁRIO",
+                bannerUrl: "https://i.imgur.com/vZdGivV.jpg",
+                dropCap: "U",
+                desc: " m testemunho do prestígio e fama alcançados por certos bruxos e famílias que deixaram uma marca duradoura na sociedade bruxa, tanto em âmbito local quanto global. Seus feitos notáveis capturaram a atenção e o respeito da comunidade bruxa, conferindo-lhes uma posição de destaque e influência não só na sociedade bruxa, como também em Hogwarts. Aqueles agraciados com o reconhecimento têm a vantagem prática de uma rede extensa de contatos e aliados, abrindo portas para oportunidades excepcionais. Eles podem receber convites para eventos exclusivos, como bailes e festivais mágicos, onde têm a chance de interagir com personalidades importantes e aprender com os bruxos mais renomados. personagens ou famílias com reconhecimento podem desfrutar de benefícios sociais, como tratamento preferencial em estabelecimentos mágicos, respeito e admiração de outros bruxos, e até mesmo a oportunidade de influenciar decisões e políticas em determinados círculos. Sua reputação pode abrir portas para posições de liderança, convites para participar de missões especiais e até mesmo concessões de privilégios especiais em Hogwarts.",
+                levels: [
+            
+                ]
+            },
+            "04": {
+                id: "04",
+                title: "MEIO-GIGANTE",
+                restriction: "RESTRITO POR FORMULÁRIO",
+                bannerUrl: "https://i.imgur.com/jiXO3lK.jpg",
+                dropCap: "G",
+                desc: " igantes são criaturas relativamente comuns no mundo bruxo. Seus corpos são enormes, desproporcionais e geralmente possuem uma força e resistência fora da curva, ironicamente proporcionais à sua aparência física. Os Gigantes, além de serem conhecidos por seus feitos braçais, são tidos como monstros pelos governos bruxos ao redor do mundo, reduzidos somente à sua capacidade intelectual por vezes extremamente limitada. No entanto, são capazes de comunicar-se através de uma linguagem própria e, quando confortáveis, falam algumas palavras inteligíveis em inglês. \n\n Quando um bruxo consegue se relacionar com um Gigante, seus filhos irão deter uma parcela significativa deste sangue. Em todas as sociedades bruxas, estes mestiços são chamados de meio-gigantes, bruxos normais que possuem características marcantes dos gigantes comuns, como força e resistência incríveis. Ainda que sejam parte gigante, herdam a inteligência e comunicação bruxa, os tornando perfeitamente aptos a conviverem com outros bruxos. \n\n Ainda sim, a existência de meio-gigantes na Sociedade Bruxa é vista com grande receio, muito por serem um povo marginalizado pelos ministérios da magia.",
+                levels: [
+                    { tier: "Nível I", name: "Herança Gigântica", desc: "A primeira geração é extremamente simples: herdam basicamente todos os traços gigantescos por parte da mãe (ou pai), como a força e o tamanho incríveis. Parte deste sangue permite com que sua pele seja resistente a lampejos impactantes, manifestando-se relativamente cedo em sua vida. Esta característica notável dá aos meio-gigantes um grande potencial para duelos." },
+                    { tier: "Nível II", name: "Primeiro Ano", desc: "Iniciando seus estudos em Hogwarts, você é claramente maior do que grande parte dos outros da mesma idade. Seu interesse em aprender magia é claramente visto com bons olhos e você até acaba por criar afinidade com uma das matérias principais de Hogwarts, Feitiços. Sua capacidade de executá-los com a varinha é exemplar, ainda que você se sinta inseguro por conta de ser um meio-gigante. Nos primeiros meses, você também percebe que sua pele é levemente resistente a lampejos, porém não o suficiente para parar um impacto causado por outro feitiço." },
+                    { tier: "Nível III", name: "Terceiro Ano", desc: "Assim que os anos se passam e você evolui suas aptidões mágicas, você percebe que seu esforço foi recompensado. Vários alunos duelistas de Hogwarts querem a sua presença no clube graças à sua resistência a lampejos, acreditando que você possa contribuir positivamente para a sua casa ganhar a taça. A partir daqui, sua pele começa a se tornar um pouco mais rígida com relação a impactos mágicos, resistindo a um feitiço impactante antes de ser jogado para fora do tablado ou área delimitada. Para além disso, seu novo foco acaba por se tornar feitiços exclusivamente ofensivos, algo que chama a atenção dos seus professores positivamente dada a dificuldade de executar alguns deles." },
+                    { tier: "Nível IV", name: "Quinto Ano", desc: "Nas férias de verão você foi chamado por diversos jornais bruxos para escrever artigos sobre duelos e feitiços, tendo grande respaldo em sua pesquisa acadêmica graças aos seus professores. Em Hogwarts, você é tido como um gênio em magia marcial e os professores acabam permitindo com que você estude e execute feitiços impactantes do ano seguinte livremente. Sua pele de gigante também acaba por se tornar mais resistente ainda e agora os duelistas precisam atingir dois impactantes para te imobilizar. Contudo, isso te torna muito mais sensível a feitiços que possuem efeitos próprios, como elementais e azarações. Ainda sim, você acredita que o tempo no tablado seja o suficiente para ganhar um duelo, seja ele fácil ou não." }
+                ]
+            },
+            "05": {
+                id: "05",
+                title: "MALEDICTUS",
+                restriction: "RESTRITO POR FORMULÁRIO",
+                bannerUrl: "https://i.imgur.com/pLaOoQB.jpg",
+                dropCap: "",
+                desc: " ",
+                levels: [
+                    { tier: "Nível I", name: "A Maldição", desc: " " },
+                    { tier: "Nível I", name: "Primeiro Ano", desc: " " },
+                    { tier: "Nível I", name: "Terceiro Ano", desc: " " },
+                    { tier: "Nível I", name: "Quinto Ano", desc: " " },
+                ]
+            },
+            "06": {
+                id: "06",
+                title: "VAMPIRISMO CONGÊNITO",
+                restriction: "RESTRITO POR FORMULÁRIO",
+                bannerUrl: "https://i.imgur.com/0uAKten.jpg",
+                dropCap: "O",
+                desc: " Vampirismo pode ser considerado uma condição mágica maligna, geralmente passada de forma congênita, ou voluntária, pelos vampiros, criaturas que possuem um longo histórico de repressão por todo o mundo bruxo. Para alguns membros da alta sociedade, vampiros como Carmilla Sanguina, conhecida por banhar-se no sangue de suas vítimas, são um motivo mais do que suficiente para respaldar sua completa remoção da sociedade. No entanto, o que os impede de serem completamente marginalizados são os esforços de outros grupos mágicos que, entendendo que são incompreendidos, criaram um movimento para a preservação de sua cultura e identidade, chamado de Sociedade pela Tolerância dos Vampiros. \n\n Algo que muito colaborou para demonstrar que nem todos vampiros são ruins foi a publicação do livro O Monólogo de um Vampiro, por Amarillo Lestoat — que o escreveu de uma forma tão densa ao ponto de deixar os leitores cansados e assim beber seu sangue de forma indolor. \n\n Ainda sim há outra possível especulação para a origem dos vampiros, que muito colabora com a “inocência” deles, relacionada aos Sasabonsams, uma criatura mágica originada da África conhecida por chupar o sangue de outros bruxos ao ponto de enfraquecê-los. Uma característica marcante destas criaturas, e que muito se relaciona à fome dos vampiros, são o seu frenesi ao ver sangue, seja em poucas ou grandes quantidades. Incidentes com Sasabonsams são amplamente documentados por acadêmicos vindos de Uagadou. \n\n Vampiros são estritamente proibidos de estudar em Hogwarts devido aos seus comportamentos, porém seus descendentes são permitidos na escola. Geralmente, após se formarem, conseguem destaque em suas carreiras, e um grande exemplo disso é Lorcan d’Eath, bruxo infectado com vampirismo, responsável pela letra e composição de “Necks For You”, que foi e ainda é um dos grandes sucessos magimusicais. Já Lestat d’Eath foi um bruxo pouco conhecido se comparado ao seu irmão, porém o que realmente o fez ser lembrado foram suas façanhas enquanto estudava em Hogwarts, dando muito o que falar.",
+                levels: [
+                    { tier: "Nível I", name: "Herança das Sombras", desc: "Embora seja classificada e amplamente conhecida como uma doença mágica graças aos Sasabonsams, o vampirismo tem charmes e peculiaridades que tornam o bruxo infectado ser distinguível entre os demais. Na primeira geração, os filhos herdam as características de sua parte vampiresca: presas, a pele pálida e a sede por sangue; ainda que este último seja muito menor se comparada aos seus genitores. Seus feitos mágicos incluem a capacidade de se mesclar com as sombras e poderem se mover mais rápido do que o normal para um bruxo." },
+                    { tier: "Nível I", name: "Primeiro Ano", desc: "Como descendente de vampiros, a primeira coisa que começam a falar de você é sobre o tamanho das suas presas. Grandes, saltitam para fora, e você gagueja um pouco pra falar devido à dificuldade de abrir sua boca por completo sem assustar ninguém. Você também está longe de ser bonitão como outros bruxos que compartilham das mesmas condições. No entanto, conforme o tempo passa em Hogwarts, você descobre que possui grandes habilidades no que diz respeito à execução de Azarações, o que lhe rende uma fama não-muito-agradável à primeira vista. Sua velocidade ainda parece muito com a de um bruxo comum e vai contra o que seus pais lhe disseram. Durante a noite, porém, você é muito mais silencioso, sendo difícil de te escutar quando o breu toma conta do castelo." },
+                    { tier: "Nível I", name: "Terceiro Ano", desc: "Dois anos são suficientes para você começar a se adaptar à forma como suas habilidades funcionam. Sua aparência, antes desagradável, começa a se ajeitar um pouco mais: as presas finalmente conseguem se retrair e você não gagueja mais, nem mesmo tem medo de expressar-se da maneira que achar adequado. No entanto, outro problema acaba por surgir na hora de se alimentar. Toda vez que você come alguma coisa com alho, suas habilidades se enfraquecem, chegando ao ponto de afetar sua consciência, te tornando sedento e hipersensível à luz, fazendo com que atividades ao ar livre, como o Quadribol, sejam impraticáveis. \n\n As habilidades noturnas também se tornam mais difíceis de se lidar. Sua mescla com as sombras se torna cada vez mais poderosa, permitindo que você fique praticamente invisível desde que não haja um foco direto de luz sobre o seu corpo. Qualquer sombra faz com que sua velocidade seja aumentada e quanto mais escuro um lugar estiver, mais rápido você se locomove [três quadrados], o que pode ser visto como um problema em certas situações." },
+                    { tier: "Nível I", name: "Quinto Ano", desc: "No último estágio do vampirismo, você finalmente chega ao seu ápice. Você se move um pouco mais rápido quando está dentro de um lugar escuro [quatro quadrados] e a sua beleza o torna motivo de admiração. Sua sensibilidade à luz é reduzida, permitindo com que você realize atividades ao ar livre sem restrições, desde que não olhe diretamente para o Sol ou fique exposto por muito tempo em um mesmo lugar. A sua sede de sangue também é drasticamente reduzida nestes casos, podendo ser aplacada com um pirulito de sangue. \n\n Ao contrário de alguns alunos de Hogwarts que miraculosamente possuem carreiras acadêmicas de destaque, você não possui nenhum foco aparente que não sejam as azarações. Entretanto, isso é o suficiente para você se aprofundar em ramos mais sombrios da magia. Da mesma forma que as azarações são consideradas magia das trevas de grau menor e uma espécie de portão para níveis avançados, você acaba por adquirir gosto e prática pela Arte das Trevas, lhe permitindo executar feitiços sombrios de segundo ano." },
+                ]
+            },
+
+
+        };
+
+        // =========================================================================
+        // MOTORES DE ATUALIZAÇÃO DO PARCHMENT (GSAP INTEGRADO)
+        // =========================================================================
+        const parchmentScrollArea = document.getElementById('parchment-scroll-area');
+        const skillsContainer = document.getElementById('skills-container');
+
+        function updateParchment(skillId) {
+            const skill = habilidadesDatabase[skillId];
+            if (!skill) return;
+
+            // Transição elegante: esmaecimento e deslocamento suave
+            gsap.to(skillsContainer, {
+                opacity: 0,
+                y: 15,
+                duration: 0.22,
+                ease: "power2.in",
+                onComplete: () => {
+                    // Monta a estrutura da habilidade baseada em image_20acc3.png
+                    let levelsHTML = '';
+                    skill.levels.forEach(lvl => {
+                        const isSpecial = lvl.special ? 'special-tier' : '';
+                        
+                        // Extração do algarismo romano do tier (ex: "Nível II" -> "II")
+                        const romanNum = lvl.tier.replace("Nível ", "").trim();
+
+                        // Processamento dinâmico de múltiplos parágrafos usando \n
+                        const paragraphsHTML = lvl.desc
+                            .split('\n')
+                            .filter(p => p.trim() !== '')
+                            .map(p => `<p class="level-desc-p">${p.trim()}</p>`)
+                            .join('');
+
+                        levelsHTML += `
+                            <div class="level-card ${isSpecial}">
+                                <div class="level-card-header">
+                                    <span class="roman-number">${romanNum}</span>
+                                    <div class="level-header-title-container">
+                                        <span class="level-tier-subtitle">GRAU ${romanNum}</span>
+                                        <h4 class="level-title">${lvl.name}</h4>
+                                    </div>
+                                </div>
+                                <div class="level-description-wrapper">
+                                    ${paragraphsHTML}
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    skillsContainer.innerHTML = `
+                        <div id="inner-transition-wrapper">
+                            <!-- Banner do Pergaminho -->
+                            <div class="skill-banner-container">
+                                <img class="skill-banner-img" src="${skill.bannerUrl}" alt="Banner de ${skill.title}" onerror="this.src='https://placehold.co/600x250/201711/ffd88a?text=${skill.title}'">
+                            </div>
+
+                            <!-- Cabeçalho (Estilo image_20acc3.png) -->
+                            <div class="skill-header">
+                                <span class="skill-number">${skill.id}.</span>
+                                <h2 class="skill-title">${skill.title}</h2>
+                                <span class="skill-restriction">${skill.restriction}</span>
+                            </div>
+
+                            <!-- Descrição com Capitular -->
+                            <p class="skill-body-text">
+                                <span class="drop-cap">${skill.dropCap}</span>
+                                ${skill.desc}
+                            </p>
+
+                            <!-- Divisória Mágica -->
+                            <img src="src/ui/divisoria.png" class="magical-divider" alt="Divisor Rúnico" onerror="this.src='https://placehold.co/120x15/281608/000000?text=*+*+*'">
+
+                            <!-- Sessão de Níveis de Habilidade -->
+            
+                            <div class="levels-container">
+                                ${levelsHTML}
+                            </div>
+
+                            <!-- Rodapé Estilizado -->
+                            <div class="pergaminho-footer">
+                                 MERCADO MÁGICO • Vantagens 
+                            </div>
+                        </div>
+                    `;
+
+                    // Força a rolagem do pergaminho de volta para o topo de forma instantânea
+                    parchmentScrollArea.scrollTop = 0;
+
+                    // Revelação suave e mágica subindo
+                    gsap.fromTo(skillsContainer, 
+                        { opacity: 0, y: -15 },
+                        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
+                    );
+                }
+            });
+        }
+
+        // Configuração e interações das abas do menu lateral
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.maestria-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    if (tab.classList.contains('active')) return;
+
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    const skillId = tab.getAttribute('data-skill-id');
+                    updateParchment(skillId);
+                });
+            });
+        }
+
+        // =========================================================================
+        // SISTEMA DE ÁUDIO E TRILHA SONORA DA VITROLA
+        // =========================================================================
+        const vitrola = document.querySelector('.vitrola');
+        const nextBtn = document.querySelector('.vitrola-next');
+        const audio = document.getElementById('vinyl-audio');
+        
+        const tracks = ['hogsmeade.mp3', 'becodiagonal.mp3', 'housecup.mp3', 'overtue.mp3'];
+        const trackBasePath = 'src/';
+        let currentTrackIndex = 0;
+
+        function updateNextButton() {
+            if (audio.paused) {
+                nextBtn.classList.remove('visible');
+            } else {
+                nextBtn.classList.add('visible');
+            }
+        }
+
+        function setTrack(index) {
+            currentTrackIndex = ((index % tracks.length) + tracks.length) % tracks.length;
+            const fullPath = `${trackBasePath}${tracks[currentTrackIndex]}`;
+            audio.src = fullPath;
+            audio.load();
+        }
+
+        async function playTrack() {
+            try {
+                await audio.play();
+                vitrola.classList.add('playing');
+                updateNextButton();
+            } catch (err) {
+                console.warn("Autoplay impedido ou áudios locais indisponíveis:", err);
+            }
+        }
+
+        vitrola.addEventListener('click', () => {
+            if (audio.paused) {
+                playTrack();
+            } else {
+                audio.pause();
+                vitrola.classList.remove('playing');
+                updateNextButton();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            setTrack(currentTrackIndex + 1);
+            playTrack();
+        });
+
+        audio.addEventListener('ended', () => {
+            setTrack(currentTrackIndex + 1);
+            playTrack();
+        });
+
+        // =========================================================================
+        // DISPARADORES NO CARREGAMENTO DA PÁGINA
+        // =========================================================================
+        window.addEventListener('DOMContentLoaded', () => {
+            // Inicializa a primeira habilidade como padrão
+            updateParchment("01");
+            setupTabs();
+            setTrack(currentTrackIndex);
+
+            // Animação inicial de entrada das abas laterais (Stagger)
+            gsap.from('.maestria-tab', {
+                opacity: 0,
+                x: -30,
+                duration: 0.65,
+                stagger: 0.07,
+                ease: "power2.out",
+                onComplete: () => {
+                    // CRÍTICO: Deleta as propriedades inline de "transform" injetadas pelo GSAP!
+                    // Isso permite que as transições de CSS (.active / :hover) funcionem perfeitamente.
+                    gsap.set('.maestria-tab', { clearProps: "transform" });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

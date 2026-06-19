@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habilidades — Hogwarts</title>
+    <!-- Tailwind CSS para estruturação responsiva básica -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP para animações mágicas de transição -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+            font-family: 'Georgia', serif;
+        }
+
+        /* =========================================================================
+           FONTES PERSONALIZADAS COM FALLBACK SEGURO
+           ========================================================================= */
+        @font-face {
+            font-family: 'Hogwarts-Titulo';
+            src: url('src/fonts/CitadelofBlackrose.ttf') format('truetype'); 
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Hogwarts-Paragrafo'; 
+            src: url('src/fonts/Philosopher-Regular.ttf') format('truetype'); 
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Hogwarts-SubTitulo'; 
+            src: url('src/fonts/OPTIColumna-Solid.otf') format('truetype'); 
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .hogwarts-title {
+            font-family: 'Hogwarts-Titulo', 'Georgia', serif;
+        }
+
+        .hogwarts-subtitle {
+            font-family: 'Hogwarts-SubTitulo', 'Times New Roman', serif;
+            letter-spacing: 2px;
+        }
+
+        .hogwarts-paragraph {
+            font-family: 'Hogwarts-Paragrafo', 'Georgia', serif;
+        }
+
+        /* =========================================================================
+           CENA PRINCIPAL E REVESTIMENTO
+           ========================================================================= */
+        #scene {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .layer,
+        .gifs,
+        .logo,
+        .scroll-area {
+            position: absolute;
+        }
+
+        .background {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            left: 0;
+            top: 0;
+            object-position: center center;
+            z-index: 1;
+        }
+
+        .gifs {
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* =========================================================================
+           STREAMING_CHUNK:Styling the hanging banner and back button...
+           BANDEIRA FLUTUANTE DE CABEÇALHO (CANTO SUPERIOR ESQUERDO)
+           ========================================================================= */
+        .hanging-banner {
+            position: absolute;
+            left: 2vw; /* Posicionado no canto superior esquerdo */
+            top: 1.5rem;
+            width: 260px;
+            height: 320px; /* Reduzido para evitar qualquer tipo de colisão com o botão de voltar */
+            background: url('src/ui/Banner_bandeira.png') no-repeat center center;
+            background-size: 100% 100%;
+            z-index: 25;
+            padding: 4.2rem 1.6rem 1.6rem 1.6rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-radius: 0 0 6px 6px;
+            animation: bannerSway 6s ease-in-out infinite;
+            transform-origin: top center;
+        }
+
+        @keyframes bannerSway {
+            0%, 100% { transform: rotate(0.4deg); }
+            50% { transform: rotate(-0.4deg); }
+        }
+
+        .hanging-banner h2 {
+            font-size: 1.25rem;
+            color: #ffd88a;
+            text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.95);
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+            font-family: 'Hogwarts-SubTitulo', serif;
+        }
+
+        .hanging-banner p {
+            font-size: 0.8rem;
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+            line-height: 1.45;
+            font-style: italic;
+            font-family: 'Hogwarts-Paragrafo', sans-serif;
+        }
+
+        /* BOTÃO DE VOLTAR - AMPLIADO E CENTRALIZADO NO MEIO VERTICAL ESQUERDO */
+        #back-from-maestrias {
+            position: absolute;
+            left: 2vw;
+            top: 60%; /* Centralizado perfeitamente no meio vertical da tela */
+            transform: translateY(-50%) rotate(180deg); /* Mantém rotação de volta e centralização */
+            width: 5.2rem; /* Ampliado a pedido */
+            height: 5.2rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.25s ease;
+        }
+
+        #back-from-maestrias:hover {
+            transform: translateY(-50%) rotate(180deg) scale(1.12); /* Preserva a centralização vertical no hover */
+            filter: brightness(1.25);
+        }
+
+        #back-from-maestrias::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('src/ui/banner-seta.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 145%;
+            z-index: 1;
+        }
+
+        #back-from-maestrias::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('src/ui/seta-aponta-direita.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 50%;
+            z-index: 2;
+        }
+
+        /* =========================================================================
+           STREAMING_CHUNK:Styling the sidebar menu and active transitions...
+           MENU VERTICAL DE SELEÇÃO DE HABILIDADES (ESQUERDA - AJUSTADO E CORRIGIDO)
+           ========================================================================= */
+        .habilidades-sidebar {
+            position: absolute;
+            left: 24%; /* Mantém perto do pergaminho */
+            top: 11vh;
+            width: 20vw;
+            height: 75vh;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            justify-content: space-between;
+            overflow: visible; /* Mantém visible para evitar cortes na lateral dos botões */
+            padding-left: 20px; /* Buffer de segurança para os efeitos de escala */
+            z-index: 15;
+        }
+
+        /* Botão principal */
+        .maestria-tab {
+            position: relative;
+            width: 100%;
+            flex: 1;
+            max-height: 52px;
+            background: url('src/ui/banner-titulo.png') no-repeat center center !important;
+            background-size: 100% 100% !important;
+            background-color: transparent !important; 
+            border: none !important;
+            padding: 0.2rem 1.2rem;
+            color: #f7e6ca;
+            text-align: center;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform-origin: left center; /* O alinhamento e ancoragem partem da esquerda */
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+        }
+
+        .maestria-tab h3 {
+            font-size: 0.72rem;
+            color: #ffd88a;
+            text-shadow: 1px 1.5px 2px rgba(0, 0, 0, 0.95);
+            font-weight: bold;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            line-height: 1.1;
+            font-family: 'Hogwarts-SubTitulo', serif;
+        }
+
+        .maestria-tab span {
+            font-size: 0.52rem;
+            color: #ffffff;
+            opacity: 0.8;
+            text-shadow: 1px 1px 1.5px rgba(0, 0, 0, 0.95);
+            font-style: italic;
+            font-family: 'Hogwarts-Paragrafo', sans-serif;
+            margin-top: 1px;
+            white-space: nowrap;
+        }
+
+        /* Efeito hover apenas nos inativos */
+        .maestria-tab:hover:not(.active) {
+            transform: scale(1.02) translateX(8px); /* Sutil avanço para a direita */
+            filter: brightness(1.2) drop-shadow(0 0 6px rgba(255, 215, 122, 0.35));
+        }
+
+        /* Alinhamento acentuado para a direita na seleção (Ativo) */
+        .maestria-tab.active {
+            transform: scale(1.04) translateX(22px); /* Deslocamento proeminente para a direita */
+            filter: brightness(1.35) drop-shadow(0 0 10px rgba(255, 222, 140, 0.6));
+        }
+
+        /* =========================================================================
+           STREAMING_CHUNK:Styling the parchment container and typography...
+           PERGAMINHO & ÁREA DE CONTEÚDO (DIREITA)
+           ========================================================================= */
+        .pergaminho {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            object-position: center center;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        .scroll-area {
+            z-index: 6;
+            left: 53.5%;
+            top: 10vh;
+            width: 26.5vw;
+            height: 76vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 15px;
+            scrollbar-gutter: stable;
+        }
+
+        .scroll-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scroll-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .scroll-area::-webkit-scrollbar-thumb {
+            background: #8e6c43;
+            border-radius: 10px;
+            border: 2px solid transparent;
+        }
+
+        /* Fontes envelhecidas e escurecidas de alta leitura em pergaminho (Escurecidas ao limite para contraste) */
+        .content {
+            width: 100%;
+            height: auto;
+            padding: 5px 10px 50px 10px;
+            color: #120802; /* Marrom-café quase preto, legibilidade extrema */
+            font-size: clamp(12px, 1.05vw, 16px);
+            line-height: 1.55;
+            text-align: justify;
+        }
+
+        /* =========================================================================
+           ESTILIZAÇÃO DE ARTIGO DE HABILIDADE (INSPIRADO EM image_20acc3.png)
+           ========================================================================= */
+        .skill-header {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .skill-number {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: clamp(3.2rem, 4.2vw, 5.5rem);
+            font-style: italic;
+            font-weight: 900;
+            color: #120802;
+            line-height: 0.8;
+            display: inline-block;
+            margin-right: 8px;
+            letter-spacing: -2px;
+        }
+
+        .skill-title {
+            font-family: 'Hogwarts-SubTitulo', 'Georgia', serif;
+            font-size: clamp(1.4rem, 1.8vw, 2.3rem);
+            font-weight: bold;
+            color: #120802;
+            text-transform: uppercase;
+            display: inline;
+            vertical-align: middle;
+            line-height: 0.95;
+            letter-spacing: 0.5px;
+        }
+
+        .skill-restriction {
+            display: block;
+            font-family: 'Georgia', serif;
+            font-size: clamp(0.65rem, 0.75vw, 0.9rem);
+            font-weight: bold;
+            color: #3b200e;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 4px;
+            margin-left: 2px;
+            border-bottom: 1px solid rgba(40, 22, 8, 0.35);
+            padding-bottom: 8px;
+        }
+
+        .skill-banner-container {
+            width: 100%;
+            border-radius: 0px;
+            overflow: hidden;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 3px 6px rgba(0,0,0,0.15);
+            margin: 1.2rem 0;
+            background: #201711;
+        }
+
+        .skill-banner-img {
+            width: 100%;
+            height: auto;
+            max-height: 180px;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(0.2) sepia(0.2) contrast(1.1);
+        }
+
+        .drop-cap {
+            float: left;
+            font-family: 'Georgia', serif;
+            font-size: clamp(3.8rem, 4.8vw, 5.8rem);
+            line-height: 0.75;
+            padding-top: 6px;
+            padding-right: 12px;
+            padding-left: 2px;
+            color: #241906;
+            font-weight: bold;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.25);
+        }
+
+        .skill-body-text {
+            font-family: 'Hogwarts-Paragrafo', 'Georgia', serif;
+            margin-bottom: 1.8rem;
+            color: #1e0e03;
+            clear: none;
+        }
+
+        .magical-divider {
+            width: 80%;
+            max-width: 220px;
+            height: auto;
+            margin: 1rem auto;
+            display: block;
+        }
+
+        /* =========================================================================
+           STREAMING_CHUNK:Styling level cards and parchment elements...
+           ESTILO DOS CARDS DE NÍVEIS DE HABILIDADE (LIVRES DE DESALINHAMENTO POR JUSTIFY)
+           ========================================================================= */
+        .levels-section-title {
+            font-family: 'Hogwarts-SubTitulo', serif;
+            font-size: 1.15rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #3b200e;
+            text-align: center;
+            margin-bottom: 1.2rem;
+            border-bottom: 2px double rgba(40, 22, 8, 0.45);
+            padding-bottom: 6px;
+        }
+
+        .level-card {
+            background: rgba(246, 237, 219, 0.65);
+            border: 1px solid rgba(92, 65, 46, 0.45);
+            border-radius: 6px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            text-align: left !important; /* CRÍTICO: Previne justificação herdada de .content! */
+        }
+
+        .level-card:hover {
+            background: rgba(246, 237, 219, 0.9);
+            border-color: rgba(92, 65, 46, 0.75);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(92, 65, 46, 0.2);
+        }
+
+        /* HEADER DOS CARDS EXCLUSIVO EM DUAS COLUNAS */
+        .level-card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 0.8rem;
+            text-align: left !important;
+        }
+
+        /* ALGARISMO ROMANO ELEGANTE E GIGANTE */
+        .roman-number {
+            font-family: 'Georgia', 'Times New Roman', Times, serif;
+            font-size: clamp(2.2rem, 2.5vw, 3rem);
+            font-weight: 800;
+            font-style: italic;
+            color: #b38530; /* Dourado medieval */
+            line-height: 0.9;
+            min-width: 48px;
+            text-align: center !important;
+            border-right: 2px solid rgba(92, 65, 46, 0.25);
+            padding-right: 12px;
+            margin-right: 4px;
+            display: inline-block;
+            flex-shrink: 0;
+            user-select: none;
+        }
+
+        .level-header-title-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: left !important;
+        }
+
+        /* Subtítulo discreto acima do título */
+        .level-tier-subtitle {
+            font-family: 'Hogwarts-SubTitulo', sans-serif;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            color: #5c412e;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 1px;
+            font-weight: bold;
+        }
+
+        .level-title {
+            font-family: 'Hogwarts-SubTitulo', serif;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #120802;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin: 0;
+            letter-spacing: 0.5px;
+            text-align: left !important;
+        }
+
+        /* Suporte para múltiplos parágrafos dentro da descrição do nível */
+        .level-desc-p {
+            font-family: 'Hogwarts-Paragrafo', 'Georgia', serif;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #1f0f04;
+            margin-bottom: 0.6rem;
+            text-align: left !important; /* CRÍTICO: Ragged-right para colunas estreitas é muito mais elegante e evita gaps */
+        }
+
+        .level-desc-p:last-child {
+            margin-bottom: 0;
+        }
+
+        .level-card.special-tier {
+            border-left: 4px solid #b38530;
+            background: rgba(253, 246, 228, 0.95);
+        }
+
+        .pergaminho-footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(92, 65, 46, 0.9);
+            margin-top: 3rem;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="scene">
+        <!-- BANDEIRA FLUTUANTE DE DETALHES (CABEÇALHO) -->
+        <div class="hanging-banner">
+            <h2>Habilidades</h2>
+            <p>Habilidades representam dons mágicos raros e complexos, conquistados através de anos de  ou por linhagem mágica. Elas expandem o potencial do seu personagem, tornando-o único e destacando sua singularidade na interpretação.</p>
+        </div>
+
+        <!-- BOTÃO VOLTAR PERSONALIZADO (#back-from-maestrias) -->
+        <button id="back-from-maestrias" onclick="window.location.href='index.html'" aria-label="Voltar para o menu principal de Hogwarts"></button>
+
+        <!-- FUNDO INTEGRADO AO RPG -->
+        <img src="src/background.png" class="layer background" alt="Cenário do Salão Comunal" onerror="this.src='https://placehold.co/1920x1080/1a120b/d4a359?text=Salao+Comunal+Hogwarts'">
+
+        <div class="gifs"></div>
+
+        <!-- MENU VERTICAL DE SELEÇÃO DE HABILIDADES (ESQUERDA) -->
+        <nav class="habilidades-sidebar" aria-label="Menu de Seleção de Habilidades">
+            <button class="maestria-tab active" data-skill-id="01">
+                <h3>Arte das Trevas</h3>
+                <span>Prática proibida de feitiços.</span>
+            </button>
+            <button class="maestria-tab" data-skill-id="02">
+                <h3>Arte das Trevas Avançadas</h3>
+                <span>Trevismo.</span>
+            </button>
+            <button class="maestria-tab" data-skill-id="03">
+                <h3>Animagia</h3>
+                <span>Metamorfose animal completa.</span>
+            </button>
+            <button class="maestria-tab" data-skill-id="04">
+                <h3>Clarividência</h3>
+                <span>Previsões do destino.</span>
+            </button>
+            <button class="maestria-tab" data-skill-id="05">
+                <h3>Oclumência</h3>
+                <span>Fortificação mental.</span>
+            </button>
+            <button class="maestria-tab" data-skill-id="06">
+                <h3>Legilimência Nativa</h3>
+                <span>Leitura e sonda mental.</span>
+            </button>
+            <button class="maestria-tab" data-skill-id="07">
+                <h3>Ofidioglossia</h3>
+                <span>Falar com serpentes.</span>
+            </button>
+            <button class="maestria-tab" data-skill-id="08">
+                <h3>Metamorfomagia</h3>
+                <span>Transfiguração humana natural.</span>
+            </button>
+            <button class="maestria-tab" data-skill-id="09">
+                <h3>Zoo-Empatia</h3>
+                <span>Conexão inata com animais.</span>
+            </button>
+        </nav>
+
+        <!-- PERGAMINHO DE CONTEÚDO (DIREITA) -->
+        <img src="src/pergaminho.png" class="layer pergaminho" alt="Pergaminho Fundo" onerror="this.src='https://placehold.co/1920x1080/faf2db/ffffff?text=Pergaminho+Fundo'">
+
+        <!-- ÁREA DE ROLAGEM INTERNA DO PERGAMINHO -->
+        <div class="scroll-area" id="parchment-scroll-area">
+            <div class="content" id="skills-container">
+                <!-- Injetado dinamicamente via JavaScript -->
+            </div>
+        </div>
+
+        <!-- VITROLA MUSICAL -->
+        <div class="vitrola" role="button" aria-label="Tocar vitrola clássica de Hogwarts">
+            <img src="src/vitrola.png" class="vitrola-img" alt="Vitrola Vintage" onerror="this.src='https://placehold.co/150x150/d4a359/000000?text=Vitrola'">
+        </div>
+        <button class="vitrola-next site-arrow-button" aria-label="Passar para próxima música do vinil"></button>
+        <audio id="vinyl-audio" src="src/hogsmeade.mp3" preload="auto"></audio>
+    </div>
+
+    <script>
+        // =========================================================================
+        // BANCO DE DADOS DE 9 HABILIDADES COMPLETO E DETALHADO DO RPG
+        // =========================================================================
+        const habilidadesDatabase = {
+            "01": {
+                id: "01",
+                title: "ARTE DAS TREVAS",
+                restriction: "ADQUIRÍVEL ATRAVÉS DE ROLEPLAY",
+                bannerUrl: "https://i.imgur.com/kmkYPpH.jpg", 
+                dropCap: "A",
+                desc: " s Artes das Trevas são muitas, variadas, em constante mudança e eternas. Lutar contra elas é como lutar contra um monstro de muitas cabeças, que, cada vez que um pescoço é cortado, uma cabeça brota ainda mais feroz e mais inteligente do que antes. Você está lutando contra isso que não é corrigido, não sofre mutação e é indestrutível. Em suma, transformam seus portadores em meros receptáculos de sentimentos negativos, onde a destruição plena ao próximo é tomada como absoluta e consistente o suficiente para que atributos psicológicos sejam deixados para trás na suma necessidade de haver melhor aplicação aos interesses d’As Artes das Trevas, que, por muitos escritores, é abordada como uma fonte capaz de ciência e inteligência própria, como também um vazio inexpugnável.",
+                levels: [
+                    { tier: "Nível I", name: "Segundo Ano", desc: "Demonstra nenhuma aptidão à prática das Artes das Trevas. Não conhece absolutamente NADA acerca do assunto e é nada além de uma pequena serpente em um mar de árvores da Floresta Proibida. Todas as suas ações têm mais consequências negativas do que realmente positivas aos seus objetivos. Entende o básico do básico, sequer tendo vivido o suficiente para ter noção do Verdadeiro Mal ou das Sombras que ousa conjurar em seus encantos. Os ferimentos e condições causados por seus feitiços são temporários, apesar de dolorosos. Toda vez que empunha sua varinha para cometer uma heresia, você sofre. Sente parte de si sendo lançada através do condão em mãos, pelo lampejo que vitimiza alguém, sendo sinônimo da perda de sua inocência e da sua alma pura. Azarações mais graves são as únicas coisas disponíveis a você." },
+                    { tier: "Nível II", name: "Quarto Ano", desc: "De meras azarações levemente prejudiciais, seu conhecimento aumenta. É vitimado, desde o início, com um vício expresso onde, cada minuto sem usar as Artes das Trevas, é como se parte de você estivesse faltando e realmente está. Sortilégios são agora parte de seu repertório mágico, que são utilizados como parte da potência expressa das Artes das Trevas para consequências mais permanentes no meio. Maldições estão ainda muito além do seu alcance, não tendo qualquer experiência no controle emocional requerido para sua performance própria." },
+                    { tier: "Nível III", name: "Sexto Ano", desc: "Uma parte de você morreu e o pior disso tudo? Você sabe disso. Antes, enxergava o mundo com inocência ímpar, com ânsia da curiosidade de aprender. Agora, nada mais evolui e nada se cria em sua mente completamente deturpada e já experiente sobre o meio no qual atua. Sabe que não existem portas fechadas quando as Artes das Trevas podem ser seu atalho para qualquer objetivo. Apesar de não perder os sentimentos positivos, estes agora não são nada além de prazeres hediondos nos quais o seu foco nunca deve estar. Quanto mais sofre, mais poderosos e eloquentes são seus encantamentos. Expõe sua dor através do uso de Maldições menores, mas ainda não chega aos pés das Imperdoáveis." },
+                ]
+            },
+            "02": {
+                id: "02",
+                title: "ARTE DAS TREVAS AVANÇADAS",
+                restriction: "requisita habilidade prévia de Arte das Trevas + Merecimento",
+                bannerUrl: "https://i.imgur.com/EZs9HaJ.jpg",
+                dropCap: "N",
+                desc: " um passo de autodescobrimento, torna-se. Sua vida é tão miserável até esse ponto, que nada mais parece o abalar. Seu corpo é usualmente esquelético, necessidades fisiológicas básicas praticamente nem existem. A sua vontade foi tomada e substituída pela das Trevas. Bem e mal são conceitos completamente desconhecidos. Você vive no pior cenário possível e desconhece se outro seria capaz de existir. É como se a linha da sua vida tivesse sido tecida pela própria Morte, o que te garantiu poderes que jamais pensaria possuir. O poder de ser exatamente como aqueles que te tiraram tanto e a negatividade que esbanja é mais que suficiente para receber uma 'autorização' quase divina para espalhar ondas de caos por onde passe.",
+                levels: [
+                    { tier: "Nível I", name: "Quarto Ano", desc: "A nivelação do Sexto Ano de Artes das Trevas convencionais é antecipada ao quinto e, além disso tudo, você é capaz de performar a Maldição do Livre-Arbítrio com pouca ou nenhuma perícia. Qualquer ser humanoide com menos de dois metros tem sua vontade sobrescrita pela do bruxo conjurador, que nele impõe uma vontade que não seja necessariamente mortal, mas vigente por até dois dias." },
+                    { tier: "Nível II", name: "Sétimo Ano", desc: "Apesar de ter crescido muito desde o segundo ano, o usuário das Artes das Trevas que chega a esse nível não está sequer próximo de compreender apropriadamente todos os galhos que formam a grande árvore herética das Trevas. Apesar de ser capaz de performar apropriadamente as Maldições Imperdoáveis, seu uso recolhe muito mais do que o previsto. Absolutamente tudo sobre a sua vida muda quando mata sua primeira vítima: perdendo qualquer senso de empatia, numa ausência absoluta, senão mortal, de remorso, você começa a ouvir vozes e sentir vontades de estender o caos por onde quer que passe, entrando num caminho sem volta, a menos que possua algum tipo de rede de proteção ou âncora capaz de livrá-lo de uma vida curta e destrutiva." }
+                ]
+            },
+            "03": {
+                id: "03",
+                title: "ANIMAGIA",
+                restriction: "ADQUIRÍVEL ATRAVÉS DE ROLEPLAY E EVOLUÇÃO POR PMs",
+                bannerUrl: "https://i.imgur.com/gGucH8j.jpg",
+                dropCap: "A",
+                desc: "A Animagia é considerada uma das vertentes mais complexas, perigosas e nobres de toda a Transfiguração. Trata-se da capacidade mágica, adquirida por meio de um rigoroso processo acadêmico e místico, de metamorfosear o próprio corpo físico em um animal completo, de pequeno ou médio porte, sem que o bruxo perca sua racionalidade, consciência e traços de sua personalidade original. \n\nDiferente da transfiguração comum, o Animago não apenas muda de forma; ele passa a habitar uma segunda natureza. A seleção do animal em que o mago deseja se transformar nunca é uma escolha arbitrária, mas sim um reflexo biológico de sua alma, temperamento e traços físicos (como uma pessoa esguia e silenciosa se inclinar a um felino, ou alguém de olhos expressivos se inclinar a uma ave de rapina). \n\nPor se tratar de um processo extremamente burocrático e monitorado, todos os Animagos no contexto atual são ilegais, agindo à margem do Ministério da Magia. Além disso, o usuário desta habilidade deve estar ciente de suas severas limitações: formas animais comuns são totalmente vulneráveis ao feitiço Homorfo (que força o retorno imediato à forma humana) e estão restritas às capacidades físicas reais da espécie escolhida (uma tartaruga não pode desviar de ataques ágeis, por exemplo).",
+                levels: [
+                    { tier: "Nível I", name: "Teoria Animaga [20 PM's]", desc: "O bruxo dá seus primeiros passos. Nesta fase inicial, o personagem se dedica inteiramente à exaustiva teoria da transmutação molecular e à anatomia comparada. É um período marcado por leituras densas, cálculos matemáticos precisos de proporção biológica e tentativas frustrantes de entender como funcionam os passos para se tornar um animago. O bruxo é totalmente incapaz de realizar qualquer tipo de transmutação física." },
+                    { tier: "Nível II", name: "Ritual de Tentativas [20 PM's]", desc: "O conhecimento teórico se transforma em uma rotina física torturante e disciplinada. O bruxo dá início ao complexo ritual da Animagia: ele deve carregar uma folha de mandrágora na boca por um mês inteiro, sem engolir ou retirá-la por um segundo sequer, mesmo durante as refeições ou o sono. Em seguida, precisa coletar saliva sob a lua cheia e preparar um elixir delicado que deve repousar em um local completamente escuro, intocado pela luz solar, aguardando pacientemente até que uma tempestade de raios atinja a região. Essa fase é uma verdadeira etapa de provações de paciência, ordem e métodos que podem durar meses e até anos caso o bruxo falhe." },
+                    { tier: "Nível III", name: "Primeira Transformação [30 PM's]", desc: "A tempestade finalmente chega e o elixir é consumido sob o clarão dos raios, desencadeando a primeira e assustadora transfiguração. As moléculas do bruxo se reorganizam, mas a mente ainda luta para controlar a súbita mudança de massa, ossos e sentidos. O processo é bruto, doloroso e longe de ser perfeito.\n\nO bruxo finalmente consegue assumir sua forma animal completa, mas o controle ainda é precário. A  transformação é lenta e exige 3 turnos inteiros de canalização e concentração para ser concluída (período em que o bruxo fica vulnerável). A forma animal dura no máximo 3 turnos em combate (ou 30 minutos em exploração). Ao retornar à sua forma humana original, o choque molecular deixa o personagem sob a exaustão, reduzindo seu movimento devido ao imenso desgaste físico." },
+                    { tier: "Nível IV", name: "Mestre Animago [30 PMS']", desc: "O ápice da animagia. O bruxo finalmente domina a habilidade conquistada, fundindo perfeitamente sua mente humana aos instintos da fera. Não há mais hesitação, dor ou demora: a transfiguração se torna um ato reflexo, tão natural quanto respirar.\n\nO processo de transmutação agora é instantâneo, exigindo apenas 1 turno para ir e voltar de sua forma animal, sem qualquer penalidade de fadiga ou exaustão física. O bruxo pode permanecer transformado pelo tempo que desejar. Além disso, sua forma bicho passa a carregar uma marca física sutil e permanente que reflete sua identidade humana, permitindo que observadores muito atentos possam identificá-lo." }
+                ]
+            },
+            "04": {
+                id: "04",
+                title: "CLARIVIDÊNCIA",
+                restriction: "RESTRITO POR FORMULÁRIO E EVOLUÇÃO VIA PMS",
+                bannerUrl: "https://i.imgur.com/W15D6wZ.jpg",
+                dropCap: "A",
+                desc: "A Clarividência transcende as barreiras comuns da magia; trata-se de um dom hereditário e espiritual intrínseco, que permite ao bruxo sintonizar sua mente com os presságios do passado, presente ou futuro. Aqueles abençoados (ou amaldiçoados) com este poder possuem uma facilidade inata para compreender as Artes Divinatórias, realizando leituras fluidas em instrumentos como tarô, bolas de cristal ou borra de café.\n\nNo entanto, rasgar o véu do tempo cobra um preço severo. O fluxo descontrolado de informações mexe drasticamente com o humor e a estabilidade emocional do clarividente, provocando cefaleias massivas e, em casos de profecias, síncopes imediatas. Em um castelo saturado de magia antiga como Hogwarts, as vozes do além ecoam com ainda mais força na mente do Clarividente.",
+                levels: [
+                    { tier: "Nível I", name: "Esquisito Sonhador [Inicial]", desc: "O dom floresce de maneira caótica e assustadora. Durante o sono, a dimensão onírica do subconsciente do bruxo é invadida por um turbilhão de imagens desconexas, vultos e sussurros incompreensíveis. O personagem acorda constantemente em estado de colapso e confusão, sendo incapaz de separar o que é um sonho comum de um presságio real.\n\nO bruxo recebe vantagens interpretativas ao praticar as artes divinatórias, mas ainda de forma confusa e inexata. Devido ao cansaço mental e às oscilações drásticas de humor, ele recebe desvantagem interpretativa em ações que exijam foco ou paciência prolongada." },
+                    { tier: "Nível II", name: "Lampejos do Além [20 PMs]", desc: "As visões escapam do mundo dos sonhos e passam a assolar o bruxo enquanto ele está acordado, manifestando-se através de flashes visuais involuntários e violentos. Vozes invisíveis e errantes passam a soprar pequenas revelações e pensamentos infames nos ouvidos do vidente, gerando espólios fragmentados de clarividência.\n\n<strong>SEXTO SENTIDO:</strong> Um calafrio percorre o corpo do bruxo. Uma vez por cena, quase como um aviso do além, o bruxo consegue prever algum perigo iminente, de forma abstrata, segundos antes de ele acontecer. Pode ser utilizado para farejar pessoas mal-intencionadas ou evitar ser pego de surpresa por algum ataque furtivo. No entanto, a mente do bruxo também poderá pregar peças e induzi-lo à paranoia constante." },
+                    { tier: "Nível III", name: "Querido Clarividente [20 PMs]", desc: "A habilidade começa a se manifestar de forma mais evidente. Os flashes dos sonhos se tornam mais prolongados e coerentes com a realidade que o bruxo conhece. Imagens mais nítidas e definidas são produzidas pelos espíritos que cercam o bruxo em formação, permitindo a identificação de objetos e indivíduos, embora ainda não seja possível discernir sua identidade exata. Nesse estágio, os sinais desconfortáveis durante o sono podem despertar preocupação nos observadores ao redor, mas não chegam a ser tortuosos ou agonizantes. O bruxo é aconselhado sobre o dom, caso sua existência seja revelada a outros, enquanto continua a explorar e compreender plenamente seu potencial. O jogador agora pode solicitar ao Narrador pequenas pistas visuais ou auditivas sobre o cenário ou objetos em tramas e missões de exploração. A identificação de ameaças ou itens-chave escondidos no mapa torna-se mais clara, embora o mistério sobre quem os controla permaneça." },
+                    { tier: "Nível IV", name: "Parceiro do Além [20 PMs]", desc: "A habilidade de clarividência passa a se manifestar de forma totalmente espontânea. O bruxo desenvolve a capacidade de captar mensagens de uma linha misteriosa, possibilitando extrair informações do passado, presente e futuro. Ele se torna perfeitamente capaz de interagir de igual para igual com seres sobrenaturais, como quadros animados, fantasmas e poltergeists, usando essa conexão direta para obter visões e previsões valiosas. Nesse estágio, os severos efeitos colaterais da prática divinatória diminuem significativamente, permitindo ao bruxo evitar os antigos desmaios e tonturas. O personagem não sofre mais penalidades físicas ou desmaios ao acessar visões de nível médio. Ao encerrar a conexão com o Além durante uma visão, o bruxo sofre uma síncope prolongada, podendo ficar desmaiado por horas." },
+                    { tier: "Nível V", name: "Mestre do Tempo [30 PMs]", desc: "O ápice do dote precognitivo. O bruxo se transforma em um verdadeiro mestre do tempo e da cronologia, tornando-se uma figura de extremo destaque (e um alvo constante de perseguições). Pelo puro toque em um objeto ou pessoa, ele é capaz de visualizar fragmentos inteiros de sua trajetória de vida.\n\n<strong>PRESSÁGIO:</strong> Uma vez por cena, ao se concentrar imóvel por 2 turnos inteiros no tabuleiro, o jogador tem uma visão absolutamente concreta dos rumos da história. O jogador pode consultar diretamente aos Narradores para receber dicas exatas de como progredir no objetivo de forma mais rápida, além de prever as consequências imediatas e os perigos de uma escolha que o grupo esteja prestes a fazer.", special: true }
+                ]
+            },
+            "05": {
+                id: "05",
+                title: "OCLUMÊNCIA",
+                restriction: "ADQUIRÍVEL ATRAVÉS DE ROLEPLAY E EVOLUÇÃO POR PMs",
+                bannerUrl: "https://i.imgur.com/pLaOoQB.jpg",
+                dropCap: "A",
+                desc: "Oclumência é a arte ancestral de proteger a própria mente contra invasões e sondagens externas, criando barreiras psíquicas que se fortalecem conforme o bruxo domina suas defesas mentais. Muito além de um escudo, a prática exige um estado absoluto de autocontrole, frieza e equilíbrio emocional. Oclumente é o pesadelo dos Legilimentes, sendo capaz de trancar seus pensamentos, camuflar suas intenções e resistir a feitiços de indução mental ou substâncias de coerção, como o feitiço Imperius ou a poção Veritaserum.",
+                levels: [
+                    { tier: "Nível I", name: "Fundação Emocional [20 PMs]", desc: "O bruxo inicia o doloroso processo de organizar o caos de seus próprios pensamentos. Nesta fase, ele aprende a criar os primeiros muros conceituais em seu subconsciente. Ele ainda é incapaz de impedir invasões diretas, mas começa a demonstrar uma resiliência incomum a provocações e intimidações biológicas. O bruxo recebe uma vantagem passiva para resistir a testes iniciais de blefe ou leitura fria. Sua mente ainda está aberta, mas invasores de nível igual sentem uma sutil resistência estática ao tentar ler suas intenções superficiais." },
+                    { tier: "Nível II", name: "Distorção Mental [30 PMs]", desc: "O bruxo ainda não tem a capacidade de impedir completamente invasões em seus pensamentos, sentimentos e memórias, mas aprendeu a contra-atacar através da decepção. Para bloquear uma ofensiva psíquica, é necessário identificá-la primeiro: o processo leva 1 turno contra Legilimentes do mesmo nível e 3 turnos contra Legilimentes experientes\n\nDurante esses turnos de invasão, você pode manipular as informações ativamente. Você distorce suas próprias memórias e ideias, causando confusão no Legilimente e fazendo-o interpretar erroneamente o pouco que viu. Após essa distorção, você o bloqueia completamente da sua mente. No entanto, devido à sutileza extrema dos Legilimentes Nativos, você é totalmente vulnerável a eles neste nível; você não percebe quando está sendo lido por um nativo e não pode se proteger contra ele." },
+                    { tier: "Nível III", name: "Fortaleza Mental [30 PMs]", desc: "O bruxo experimenta um aumento significativo em sua capacidade de ocultação. Legilimentes de níveis inferiores ou semelhantes aos seus já não conseguem sequer penetrar na sua mente para acessar pensamentos, memórias ou sentimentos. Momentos de pânico e nervosismo tornam-se desconhecidos para você, permitindo raciocinar com total clareza mesmo nas situações mais caóticas\n\nSuas barreiras mentais tornam-se automáticas e impenetráveis. O fluxo dos seus pensamentos reais fica trancado em um cofre subconsciente profundo, tornando as tentativas de leitura externa obsoletas. Os feitiços Imperius e Obliviate têm seus efeitos drasticamente reduzidos sobre você, permitindo que você resista a eles por um tempo considerável no RPG antes de ceder. Da mesma forma, os efeitos da poção Veritaserum são enfraquecidos, permitindo que você minta ou oculte a verdade mesmo sob o efeito do soro." },
+                    { tier: "Nível IV", name: "Labirinto Mental [30 PMs]", desc: "O ápice da Oclumência. Sua mente não é apenas uma parede de pedra; ela é um labirinto de espelhos perfeito. Você atinge o controle orgânico de todas as suas reações físicas, batimentos cardíacos e microexpressões, tornando-se o mestre supremo da dissimulação no mundo bruxo. Quando um Legilimente tentar invadir sua mente, você pode escolher permitir a entrada dele, criando uma projeção mental inteiramente falsa, detalhada e realista em sua cabeça. O invasor verá memórias fictícias criadas por você, acreditará piamente nelas e não fará ideia de que está flutuando em uma ilusão oclumente, dando a você controle estratégico total sobre as informações." }
+                ]
+            },
+            "06": {
+                id: "06",
+                title: "LEGILIMÊNCIA NATIVA",
+                restriction: "RESTRITO POR FORMULÁRIO E EVOLUÇÃO VIA PMS",
+                bannerUrl: "https://i.imgur.com/PQYpVZJ.jpg",
+                dropCap: "E",
+                desc: "xistem bruxos ao redor do mundo que nascem com dons extraordinários, embora estes muitas vezes sejam carregados como uma verdadeira maldição. A Legilimência Nativa é a capacidade inata e involuntária de sintonizar e ler completamente a mente alheia, seja de bruxos ou trouxas. Ao contrário da versão adquirida por estudos, o legilimente nativo não precisa de varinha; ele rasga o véu dos pensamentos por pura presença. À medida que essa habilidade se desenvolve, o bruxo passa a realizar manipulações mentais complexas com extrema facilidade, contanto que mantenha contato visual constante com a vítima. O preço desse poder, no entanto, é o tormento: mentes destreinadas são constantemente bombardeadas pelo eco e lamento de todos ao redor.",
+                levels: [
+                    { tier: "Nível I", name: "Eco Involuntário [Inicial]", desc: "O despertar do dom é instável, caótico e completamente oposto a uma bênção. O bruxo é incapaz de fechar os próprios canais mentais, fazendo com que os pensamentos, constantes lamúrias e preocupações de todos os alunos e professores ao redor invadam sua mente de forma abrupta. Há uma enorme dificuldade em distinguir onde terminam os seus próprios pensamentos e onde começam os pensamentos alheios." },
+                    { tier: "Nível II", name: "Filtragem Cognitiva [30 PMs]", desc: "O bruxo adquire as primeiras técnicas de concentração e focalização mental, aprendendo a erguer diques psicológicos para separar seus pensamentos do barulho externo. Ele começa a deixar de ser uma vítima do próprio dom para se tornar um observador.\n\nO bruxo agora consegue escolher conscientemente quando deseja abrir sua mente para ler alguém e quando deseja bloquear o ruído de fundo. Ele também passa a interpretar as emoções e intenções por trás dos pensamentos capturados (embora os detalhes ainda não sejam totalmente precisos). No entanto, em locais com grandes aglomerações, manter o bloqueio ativo exige esforço contínuo e impede o bruxo de realizar outras ações focadas simultaneamente." },
+                    { tier: "Nível III", name: "Mente Direcionada [30 PMs]", desc: "O legilimente atinge a proficiência em sua arte. O bombardeio descontrolado cessa por completo, dando lugar a uma precisão cirúrgica de rastreio psicológico. Ele aprendeu a controlar o impacto emocional dos pensamentos alheios, blindando-se contra a negatividade e a dor dos outros\n\nO bruxo pode direcionar sua legilimência para alvos específicos no ambiente, mesmo à distância, sem que eles percebam o escaneamento. Você capta nuances sutis, segredos guardados e mentiras descaradas em tempo real durante diálogos. Você agora ignora completamente as defesas de Oclumentes de Nível Um e Dois. Ao tentar ler um Oclumente de Nível Três, você imediatamente percebe a resistência e inicia uma disputa mental ativa pelo controle das informações." },
+                    { tier: "Nível IV", name: "Dominador Mental [30 PMs]", desc: "O ápice assustador da Legilimência Nativa. O bruxo não é mais apenas um ouvinte do fluxo temporal dos pensamentos; ele se torna o mestre e arquiteto da mente alheia. A leitura instantânea e profunda não exige esforço, e o subconsciente das pessoas ao seu redor torna-se um livro aberto.\n\n<strong>SUSSURRO DOMINANTE:</strong> Uma vez por cena, ao fixar contato visual direto com um alvo a até 4 quadrados de distância, você pode invadir e manipular sua mente por 1 turno. Você pode implantar uma ordem direta (como 'ataque seu aliado', 'solte sua varinha' ou 'corra para longe'), que a vítima obedecerá cegamente, a menos que possua Oclumência de Nível Quatro (Labirinto de Espelhos), única barreira capaz de repelir seu avanço instantaneamente." }
+                ]
+            },
+            "07": {
+                id: "07",
+                title: "OFIDIOGLOSSIA",
+                restriction: "RESTRITO POR FORMULÁRIO E EVOLUÇÃO VIA PMS",
+                bannerUrl: "https://i.imgur.com/jMNcEeV.jpg",
+                dropCap: "A",
+                desc: " Ofidioglossia é um dom mágico de extrema raridade que concede ao bruxo a capacidade inata de compreender e falar a língua das serpentes. Historicamente temida e associada às vertentes mais obscuras e ambiciosas da magia, esta habilidade funciona como qualquer outro idioma complexo, exigindo prática e conversação para que o bruxo atinja a fluência necessária para persuadir, comandar e subjugar os répteis, independentemente de seu porte.",
+                levels: [
+                    { tier: "Nível I", name: "Conexão Estranha [Inicial]", desc: "O bruxo sequer compreende a natureza do seu dom, mas percebe que possui uma atração incomum por cobras e serpentes. Elas chamam sua atenção de maneira estranha e magnética. Nesta fase, o personagem ainda não consegue falar ou entender o idioma rastejante de forma direta, mas manifesta uma zoo-empatia profunda voltada exclusivamente a este grupo de animais.\n\nAtravés da observação atenta do comportamento dos répteis, o bruxo consegue desvendar suas vontades, dores e necessidades. Cobras selvagens ou comuns adotam uma postura neutra em relação a ele, não o atacando a menos que sejam provocadas diretamente." },
+                    { tier: "Nível II", name: "Compreensão Ofídica [20 PMs]", desc: "Após descobrir-se oficialmente um ofidioglota, o bruxo desenvolve os fundamentos básicos da linguagem das cobras. Ele passa a conseguir silvar e construir diálogos simples e pouco sólidos, compreendendo superficialmente as mensagens que os animais transmitem.\n\nO bruxo consegue usar sua fala sibilante para acalmar serpentes comuns ou aquelas que tenham sido conjuradas por feitiços de outros bruxos. O réptil cessa a agressividade e ignora o oponente por até 2 turnos, impedindo que o bruxo seja um alvo direto. No entanto, ele ainda não possui poder ou respeito o suficiente para persuadir o animal a obedecer às suas ordens ou se voltar contra terceiros." },
+                    { tier: "Nível III", name: "Persuasão Rastejante [20 PMs]", desc: "A conversação prática leva o bruxo a um nível de fluência formidável. O tom sibilante de sua voz agora carrega autoridade mágica sobre a mente fria das cobras. Ele compreende nuances, segredos que os animais observaram no cenário e pode extrair informações valiosas delas.\n\nVocê consegue comandar e direcionar serpentes comuns e de médio porte. Se um inimigo conjurar uma cobra contra você, você pode gastar sua ação para tomar controle do animal. A serpente muda de lado instantaneamente, atacando o próprio bruxo que a conjurou ou servindo como distração por 2 turnos." },
+                    { tier: "Nível IV", name: "Senhor das Serpentes [30 PMs]", desc: "O ápice da Ofidioglossia. O bruxo atinge o controle absoluto e a fluência impecável do idioma, sendo respeitado por qualquer criatura escamosa, independente do porte ou periculosidade, incluindo grandes víboras e monstros de natureza serpentina. Suas ordens são leis absolutas para estes animais." },
+                ]
+            },
+            "08": {
+                id: "08",
+                title: "METAMORFOMAGIA",
+                restriction: "RESTRITO POR FORMULÁRIO E EVOLUÇÃO VIA PMS",
+                bannerUrl: "https://i.imgur.com/SyvMuyM.jpg",
+                dropCap: "A",
+                desc: " Metamorfomagia é uma habilidade genética e hereditária extremamente rara. Os portadores desse gene são capazes de transcender as barreiras corpóreas ao modificar as próprias características fisiológicas ou fenotípicas (como volume, resistência, aspecto, textura e cor de partes do corpo) sem o uso de varinhas ou poções.\n\nNo entanto, o dom é diretamente afetado pelo estado emocional do bruxo. O descontrole e a inexperiência podem causar deformações permanentes e acidentes irreversíveis. Em contrapartida, quando masterizado, o metamorfomago se torna o mestre supremo do disfarce, da infiltração e da ilusão física no campo de batalha.",
+                levels: [
+                    { tier: "Nível I", name: "O Caos Emocional [Inicial]", desc: "O bruxo ainda é inexperiente e seu dom é instável e involuntário. O turbilhão emocional da juventude afeta o metamorfomago com intensidade dupla, provocando mudanças bruscas de humor que se manifestam na alteração irreprimível da cor de seus cabelos e outros aspectos fisiológicos. Vivências intensas desencadeiam transformações físicas totalmente descontroladas e bizarras. Como, por exemplo, ao passar por um evento de forte estresse emocional." },
+                    { tier: "Nível II", name: "Controle Parcial [30 PMs]", desc: "O portador desenvolve um controle emocional consideravelmente maior, abrandando suas reações. As mudanças involuntárias de humor tornam-se raras, garantindo o domínio quase completo sobre a cor de suas madeixas, por exemplo. O bruxo começa a direcionar sua magia transfiguratória para fins práticos.\n\nO metamorfomago consegue alterar a forma de seu nariz ou de suas orelhas para se assemelhar ao de um animal específico ou de outra pessoa humana. No entanto, exige 2 turnos inteiros de concentração. A modificação se sustenta por mais 2 turnos. Caso o bruxo gaste sua ação para manter o foco rígido durante a concentração, pode estendê-la por mais 1 turno." },
+                    { tier: "Nível III", name: "Dominador da Estética [30 PMs]", desc: "O emocional se estabiliza a ponto de as emoções interferirem pouco nas mudanças no corpo, garantindo controle total sobre a coloração, extensão ou compressão dos fios de cabelo, por exemplo. O tempo necessário para realizar alterações físicas é reduzido, e novos tecidos biológicos passam a responder aos seus comandos moleculares.\n\nExige apenas 1 turno de concentração para se transformar por conta própria. O bruxo agora altera o formato dos lábios, a cor dos olhos e o tom de partes da pele, sustentando o disfarce por 3 turnos (estendendo-se para 5 turnos se mantiver a concentração por um turno)." },
+                    { tier: "Nível IV", name: "Mestre Metamorfo [30 PMs]", desc: "O ápice do dom genético é fundido ao estudo rigoroso da Transfiguração. O metamorfomago atinge o controle orgânico absoluto, quebrando os limites conhecidos da biologia bruxa. Modificações de textura, massa e voz tornam-se atos reflexos e instantâneos, quase como respirar.\n\nA transformação agora é instantânea, livre de canalização e sem limite de turnos para se manter. O bruxo pode alterar completamente sua estrutura física, peso, altura e voz, transformando-se, em todos os sentidos da expressão, em outra pessoa por até um dia. O mestre metamorfomago pode, por exemplo, assumir a identidade visual de um inimigo. Isso confunde os oponentes adjacentes. Embora os limites dessa magia transfiguratória sejam desconhecidos, é impossível se transformar completamente em um animal, assim como um Animago. No entanto, os limites são extensos e a habilidade de transformação do bruxo dependerá de sua disciplina e foco em Transfiguração." }
+                ]
+            },
+            "09": {
+                id: "09",
+                title: "ZOO-EMPATIA",
+                restriction: "RESTRITO POR FORMULÁRIO E EVOLUÇÃO VIA PM",
+                bannerUrl: "https://i.imgur.com/od8VO00.jpg",
+                dropCap: "A",
+                desc: " Zoo-Empatia é a capacidade mágica de estabelecer uma ponte psíquica e emocional única com o reino animal, permitindo uma comunicação especial com criaturas mágicas ou comuns. Esta habilidade é extremamente valiosa em missões de exploração, resgates e investigações, transformando feras em aliadas estratégicas. Enquanto bruxos comuns dependem de feitiços de controle brutais, o Zoo-Empata lidera através da confiança, respeito e sintonia mútua, sendo o único tipo de mago capaz de domesticar feras de altíssima periculosidade.",
+                levels: [
+                    { tier: "Nível I", name: "Conexão Rudimentar [Inicial]", desc: "Ao descobrir seu dom, o bruxo desenvolve uma sensibilidade básica com a fauna. Ele compreende, de forma superficial, as necessidades físicas e emoções mais primitivas de um animal. Essa leitura ocorre de forma instintiva e natural através da observação de gestos, vocalizações e expressões corporais da criatura. O bruxo decifra o estado imediato de um bicho (se está arisco, faminto ou defendendo território). Quanto à comunicação, os animais comuns compreendem ordens humanas extremamente simples (como ‘fique’, ‘venha’ ou ‘busque’), embora ainda possam ignorá-las caso haja distrações." },
+                    { tier: "Nível II", name: "Vínculo de Confiança [30PMs]", desc: "A sensibilidade do bruxo se aprofunda. Ele agora distingue com exatidão a dor, a fome, o medo ou a angústia que perpassam a criatura no momento, somente de olhar para ela. O personagem passa a estabelecer laços reais de confiança mútua com os animais de convívio constante. Suas ordens passam a ser comumente atendidas, desde que os animais sejam de pequeno porte ou inofensivos e que o comando não ofereça riscos diretos à vida da criatura. Consegue, com facilidade, acalmar criaturas mágicas assustadas ou irritadas. Neste nível, a domesticação se torna uma tarefa fácil ao criar o vínculo de confiança com um animal por muito tempo. No entanto, vincular a sua empatia com um animal significa sentir suas dores e sofrimentos. Ou seja, se a criatura for injuriada de alguma forma, você sentirá um grande pesar e poderá até entrar em crises depressivas caso um animal de vínculo forte adoeça ou morra." },
+                    { tier: "Nível III", name: "Influência Empática [20 PMs]", desc: "O bruxo atinge um patamar avançado de conexão. Ele capta o fluxo de sentimentos dos animais com extrema facilidade, sendo capaz de decifrar a 'linguagem' e a comunicação das criaturas através da própria mente. Sua presença passa a irradiar uma aura pacífica que influencia o comportamento das feras ao redor.\n\nAnimais inofensivos ou de médio porte conectam-se ao bruxo instantaneamente, obedecendo a comandos complexos, como flanquear inimigos ou ativar alavancas. Criaturas perigosas ou predadoras ainda oferecem resistência às suas ordens, mas sentem uma relutância mágica em feri-lo, fazendo com que o Zoo-Empata nunca seja o alvo primordial de seus ataques em um combate, a menos que ele ataque primeiro." },
+                    { tier: "Nível IV", name: "Mestre das Feras [30PMs]", desc: "O ápice absoluto da Zoo-Empatia. O bruxo quebra as barreiras do medo e da agressividade do mundo selvagem. Ele é capaz de estender seus canais empáticos para monstros de classificação perigosa e letal (como Acromântulas, Hipogrifos ou Pássaros-Trovão), convertendo instintos assassinos em lealdade eterna\n\nQualquer criatura , independente do tamanho, porte ou periculosidade, pode vir a se aliar ao bruxo, desde que ele mantenha uma constância de aproximação em RP, passando a enxergá-lo como um parceiro de bando. Uma vez por cena, o bruxo pode emitir um comando empático global. Criaturas selvagens presentes ignoram completamente as ordens de seus mestres originais para defender o Zoo-Empata, atacando os oponentes ou servindo como montarias e escudos biológicos estáveis. No entanto, para isso, é preciso reconhecer a natureza daquela espécie para que o empata possa repetir gestos, vocalizações, conquistar pelo alimento ou por ações específicas que ajude a criar um vínculo específico com aquela criatura, assim como Rúbeo Hagrid sabia domar um Hipogrifo ao entender seu código de reverência." }
+                ]
+            }
+        };
+
+        // =========================================================================
+        // MOTORES DE ATUALIZAÇÃO DO PARCHMENT (GSAP INTEGRADO)
+        // =========================================================================
+        const parchmentScrollArea = document.getElementById('parchment-scroll-area');
+        const skillsContainer = document.getElementById('skills-container');
+
+        function updateParchment(skillId) {
+            const skill = habilidadesDatabase[skillId];
+            if (!skill) return;
+
+            // Transição elegante: esmaecimento e deslocamento suave
+            gsap.to(skillsContainer, {
+                opacity: 0,
+                y: 15,
+                duration: 0.22,
+                ease: "power2.in",
+                onComplete: () => {
+                    // Monta a estrutura da habilidade baseada em image_20acc3.png
+                    let levelsHTML = '';
+                    skill.levels.forEach(lvl => {
+                        const isSpecial = lvl.special ? 'special-tier' : '';
+                        
+                        // Extração do algarismo romano do tier (ex: "Nível II" -> "II")
+                        const romanNum = lvl.tier.replace("Nível ", "").trim();
+
+                        // Processamento dinâmico de múltiplos parágrafos usando \n
+                        const paragraphsHTML = lvl.desc
+                            .split('\n')
+                            .filter(p => p.trim() !== '')
+                            .map(p => `<p class="level-desc-p">${p.trim()}</p>`)
+                            .join('');
+
+                        levelsHTML += `
+                            <div class="level-card ${isSpecial}">
+                                <div class="level-card-header">
+                                    <span class="roman-number">${romanNum}</span>
+                                    <div class="level-header-title-container">
+                                        <span class="level-tier-subtitle">GRAU ${romanNum}</span>
+                                        <h4 class="level-title">${lvl.name}</h4>
+                                    </div>
+                                </div>
+                                <div class="level-description-wrapper">
+                                    ${paragraphsHTML}
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    skillsContainer.innerHTML = `
+                        <div id="inner-transition-wrapper">
+                            <!-- Banner do Pergaminho -->
+                            <div class="skill-banner-container">
+                                <img class="skill-banner-img" src="${skill.bannerUrl}" alt="Banner de ${skill.title}" onerror="this.src='https://placehold.co/600x250/201711/ffd88a?text=${skill.title}'">
+                            </div>
+
+                            <!-- Cabeçalho (Estilo image_20acc3.png) -->
+                            <div class="skill-header">
+                                <span class="skill-number">${skill.id}.</span>
+                                <h2 class="skill-title">${skill.title}</h2>
+                                <span class="skill-restriction">${skill.restriction}</span>
+                            </div>
+
+                            <!-- Descrição com Capitular -->
+                            <p class="skill-body-text">
+                                <span class="drop-cap">${skill.dropCap}</span>
+                                ${skill.desc}
+                            </p>
+
+                            <!-- Divisória Mágica -->
+                            <img src="src/ui/divisoria.png" class="magical-divider" alt="Divisor Rúnico" onerror="this.src='https://placehold.co/120x15/281608/000000?text=*+*+*'">
+
+                            <!-- Sessão de Níveis de Habilidade -->
+                            <h3 class="levels-section-title">Níveis de Habilidade</h3>
+                            <div class="levels-container">
+                                ${levelsHTML}
+                            </div>
+
+                            <!-- Rodapé Estilizado -->
+                            <div class="pergaminho-footer">
+                                MERCADO MÁGICO • Habilidades
+                            </div>
+                        </div>
+                    `;
+
+                    // Força a rolagem do pergaminho de volta para o topo de forma instantânea
+                    parchmentScrollArea.scrollTop = 0;
+
+                    // Revelação suave e mágica subindo
+                    gsap.fromTo(skillsContainer, 
+                        { opacity: 0, y: -15 },
+                        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
+                    );
+                }
+            });
+        }
+
+        // Configuração e interações das abas do menu lateral
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.maestria-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    if (tab.classList.contains('active')) return;
+
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    const skillId = tab.getAttribute('data-skill-id');
+                    updateParchment(skillId);
+                });
+            });
+        }
+
+        // =========================================================================
+        // SISTEMA DE ÁUDIO E TRILHA SONORA DA VITROLA
+        // =========================================================================
+        const vitrola = document.querySelector('.vitrola');
+        const nextBtn = document.querySelector('.vitrola-next');
+        const audio = document.getElementById('vinyl-audio');
+        
+        const tracks = ['hogsmeade.mp3', 'becodiagonal.mp3', 'housecup.mp3', 'overtue.mp3'];
+        const trackBasePath = 'src/';
+        let currentTrackIndex = 0;
+
+        function updateNextButton() {
+            if (audio.paused) {
+                nextBtn.classList.remove('visible');
+            } else {
+                nextBtn.classList.add('visible');
+            }
+        }
+
+        function setTrack(index) {
+            currentTrackIndex = ((index % tracks.length) + tracks.length) % tracks.length;
+            const fullPath = `${trackBasePath}${tracks[currentTrackIndex]}`;
+            audio.src = fullPath;
+            audio.load();
+        }
+
+        async function playTrack() {
+            try {
+                await audio.play();
+                vitrola.classList.add('playing');
+                updateNextButton();
+            } catch (err) {
+                console.warn("Autoplay impedido ou áudios locais indisponíveis:", err);
+            }
+        }
+
+        vitrola.addEventListener('click', () => {
+            if (audio.paused) {
+                playTrack();
+            } else {
+                audio.pause();
+                vitrola.classList.remove('playing');
+                updateNextButton();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            setTrack(currentTrackIndex + 1);
+            playTrack();
+        });
+
+        audio.addEventListener('ended', () => {
+            setTrack(currentTrackIndex + 1);
+            playTrack();
+        });
+
+        // =========================================================================
+        // DISPARADORES NO CARREGAMENTO DA PÁGINA
+        // =========================================================================
+        window.addEventListener('DOMContentLoaded', () => {
+            // Inicializa a primeira habilidade como padrão
+            updateParchment("01");
+            setupTabs();
+            setTrack(currentTrackIndex);
+
+            // Animação inicial de entrada das abas laterais (Stagger)
+            gsap.from('.maestria-tab', {
+                opacity: 0,
+                x: -30,
+                duration: 0.65,
+                stagger: 0.07,
+                ease: "power2.out",
+                onComplete: () => {
+                    // CRÍTICO: Deleta as propriedades inline de "transform" injetadas pelo GSAP!
+                    // Isso permite que as transições de CSS (.active / :hover) funcionem perfeitamente.
+                    gsap.set('.maestria-tab', { clearProps: "transform" });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
