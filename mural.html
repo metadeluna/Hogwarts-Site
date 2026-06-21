@@ -1080,13 +1080,7 @@
 
         <!-- MENU DE SISTEMAS (BOTÕES) -->
         <nav class="categorias-sidebar" aria-label="Menu de Sistemas do RPG">
-            <button class="categoria-tab active" data-sistema="duelos">
-                <h3>Duelos</h3>
-            </button>
-            <button class="categoria-tab" data-sistema="quadribol">
-                <h3>Quadribol</h3>
-            </button>
-            <button class="categoria-tab" data-sistema="ambientacao">
+            <button class="categoria-tab active" data-sistema="ambientacao">
                 <h3>Ambientação</h3>
             </button>
             <button class="categoria-tab" data-sistema="tramas">
@@ -1145,250 +1139,6 @@
         //   { tipo: "divisoria" }
         //   { tipo: "acordeao", titulo: "...", blocos: [ ...blocos internos... ] }
         const sistemasDatabase = {
-            "duelos": {
-                titulo: "Sistemas",
-                blocos: [
-                    { tipo: "titulo", texto: "Duelos" },
-                    { tipo: "imagem", url: "https://i.imgur.com/Rj2HNr3.jpg", alt: "Sistema de Duelos" },
-                    {
-                        tipo: "texto",
-                        dropCap: "A",
-                        texto: " forma mais genérica — e também a mais popular — de se duelar consiste no ato em que dois bruxos se posicionam em extremidades opostas de um elevado, o tablado, onde travarão seu combate até que um de ambos tenha sido, de algum modo, incapacitado pelo outro. Não é permitido matar, humilhar ou ferir de maneira grave e intencional outro duelista, e fazê-lo irá acarretar na imediata desclassificação do infrator."
-                    },
-                    {
-                        tipo: "texto",
-                        texto: "Nesse caso, o tablado geralmente será uma superfície lisa, plana e limpa, onde não há nenhum tipo de obstáculo ou poluição a princípio — e onde objetos externos a ele não podem ser utilizados, com exceção daqueles produzidos no decorrer do próprio duelo."
-                    },
-                    {
-                        tipo: "texto",
-                        texto: "Embora não seja necessário, é prática comum se ter uma terceira parte responsável por arbitrar o duelo. Nos casos em que isso aconteça, a sua palavra é absoluta — à exceção de posicionamentos que claramente violem as regras estabelecidas abaixo, casos nos quais o seu discernimento pode e deve ser questionado."
-                    },
-                    { tipo: "divisoria" },
-                    {
-                        tipo: "acordeao",
-                        titulo: "Regras",
-                        blocos: [
-                            {
-                                tipo: "texto",
-                                texto: "A regra mais básica e recorrente dos duelos, que não foi alterada aqui, é a conhecida regra de esquiva, que observa o esquema FEITIÇO-FEITIÇO-DESVIO. E, dentro dessa ordem, entende-se que entre cada esquiva é necessário que o bruxo faça uso de ao menos dois feitiços. A contagem inclui feitiços que sejam executados durante o seu turno de esquiva (ex: Esquiva-se para o lado e contra-ataca com um lampejo no tórax), mas:"
-                            },
-                            {
-                                tipo: "lista",
-                                itens: [
-                                    "Em regra, somente um feitiço, habilidade ou poder será usado a cada turno — essa regra está sujeita a receber algumas exceções no futuro por motivos de dinamicidade;",
-                                    "A menos que especificado de outra forma, não é permitido usar azarações em duelos;",
-                                    "Em duelos que ocorrem no tablado, não é permitido que o público externo interfira. A única exceção é quando isso é feito para salvar uma pessoa de se ferir gravemente, a exemplo de um oponente que continue atacando mesmo com o outro incapacitado;",
-                                    "O juiz tem total controle sobre o decurso do duelo. É permitido debater via sussurro algum assunto que se ache pertinente com ele, mas por questão de ordem ele sempre tem a palavra final;",
-                                    "Não é permitido utilizar o Feitiço-Escudo, Protego, duas vezes consecutivas em locais muito distantes do corpo (por exemplo, um no ombro e um no joelho);",
-                                    "Em regra, não é possível movimentar-se enquanto se conjura Protego. Entretanto, ao longo do RPG exceções a essa regra surgirão;",
-                                    "Quando se está fora do seu turno de esquiva, não é permitido \"se jogar para o lado e tomar o feitiço de raspão\";",
-                                    "O duelo só termina quando um dos lados for de alguma maneira incapacitado, seja por desistência, imobilização, perda de consciência, saída do tablado ou desarme. No caso de pessoas proficientes em magia desarmada, a derrota ainda acontece;",
-                                    "No caso de duelos prolongados, o juiz pode e deve interpretar o cansaço das partes e suas consequências caso os próprios duelistas não o façam. Consequências possíveis de cansaço acumulado são: errar a execução de um feitiço, imprecisão na mira, levar mais tempo do que o normal para executá-lo, perder o equilíbrio durante uma esquiva ou defesa, dentre outros. Em duelos oficiais será usado um dado a partir de um certo número de turnos para se interpretar as adversidades do duelo. Mais a respeito disso será explicado adiante;",
-                                    "Não é permitido o uso de objetos externos ao tablado durante um duelo formal, com exceção de objetos que tenham sido produzidos durante e por consequência direta do duelo em si. Por exemplo, um Esferi que saia do tablado ainda pode ser utilizado pelos duelistas;",
-                                    "A movimentação está limitada a 1q por turno, em quaisquer direções;",
-                                    "A fórmula mágica dos feitiços deve ser escrita corretamente em TODAS as ações em que ocorra a execução do feitiço. No caso de feitiços não-verbais, a fórmula deve seguir o formato >Protego<;",
-                                    "O uso de sotaque na execução de algum feitiço (ex: Expelliarrrmus!) é válido, porém ele deve obrigatoriamente ser descrito na ação (O sotaque francês arranha o R da fórmula, …), do contrário será tratado como um erro e o feitiço falhará. Além disso, é preciso que a fórmula original seja claramente compreensível."
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        tipo: "acordeao",
-                        titulo: "Ações",
-                        blocos: [
-                            {
-                                tipo: "texto",
-                                texto: "Esse tipo de ação é utilizada para o uso de feitiços, e é aplicado exaustivamente em duelos, devendo normalmente ser escritas em negrito ou com balões coloridos para facilitar o destaque dos duelistas. Quando se faz uso de um feitiço, a fórmula mágica deve ser escrita da maneira correta, fora dos asteriscos da ação."
-                            },
-                            {
-                                tipo: "lista",
-                                itens: [
-                                    "Fórmula do Feitiço. Lampejo, lugar-alvo, efeito",
-                                    "Fórmula do Feitiço. Natureza do feitiço, lugar-alvo, efeito",
-                                    "Fórmula do Feitiço. Descrição do movimento, descrição do lampejo, descrição do alvo, efeito",
-                                    "Fórmula do Feitiço. Descrição do movimento, descrição do lampejo, descrição detalhada do lugar-alvo, descrição detalhada do efeito"
-                                ]
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "Embora duelos em geral devam ser rápidos, e por isso se prioriza ações com menos detalhes, existe um nível mínimo que deve ser respeitado: é necessário sempre deixar clara a natureza do feitiço executado — é um lampejo? Um objeto? Uma rajada elemental? —, o local em que se está mirando no corpo do alvo e o efeito que terá sobre ele."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "Ações mais detalhadas são muito apreciadas, visto que oferecem uma dinâmica ainda maior para os duelos. Por exemplo, é possível utilizar o feitiço Incendio Erupto da maneira padrão — uma rajada elemental em uma parte do corpo do alvo —, mas também é perfeitamente possível espalhar as chamas em horizontal com um movimento adequado da varinha."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "Por outro lado, a não-descrição de feitiço, lugar ou efeito compete ao bruxo que executa a ação uma punição no duelo, que pode vir na mesma ação ou em ações de reação. Por exemplo, um feitiço pode sair mais fraco do que deveria, talvez ele simplesmente erre o alvo, talvez atinja e não produza efeito algum. Isso fica a critério do juiz, mas a consequência deve existir."
-                            }
-                        ]
-                    },
-                    {
-                        tipo: "acordeao",
-                        titulo: "Interpretação",
-                        blocos: [
-                            {
-                                tipo: "texto",
-                                texto: "Em todos os casos, é importante ter em mente a interpretação do personagem. Não é incomum que jogadores simplesmente parem de interpretar a personalidade da personagem pelo tempo em que sobem ao tablado, esquecendo-se do aspecto de roleplay."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "Pensando nisso, é importante ter em mente que o fato de as regras permitirem que você faça algo (por ex: \"esse é o meu turno de esquiva, logo eu vou desviar\") não significa que o seu personagem possa fazê-lo naquele momento. Alunos mais novos e inexperientes não têm a percepção que adultos possuem duelando. Talvez a poluição visual impediu que o seu personagem visse o lampejo vindo em sua direção. Talvez ele se distraia com a audiência e perca o tempo de bloquear um feitiço."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "Assim, por mais contra-intuitivo que possa parecer, em diversos momentos importa ter em mente o que a sua personagem faria em determinado momento. Recompensas dentro do sistema não serão dadas apenas para os vencedores dos duelos, mas sim de acordo com a maneira como o RP foi seguido. Por exemplo, uma personagem que expressamente detesta duelos e subitamente se vê duelando."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "O \"senso\" duelístico dentro de Hogwarts não tem o seu foco principal no sistema em si, mas sim em observar se a interação acontece de maneira orgânica, que faça sentido dentro do contexto, o que novamente remete ao sistema rolamento de dados que volta e meia será aplicado em duelos, explicado mais abaixo."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "O importante é ter em mente que a sua personagem não é uma máquina de duelos, e sim uma pessoa. Situações como bloquear um feitiço em um ponto do corpo e imediatamente em um ponto muito distante no turno seguinte, esquivar-se sem ter visão do feitiço que o seu oponente utilizou, dentre outras coisas em alguns momentos serão rejeitadas em favor de se manter o senso proposto no RPG, onde todos são alunos que ainda estão aprendendo a duelar."
-                            }
-                        ]
-                    },
-                    {
-                        tipo: "acordeao",
-                        titulo: "Defesa / Esquiva",
-                        blocos: [
-                            {
-                                tipo: "texto",
-                                texto: "É necessário ter em mente as regras de defesa, desvio e de distância. São normas feitas para o balanceamento dos duelos e a inteligência da dinâmica do RPG para a canalização das habilidades mágicas através de varinhas. Estude-as e compreenda-as antes de duelar para não acabar caindo na velha armadilha do sábio burro, que pensa que sabe tudo, mas não sabe nada."
-                            },
-                            { tipo: "subtitulo", texto: "I. Defendendo" },
-                            {
-                                tipo: "texto",
-                                texto: "Assim como no caso de feitiços ofensivos, para se defender com Protego é necessário citar alguns detalhes na sua ação, seguindo o molde: Protego! Barreira translúcida, peito, defender."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "Note que, embora o propósito do feitiço seja diferente, o esquema é similar: natureza do feitiço, local defendido e efeito produzido. O Feitiço-Escudo é um dos feitiços básicos do mundo bruxo, e ao mesmo tempo um dos mais difíceis de se dominar. Por essa razão, não é possível fazer uso desse feitiço ao mesmo tempo em que se movimenta, sob pena de perder a força do feitiço e ser atingido pelo impacto do ataque defendido."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "Embora popular, Protego não é o único feitiço defensivo. Além das suas variações que buscam proteção em área, existem diversos feitiços que podem ser empregados como forma de se defender de outros feitiços, todos a depender da situação."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "Por exemplo, não é possível, em regra, utilizar o Feitiço-Escudo para defender-se de um feitiço elemental ou um feitiço corpóreo, mas existem outros feitiços apropriados para se fazer isso, como outros elementais, transfiguratórios ou feitiços de efeito. É tudo questão de bom senso, tendo sempre em mente que a proporção na defesa é importante — por exemplo, não é possível defender um feitiço Incendio Erupto com Aquamenti, visto que, embora seja água confrontando fogo, a diferença proporcional de forças entre os dois feitiços é gigantesca e não permite o seu bloqueio efetivo."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "Da mesma forma, feitiços mais potentes usados em defesa podem produzir um contra-ataque imediato, \"atropelando\" o feitiço do seu oponente. Nesses casos é importante ter em mente que o feitiço perde força, e com isso tamanho, na colisão."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "Não é possível usar feitiços corpóreos para bloquear lampejos, tampouco confrontar o lampejo do seu adversário com outro. De mesma forma, objetos demasiadamente pequenos, como pedras, não são capazes de bloquear um lampejo, sendo \"atropelados\" por ele."
-                            },
-                            { tipo: "subtitulo", texto: "II. Desviando" },
-                            {
-                                tipo: "texto",
-                                texto: "O desvio é uma característica recorrente em RPG, sendo utilizado primariamente para inverter a ordem de ataque, seguindo a regra explicada mais acima de Feitiço-Feitiço-Desvio."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "É importante estar ciente de que a regra é um parâmetro geral, mas o mero fato de ser o seu turno de esquiva não significa que seja possível realizar um desvio naquele turno, o que será explicado mais adiante."
-                            }
-                        ]
-                    },
-                    {
-                        tipo: "acordeao",
-                        titulo: "Desvios Impossíveis",
-                        blocos: [
-                            {
-                                tipo: "texto",
-                                texto: "Formulada pela primeira vez na Fortaleza Fidelius, a regra de desvios impossíveis visa justamente tornar os duelos menos robóticos e dependentes de um sistema de contagem de turnos e passos. Em diversos momentos durante um duelo, um duelista se deparará com a impossibilidade de realizar uma esquiva, seja por causa da distância entre ele e o outro bruxo, seja por conta do posicionamento ou do efeito do feitiço."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "Entretanto, expandindo essa regra, é importante também considerar a impossibilidade por condições do tablado e pelas condições dos duelistas. Por exemplo, um bruxo exausto dificilmente conseguirá desviar de um lampejo disparado em sua direção, independentemente da ordem dos turnos de esquiva."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "Desse modo, a mera aplicação do conceito geral Feitiço-Feitiço-Desvio, considerada superficial demais por conta própria, é insuficiente para determinar todas as variantes dentro do duelo."
-                            },
-                            { tipo: "subtitulo", texto: "I. Distância" },
-                            {
-                                tipo: "texto",
-                                texto: "Em regra, a distância mínima para esquivas em um duelo é de 4 quadrados, de modo que um bruxo fica incapaz de esquivar-se a partir do momento em que fica a 3 quadrados de seu atacante. Assim, a forma mais básica de se finalizar um duelo é rompendo a distância de esquiva do oponente e o atacando de dentro dela."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "Entretanto, essa regra é um dos principais fatores que \"manjaram\" o sistema. Tendo isso em mente, alguns feitiços terão distâncias de esquiva próprias. Por exemplo, a Maldição da Morte tem uma distância mínima de esquiva de 7 quadrados, ao contrário dos 4 habituais. Feitiços não-verbais têm sempre +1q de distância mínima, ou seja, um desarmante que seja executado de maneira não-verbal tem distância mínima de desvio de 5 quadrados, e não 4."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "Alguns feitiços sem lampejo, como Confundus, também têm uma distância mínima de esquiva aumentada em +1q, visto a dificuldade de se calcular a mira do feitiço."
-                            },
-                            { tipo: "subtitulo", texto: "II. Posicionamento" },
-                            {
-                                tipo: "texto",
-                                texto: "A ideia do Desvio Impossível por posicionamento se respalda em movimentações que não façam sentido dentro do contexto da esquiva. Por exemplo, se o seu ombro esquerdo é alvejado por um lampejo e você se esquiva saltando para a sua esquerda, o lampejo atingirá a sua personagem. Lampejos são muito rápidos, e portanto a movimentação deve ser sempre precisa e ágil."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "A posição relativa entre ambos os duelistas sempre é considerada nesses casos, e em alguns é possível que a posição simplesmente não possibilite um desvio. Em determinados momentos é possível se abaixar para desviar de um feitiço, mas essa situação impossibilita se levantar ou avançar no mesmo turno, devendo ser feito no seguinte."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "Em alguns casos, é possível que o posicionamento simplesmente não permita esquiva, independente da movimentação do personagem. Por exemplo, ao cair por algum motivo é muito difícil se esquivar do feitiço seguinte."
-                            },
-                            { tipo: "subtitulo", texto: "III. Raio de Alcance" },
-                            {
-                                tipo: "texto",
-                                texto: "Nem todos os feitiços se concentram especificamente no corpo do alvo. Em alguns casos, principalmente no que diz respeito a feitiços elementais, é possível espalhá-los para que se cause um efeito em área, atingindo até um máximo de 3 quadrados, seja horizontal, vertical ou diagonalmente, simultaneamente. Isso em regra visa impossibilitar que o seu alvo se esquive mesmo tendo turno para fazê-lo, já que nessas situações desviar normalmente se torna uma impossibilidade."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "Assim, alguns feitiços elementais são capazes de atingir uma área abrangente, mas só as suas versões mais potentes — como Incendio Erupto e Aqua Erupto —, entendendo-se que feitiços como Incendio e Aquamenti não são intensos o suficiente para se espalharem por uma área maior do que o corpo do alvo."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "De forma semelhante, certos feitiços corpóreos, por produzirem uma quantidade muito grande de objetos, podem ser utilizados de maneira parecida. Por exemplo, o feitiço Petrus dispara até três pedras, o que pode ser utilizado para fechar o ângulo de esquiva de um bruxo. A regra continua assim para outros, à exemplo de Spinus, mas em todos os casos não é possível escolher pontos específicos e diferentes do corpo de um alvo que serão alvejados. Todos os objetos produzidos devem ser disparados na mesma linha horizontal, não sendo possível mirar cada um deles de forma seletiva."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "É importante sempre ficar atento à descrição feita pelo conjurador para entender o raio de efeito e a possibilidade (ou impossibilidade) de esquiva gerada por ele."
-                            },
-                            { tipo: "subtitulo", texto: "IV. Condições de Campo" },
-                            {
-                                tipo: "texto",
-                                texto: "As condições de campo são uma adição à regra de Desvios Impossíveis. Assim como no caso do Raio de Alcance, essas condições geralmente são criadas por feitiços, embora em alguns casos possam ser parte natural do cenário ou consequência de efeitos externos, e a sua importância nesses casos é a dificuldade que certos fatores criam para a realização de desvios no duelo."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "Por exemplo, uma pista molhada se torna mais escorregadia, dificultando as esquivas feitas pelos duelistas. Nesses casos, existe a possibilidade de ser apenas água, decorrente de feitiços como Aqua Erupto ou Aquamenti, ou a água ensaboada do feitiço Escorrego. Água normal não compromete, por si só, o equilíbrio dos duelistas, mas diminui o seu tempo de esquiva em +1q — ou seja, sua distância mínima de esquiva vai de 4 para 5 quadrados. No caso de água ensaboada, qualquer movimento feito imediatamente causará a queda do bruxo."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "Em casos de poluição visual, normalmente causada pelo uso de feitiços elementais de ampla escala, a reação de um bruxo também pode ficar comprometida. Obstáculos, ou mesmo o próprio limite do tablado são considerados nas condições de campo, e podem contribuir para a impossibilidade de esquiva. Por exemplo, se um lampejo lhe alveja do lado direito do corpo, mas o lado esquerdo está bloqueado pelo limite do tablado ou algum obstáculo, talvez não seja possível realizar uma esquiva."
-                            },
-                            { tipo: "subtitulo", texto: "V. Condições dos Duelistas" },
-                            {
-                                tipo: "texto",
-                                texto: "O cansaço também deve ser levado em conta em cada duelo. Um bruxo cansado tem um vigor muito menor do que o que tinha no começo do embate, o que pode incidir no seu tempo de reação. Nesse caso em específico, a partir de um número específico de turnos pelos quais um duelo perdure o juiz poderá rolar um dado para determinar o sucesso (ou falha) do bruxo em se esquivar, sendo que o dado nesses casos será rolado eventualmente ao longo do duelo de pouco em pouco, mas nunca continuamente."
-                            },
-                            {
-                                tipo: "texto",
-                                texto: "Em certos casos, a condição do duelista pode impossibilitar por completo o seu desvio em um turno, o que pode tanto ser causado pela sua fadiga quanto por algum ferimento que tenha vindo a sofrer no decurso do duelo."
-                            }
-                        ]
-                    }
-                ]
-            },
-            "quadribol": {
-                titulo: "Sistemas",
-                blocos: [
-                    { tipo: "titulo", texto: "Quadribol" },
-                    {
-                        tipo: "texto",
-                        dropCap: "C",
-                        texto: " onteúdo não encontrado."
-                    }
-                ]
-            },
             "ambientacao": {
                 titulo: "Ambientação",
                 blocos: [
@@ -1408,43 +1158,32 @@
                         texto: "O RPG se passa majoritariamente dentro dos limites de Hogwarts e Hogsmeade, com o calendário letivo seguindo de setembro a junho. Eventos sazonais — Halloween, o Baile, os exames finais — funcionam como marcos narrativos em torno dos quais várias tramas podem se entrelaçar."
                     },
                     { tipo: "divisoria" },
+                    { tipo: "subtitulo", texto: "Salões Comunais" },
                     {
-                        tipo: "acordeao",
-                        titulo: "O Castelo",
-                        blocos: [
-                            { tipo: "subtitulo", texto: "Salões Comunais" },
-                            {
-                                tipo: "texto",
-                                texto: "Cada casa possui seu próprio salão comunal e dormitórios, acessíveis apenas por seus membros através de senhas, enigmas ou — no caso da Sonserina — reconhecimento de sangue-puro nas masmorras."
-                            },
-                            { tipo: "subtitulo", texto: "Salão Principal" },
-                            {
-                                tipo: "texto",
-                                texto: "Palco das refeições, anúncios e cerimônias. O teto encantado reflete o céu do lado de fora — e ocasionalmente o clima emocional de quem o enfeitiçou por último."
-                            },
-                            { tipo: "subtitulo", texto: "Floresta Proibida" },
-                            {
-                                tipo: "texto",
-                                texto: "Tecnicamente fora dos limites para alunos. Na prática, palco recorrente de detenções, apostas idiotas e o ocasional encontro com algo que definitivamente não devia estar ali."
-                            }
-                        ]
+                        tipo: "texto",
+                        texto: "Cada casa possui seu próprio salão comunal e dormitórios, acessíveis apenas por seus membros através de senhas, enigmas ou — no caso da Sonserina — reconhecimento de sangue-puro nas masmorras."
+                    },
+                    { tipo: "subtitulo", texto: "Salão Principal" },
+                    {
+                        tipo: "texto",
+                        texto: "Palco das refeições, anúncios e cerimônias. O teto encantado reflete o céu do lado de fora — e ocasionalmente o clima emocional de quem o enfeitiçou por último."
+                    },
+                    { tipo: "subtitulo", texto: "Floresta Proibida" },
+                    {
+                        tipo: "texto",
+                        texto: "Tecnicamente fora dos limites para alunos. Na prática, palco recorrente de detenções, apostas idiotas e o ocasional encontro com algo que definitivamente não devia estar ali."
+                    },
+                    { tipo: "subtitulo", texto: "Hogsmeade" },
+                    {
+                        tipo: "texto",
+                        texto: "A única vila inteiramente bruxa da Britânia, visitada em fins de semana liberados a partir do terceiro ano. Three Broomsticks, Dedosdemel e a Casa dos Gritos compõem o roteiro padrão — mas o vilarejo guarda esquinas menos óbvias para quem souber procurar."
                     },
                     {
-                        tipo: "acordeao",
-                        titulo: "Hogsmeade",
-                        blocos: [
-                            {
-                                tipo: "texto",
-                                texto: "A única vila inteiramente bruxa da Britânia, visitada em fins de semana liberados a partir do terceiro ano. Three Broomsticks, Dedosdemel e a Casa dos Gritos compõem o roteiro padrão — mas o vilarejo guarda esquinas menos óbvias para quem souber procurar."
-                            },
-                            {
-                                tipo: "lista",
-                                itens: [
-                                    "Saídas a Hogsmeade ocorrem em datas fixas do calendário letivo, anunciadas previamente no mural;",
-                                    "Alunos sem autorização assinada permanecem no castelo;",
-                                    "Comportamento em Hogsmeade ainda está sujeito às regras escolares — o que acontece na vila não fica na vila."
-                                ]
-                            }
+                        tipo: "lista",
+                        itens: [
+                            "Saídas a Hogsmeade ocorrem em datas fixas do calendário letivo, anunciadas previamente no mural;",
+                            "Alunos sem autorização assinada permanecem no castelo;",
+                            "Comportamento em Hogsmeade ainda está sujeito às regras escolares — o que acontece na vila não fica na vila."
                         ]
                     },
                     { tipo: "divisoria" },
@@ -1464,39 +1203,29 @@
                         texto: "s tramas são os fios narrativos que conectam personagens, casas e eventos ao longo da temporada. Algumas são propostas pela administração como pano de fundo geral; outras nascem espontaneamente da interpretação dos próprios jogadores — e ambas são igualmente válidas."
                     },
                     { tipo: "divisoria" },
+                    { tipo: "subtitulo", texto: "Trama Principal — Sombras sobre o Lago" },
                     {
-                        tipo: "acordeao",
-                        titulo: "Trama Principal — Sombras sobre o Lago",
-                        blocos: [
-                            {
-                                tipo: "texto",
-                                texto: "Nas últimas semanas, criaturas do Lago Negro têm sido vistas em comportamento anormal durante a madrugada. O professor responsável por Cuidado com Criaturas Mágicas suspeita de interferência externa, mas se recusa a comentar publicamente."
-                            },
-                            {
-                                tipo: "lista",
-                                itens: [
-                                    "Avistamentos devem ser reportados através de fichas de RP nos canais indicados;",
-                                    "Investigações não-autorizadas no Lago após o toque de recolher resultarão em pontos perdidos — e possivelmente em algo pior;",
-                                    "Pistas adicionais serão liberadas periodicamente pela administração conforme o RP avança."
-                                ]
-                            }
-                        ]
+                        tipo: "texto",
+                        texto: "Nas últimas semanas, criaturas do Lago Negro têm sido vistas em comportamento anormal durante a madrugada. O professor responsável por Cuidado com Criaturas Mágicas suspeita de interferência externa, mas se recusa a comentar publicamente."
                     },
                     {
-                        tipo: "acordeao",
-                        titulo: "Tramas Secundárias",
-                        blocos: [
-                            { tipo: "subtitulo", texto: "Rivalidade no Time de Quadribol" },
-                            {
-                                tipo: "texto",
-                                texto: "A disputa pela vaga de Apanhador da Lufa-Lufa se tornou pessoal entre dois candidatos. O resultado das próximas seletivas pode render mais do que apenas um lugar no time."
-                            },
-                            { tipo: "subtitulo", texto: "O Diário Perdido" },
-                            {
-                                tipo: "texto",
-                                texto: "Um caderno com anotações estranhas foi encontrado na Seção Restrita da Biblioteca. Quem o perdeu? E por que ele continua aparecendo em lugares onde já foi confiscado?"
-                            }
+                        tipo: "lista",
+                        itens: [
+                            "Avistamentos devem ser reportados através de fichas de RP nos canais indicados;",
+                            "Investigações não-autorizadas no Lago após o toque de recolher resultarão em pontos perdidos — e possivelmente em algo pior;",
+                            "Pistas adicionais serão liberadas periodicamente pela administração conforme o RP avança."
                         ]
+                    },
+                    { tipo: "subtitulo", texto: "Tramas Secundárias" },
+                    { tipo: "subtitulo", texto: "Rivalidade no Time de Quadribol" },
+                    {
+                        tipo: "texto",
+                        texto: "A disputa pela vaga de Apanhador da Lufa-Lufa se tornou pessoal entre dois candidatos. O resultado das próximas seletivas pode render mais do que apenas um lugar no time."
+                    },
+                    { tipo: "subtitulo", texto: "O Diário Perdido" },
+                    {
+                        tipo: "texto",
+                        texto: "Um caderno com anotações estranhas foi encontrado na Seção Restrita da Biblioteca. Quem o perdeu? E por que ele continua aparecendo em lugares onde já foi confiscado?"
                     },
                     { tipo: "divisoria" },
                     {
@@ -1508,30 +1237,35 @@
             "notas": {
                 titulo: "Notas",
                 blocos: [
-                    { tipo: "titulo", texto: "Notas da Administração" },
+                    { tipo: "titulo", texto: "Notas" },
                     {
                         tipo: "texto",
-                        dropCap: "E",
-                        texto: "sta seção reúne avisos gerais, atualizações de regras e comunicados que não se encaixam perfeitamente em nenhuma outra aba do mural. Verifique-a com frequência."
+                        dropCap: "O",
+                        texto: " desempenho acadêmico em Hogwarts é avaliado por um sistema de notas próprio do mundo bruxo, usado tanto em provas regulares quanto nos exames N.O.M. (Níveis Ordinários de Magia) e N.I.E.M. (Níveis de Incompetência Extremamente Mortais). As notas vão da mais alta à mais baixa, dividas entre aprovação e reprovação."
                     },
                     { tipo: "divisoria" },
-                    { tipo: "subtitulo", texto: "Atualizações Recentes" },
+                    { tipo: "subtitulo", texto: "Notas de Aprovação" },
                     {
                         tipo: "lista",
                         itens: [
-                            "Revisão das regras de Desvios Impossíveis, seção Raio de Alcance, com exemplos adicionais;",
-                            "Nova aba de Cronograma adicionada ao mural, substituindo os avisos soltos antigos;",
-                            "Sistema de Taça das Casas migrado para o novo painel visual — pontos agora são atualizados semanalmente."
+                            "<strong>Ótimo (O):</strong> a nota máxima, correspondente a um desempenho excelente;",
+                            "<strong>Excede as Expectativas (E):</strong> um bom desempenho, que supera o esperado para o nível;",
+                            "<strong>Aceitável (A):</strong> uma nota mediana, suficiente para aprovação."
                         ]
                     },
-                    { tipo: "subtitulo", texto: "Lembretes Gerais" },
+                    { tipo: "subtitulo", texto: "Notas de Reprovação" },
                     {
-                        tipo: "texto",
-                        texto: "Dúvidas sobre qualquer sistema podem ser direcionadas à administração pelos canais oficiais. Por favor, evite enviar a mesma pergunta em múltiplos canais — isso só atrasa todo mundo."
+                        tipo: "lista",
+                        itens: [
+                            "<strong>Péssimo (P):</strong> insuficiente para avançar, mas permite repetir a prova;",
+                            "<strong>Deplorável (D):</strong> desempenho muito fraco, bem abaixo do esperado;",
+                            "<strong>Trasgo (T):</strong> a pior nota possível, indicando uma reprovação grave."
+                        ]
                     },
+                    { tipo: "divisoria" },
                     {
                         tipo: "texto",
-                        texto: "Sugestões e críticas construtivas são sempre bem-vindas e ativamente incentivadas. O RPG cresce com a participação de todos."
+                        texto: "Em provas e trabalhos regulares dentro do RPG, as notas seguem essa mesma escala, sendo atribuídas pelos professores responsáveis de acordo com a qualidade da resposta, a interpretação envolvida e o cumprimento dos critérios estabelecidos em cada atividade."
                     }
                 ]
             }
@@ -1871,7 +1605,7 @@
         // =========================================================================
         window.addEventListener('DOMContentLoaded', () => {
             setupTabs();
-            updateSistema('duelos');
+            updateSistema('ambientacao');
             setTrack(currentTrackIndex);
 
             gsap.from('.categoria-tab', {
