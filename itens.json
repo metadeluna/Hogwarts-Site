@@ -1,0 +1,337 @@
+{
+  "lata_de_infinitinta": {
+    "nome": "Lata de Infinitinta",
+    "descricao": "Muito utilizada entre os bruxos do meio artístico, as Latas de Infinitinta são pequenos e portáteis compartimento metálicos. Muitos dizem que o tubo do spray está ligado diretamente no Todo graças a um feitiço transfiguratório potente, o que torna a latinha mágica; a tinta torna-se infinita e as cores estão intrinsecamente ligadas à mente do portador, tendo um também infinito leque de opções.",
+    "custo_galeoes": 10,
+    "classe": "compravel"
+  },
+  "febricolate": {
+    "nome": "Febricolate",
+    "descricao": "Esse chocolate especial faz a temperatura do corpo subir instantaneamente, deixando seu usuário com febre. Quando usado em excesso, produz como efeito colateral uma série de enormes furúnculos cheios de pus em um lugar que não se expõe ao público.",
+    "custo_galeoes": 10,
+    "classe": "compravel"
+  },
+  "lembrol": {
+    "nome": "Lembrol",
+    "descricao": "Um Lembrol é uma bola de vidro do tamanho de uma grande bola de gude que faz seu dono lembrar-se de algo que ele tenha esquecido. É cheio de fumaça branca, que se torna escarlate caso a pessoa que a segura tenha se esquecido de alguma coisa.",
+    "custo_galeoes": 15,
+    "classe": "compravel"
+  },
+  "caramelo_incha_lingua": {
+    "nome": "Caramelo Incha-Língua",
+    "descricao": "É um doce arco-íris que faz a língua do consumidor inchar até um tamanho indeterminado (pelo menos mais de um metro de comprimento) e pareça um tentáculo roxo viscoso.",
+    "custo_galeoes": 20,
+    "classe": "compravel"
+  },
+  "gaiola_transfigurante": {
+    "nome": "Gaiola Transfigurante",
+    "descricao": "As gaiolas transfigurantes são o sonho de consumo de qualquer bruxo ou bruxa que preze pela Transfiguração. Símbolo das transformações em animais, a Gaiola Transfigurante não é apenas um útil receptáculo para animais. Ela é também uma pequena arena de encantamento que facilita os trabalhos transfiguratórios. Assim, todo feitiço transfiguratório que é lançado dentro da Gaiola tem o dobro de chance de funcionar e sair perfeitamente, sendo muito útil para os transfiguradores que estão desenvolvendo seus poderes e querem ir um pouco além. Além disto, existe um encantamento \"programado\" pela voz do bruxo, que o define quando compra sua gaiola. Assim, pode transformar cálices em aves ou um rato numa pomba apenas com o comando da voz. O encantamento programado não pode ser mudado e só serve para animais e objetos de pequeno porte.",
+    "custo_galeoes": 20,
+    "classe": "compravel"
+  },
+  "bola_de_cristal": {
+    "nome": "Bola de Cristal",
+    "descricao": "A compra desse objeto é feita, principalmente, no Beco Diagonal. Uma bola de cristal é uma esfera de cristal que os videntes contemplam com o propósito de adivinhação. Por causa de sua espessura, ela pode servir como arma improvisada, mas, comumente, é utilizada na cristalomancia.",
+    "custo_galeoes": 20,
+    "classe": "compravel"
+  },
+  "onioculos": {
+    "nome": "Onióculos",
+    "descricao": "Objeto mágico que se parece com um binóculo de latão cheio de botões estranhos, os Onióculos são binóculos mágicos. Comumente utilizados nas Copas Mundiais de Quadribol, seus botões podem fazer a imagem ser revista, passada em câmera lenta ou fazer uma retrospectiva das imagens lance a lance das jogadas da partida.",
+    "custo_galeoes": 20,
+    "classe": "compravel"
+  },
+  "pena_sigilosa": {
+    "nome": "Pena Sigilosa",
+    "descricao": "Foi desenvolvida no intuito de manter os planos malignos dos Comensais ao máximo de sigilo possível, principalmente por todas as atenções do Ministério estarem voltadas a barrar seus objetivos. A pena mágica tem a capacidade de escrever sem o uso de tinta, e todos os caracteres somem após serem lidos por completo. Para receber a mensagem, o bruxo deve focar a relíquia planando logo a sua frente e em seguida apanhar o pequeno bilhete que está atrelado em sua ponta.",
+    "custo_galeoes": 20,
+    "classe": "compravel"
+  },
+  "pena_de_repeticao_rapida": {
+    "nome": "Pena de Repetição Rápida",
+    "descricao": "Uma renomada espécie de pena que pode ser comprada na loja Penas de Escritório, no Beco Diagonal, ou por jornalistas, revendedores, do Profeta Diário. Famosa pena divulgada por Rita Skeeter, as penas de repetição rápida estão muito em moda pelo complexo encantamento que possuem. Tal encantamento copia tudo aquilo que por ela é ouvido, transcrevendo magicamente as palavras para o pergaminho. Além disso, alguns feiticeiros conseguem encantar a pena para que esta consiga escrever com seu estilo redacional próprio, inventando mentiras e adicionando informações. Item indispensável para jornalistas bruxos, escritores bruxos ou anotadores contumazes.",
+    "custo_galeoes": 20,
+    "classe": "compravel"
+  },
+  "sobretudo_debilitante": {
+    "nome": "Sobretudo Debilitante",
+    "descricao": "Ao utilizar este grande sobretudo, quem o usa é acometido por náuseas até que o desmaio finalmente aconteça. É ótimo para quando você precisar realmente sair da sala de aula ou de uma situação complicada, onde estejam desconfiando de você. Ao acordar, tudo estará bem novamente.",
+    "custo_galeoes": 20,
+    "classe": "compravel"
+  },
+  "orelhoscopio": {
+    "nome": "Orelhoscópio",
+    "descricao": "Um artefato antiquado, de moldes medievais, mas de utilidades nada obsoletas. Composto principalmente de metal, e, sobretudo, propriedades mágicas, o Orelhoscópio fora modulado para que se aderisse perfeitamente a quaisquer tipos de orelhas – e ajusta-se perfeitamente a todas elas. Sua função, apesar de simples, é bem eficiente e usual: a relíquia confere ao bruxo que a usa um aumento de suas habilidades auditivas, podendo ser regulada – na parte inferior, onde se pode modificar a área de alcance da audição aguçada, para que se adeque ao que preferir. Além disso, o artefato também fora magicamente alterado para que nunca seja furtado enquanto esteja sobre uso de algum bruxo. Não pode ser enfeitiçado para que seu uso seja prejudicado. Como consequência, o usuário que o utilizar durante muito tempo pode sofrer, em um futuro próximo, com problemas em sua audição.",
+    "custo_galeoes": 30,
+    "classe": "compravel"
+  },
+  "anel_porta_antidotos": {
+    "nome": "Anel Porta-Antídotos",
+    "descricao": "Adquirido em lojas voltadas à venda de artefatos mágicos do uso diário de um bruxo, não é necessária uma licença para adquirir o item. Alastor Moody possuía um anel discreto para usar em seu dedo anelar que lembrava uma águia. Porém, quando ele dizia para a águia \"abra suas asas, precisamos voar\", a águia baixava as asas e as abria, revelando um pequeno compartimento secreto que serve para guardar antídotos. Somente antídotos podem ser armazenados no anel por longo tempo.",
+    "custo_galeoes": 30,
+    "classe": "compravel"
+  },
+  "anel_veneficante": {
+    "nome": "Anel Veneficante",
+    "descricao": "Uma renomada família nobre, bem como um grande número de família bruxas, sempre possuiu em seus tesouros itens não muito \"saudáveis\". O anel veneficante de Timothy Rosier é um exemplo disso. Ornado com uma grande e rara opala negra, símbolo das artes sombrias, o anel possui um fundo falso, utilizado para guardar pequenas mas mortíferas doses de poções ou venenos.",
+    "custo_galeoes": 30,
+    "classe": "compravel"
+  },
+  "bolhas_para_seduzir_o_primeiro_amor": {
+    "nome": "Bolhas para Seduzir o Primeiro Amor",
+    "descricao": "É uma poção de amor da linha Bruxa Maravilha. O alvo que a bebe sofre de extrema obsessão atrativa por quem a poção, funcionando como uma espécie de paixonite temporária. É comumente comprada por um bom número de alunas e alunos de Hogwarts.",
+    "custo_galeoes": 30,
+    "classe": "compravel"
+  },
+  "detonadores_chamariz": {
+    "nome": "Detonadores-Chamariz",
+    "descricao": "São objetos pretos e esquisitos que possuem um apito que de fato tenta sumir de vista. Ao deixar cair um, ele sai correndo e apitando por aí, até sumir, e com isso, desvia as atenções se assim for desejado. São bastante utilizados para fugas.",
+    "custo_galeoes": 30,
+    "classe": "compravel"
+  },
+  "orelhas_extensiveis": {
+    "nome": "Orelhas Extensíveis",
+    "descricao": "Um par de orelhas que funcionam como uma espécie de rádio comunicador, interligadas por um longo fio tão fino que é quase invisível aos olhos; você põe um lado próximo ao ouvido, e pode ouvir o que está acontecendo do outro lado do fio.",
+    "custo_galeoes": 30,
+    "classe": "compravel"
+  },
+  "botas_do_explorador": {
+    "nome": "Botas do Explorador",
+    "descricao": "Botas de cano alto extremamente confortáveis e ajustáveis aos pés do experimentador, são artefatos perfeitos para vagar pelos domínios de um lugar tão perigoso e repleto de criaturas quanto as florestas mais escuras e sombrias. Uma das especialidades destas exímias botas mágicas é guiar o seu portador: caso esteja seguindo pelo caminho errado ou indo em direção a algum lugar perigoso, ela irá imediatamente alterar o rumo (mesmo contra a vontade de quem está a calçando. Outro artifício das solas das Botas do Explorador é fazer com que o bruxo despiste criaturas e caçadores da floresta, já que são de um pisar tão suave que é impossível ouvir o seu portador se aproximando.",
+    "custo_galeoes": 30,
+    "classe": "compravel"
+  },
+  "chapeu_sem_cabeca": {
+    "nome": "Chapéu Sem-Cabeça",
+    "descricao": "É um chapéu perfeito para assustar os amigos e deixar o Nick-Quase-Sem-Cabeça morrendo (sacou?) de inveja. Com um campo de invisibilidade ampliado para além dos limites do objeto enfeitiçado, ao usar o artefato decorado com uma pluma cor-de-rosa, a cabeça de seu portador fica invisível ao olhos de quem o vê. Ao tirá-lo, a cabeça volta ao normal.",
+    "custo_galeoes": 30,
+    "classe": "compravel"
+  },
+  "blush_da_paixao_subita": {
+    "nome": "Blush da Paixão Súbita",
+    "descricao": "Após uma mistura de pó de gema de Cacto Hipnótico Egípcio e uma única gota de sangue de veela, pequenos retoques deste blush nas bochechas causam um efeito levemente hipnótico, como se o usuário fosse mais saudável e atraente. Aqueles que observam o usuário acabam extremamente encantados por sua beleza, vendo-o como um símbolo de desejo.",
+    "custo_galeoes": 30,
+    "classe": "compravel"
+  },
+  "oculos_aracnideos": {
+    "nome": "Óculos Aracnídeos",
+    "descricao": "São óculos regulares à vista nua, mas que cobrem toda a visão do usuário - incluindo a periférica - e que foi enfeitiçado para permitir com que o mesmo enxergue como uma aranha com oito olhos (motivo do formato do óculos). Tomando a Tarântula como exemplo de aranha com oito olhos, ela possui simetria por par de olhos e cada olho possui uma angulação diferente na cabeça, o que aumenta o raio de alcance. As lentes dos óculos são ultravioletas como presente na visão da maioria das aranhas.",
+    "custo_galeoes": 30,
+    "classe": "compravel"
+  },
+  "lupa_magica": {
+    "nome": "Lupa Mágica",
+    "descricao": "Utilizada por muitos magistoriadores, a Lupa Mágica é um acessório capaz de investigar a incidência de magia sobre um determinado objeto. Ao posicionar a lente de ampliação mágica rente a uma pergaminho ou objeto embebido em magia, a Lupa consegue captar a existência de um feitiço ali impregnado, decodificando-o em cores: amarelo para objetos encantados que possuem contra feitiços básicos, como Finite Incantatem, verde para objetos que não lhe oferecem nenhum risco e vermelho para artefatos perigosos ao tato.",
+    "custo_galeoes": 40,
+    "classe": "compravel"
+  },
+  "maquina_fotografica": {
+    "nome": "Máquina Fotográfica",
+    "descricao": "Capaz de capturar os movimentos durante tempo ilimitado (basta pressionar e segurar o botão, quando quiser terminar de capturar os movimentos da foto, solte-o) na maior resolução possível, isto é, uma qualidade ótima. É bem simples de se usar e utiliza filmes especiais, bastante caros. Por sorte, há a reposição dos filmes por parte de um kit que já vem junto, possibilitando que seus filmes \"nunca\" acabem.",
+    "custo_galeoes": 40,
+    "classe": "compravel"
+  },
+  "pantano_portatil": {
+    "nome": "Pântano Portátil",
+    "descricao": "Capaz de criar um ambiente pantanoso em qualquer ambiente, ou seja, tornar um determinado lugar úmido e mau cheiroso até que alguém limpe tudo. Os efeitos do pântano são variados, quanto mais uma pessoa pisar nas dependências pegajosas mais ela se espalhará e mais ficará difícil de limpar, atraindo criaturas que solidarizam com a sujeira e podendo chegar a prender algumas pessoas ao solo com a persistência das consequências.",
+    "custo_galeoes": 40,
+    "classe": "compravel"
+  },
+  "apito_do_clamor": {
+    "nome": "Apito do Clamor",
+    "descricao": "Comprável no Beco Diagonal, necessita de uma autorização de algum secretário, ou filiado, do Departamento para Regulamentação e Controle de Criaturas Mágicas. Também pode ser adquirido pela doação da professora de Trato das Criaturas Mágicas. Um apito usado por um aventureiro e magizoologista. Fora usado quase que todos os feitiços magizoólogos no utensílio para que este conseguisse absorver a essência deles e adquirir uma finalidade. Ele é usado até os dias de hoje por um velho fazendeiro e trabalhador do Ministério de Criaturas Mágicas e cuida de criaturas mágicas desde muito tempo. Quando as criaturas se espalham pela fazenda e se soltam de suas grades, ele usa o apito para emitir um som agudo incrivelmente alto para o ouvido das criaturas, que são conhecidas pela vulnerabilidade na audição; sendo assim, elas são hipnotizadas até o autor do zunido, sob um transe.",
+    "custo_galeoes": 50,
+    "classe": "compravel"
+  },
+  "espelho_de_dois_sentidos": {
+    "nome": "Espelho de Dois Sentidos",
+    "descricao": "Dois pequenos espelhos, encantados para servir como um meio de comunicação entre dois bruxos, como uma janela ou portal, através dos quais os bruxos não só conseguem enxergar o que é refletido no outro lado do espelho, como também dialogar com o portador da contraparte da relíquia. As faces do espelho, porém, não são ativáveis, o encanto é funcional o tempo inteiro, de modo que se uma das faces do espelho cair em mãos erradas, o outro portador pode até mesmo ser espionado através dela sem saber.",
+    "custo_galeoes": 50,
+    "classe": "compravel"
+  },
+  "estojo_do_alquimista": {
+    "nome": "Estojo do Alquimista",
+    "descricao": "Paracelsus, renomado alquimista das eras medievais, por muitos anos trabalhou na criação de utensílios, que, magicamente alterados, tornassem seu trabalho mais simples e veloz. Com isso, acabou por inventar um conjunto de frascos de cristal, os quais, obedecendo ao bruxo o qual estão subordinados, realizam as mais diversas funções requeridas nos variados processos da alquimia. São capazes de concluir o tarefas fáceis – como o movimento de mistura de substâncias – e até as mais complicadas – como o processo de decantação, a purificação destas substâncias e até mesmo o aquecimento delas –, sem necessitar de sequer um toque do bruxo, senão um comando de voz. Possuem, também, a função auto-limpante, exercendo esta ao fim de seu uso. Depois de higienizados, os frascos retornam ao seu estojo de armazenamento – flutuam até ele, onde quer que esteja – permanecendo por ali até que sejam solicitados novamente.",
+    "custo_galeoes": 50,
+    "classe": "compravel"
+  },
+  "feixe_crepuscular": {
+    "nome": "Feixe Crepuscular",
+    "descricao": "Uma poção prata que necessita de duas gotas para tornar qualquer coisa brilhante (inclusive pessoas), independente se a aplicação é feita direta ou indiretamente. O brilho chega a ser tão intenso que, com a aplicação repetitiva das doses, passa a cegar brevemente as pessoas e causar repúdio em criaturas fotofóbicas.",
+    "custo_galeoes": 50,
+    "classe": "compravel"
+  },
+  "essencia_metamorfomaga": {
+    "nome": "Essência Metamorfomaga",
+    "descricao": "Uma poção de uso único que serve para permanentemente alterar uma característica do corpo utilizando o poder metamorfomago. Cor de cabelo, dos olhos, estatura e até fenótipos animais podem ser adquiridos dessa forma por não-metamorfomagos. Apenas uma única poção pode ser usada por pessoa durante toda sua vida, que age como uma mutilação no corpo: irreversível.",
+    "custo_galeoes": 50,
+    "classe": "compravel"
+  },
+  "chapeu_escudo": {
+    "nome": "Chapéu Escudo",
+    "descricao": "É um chapéu encantado com um feitiço protetor e, quando usado, protege o usuário de maldições simples, azarações e feitiços leves e medianos. Isto é, de encantamentos até do terceiro ano. Contudo, esse tipo de artefato é inútil contra magias mais poderosas, incluindo as Maldições Imperdoáveis.",
+    "custo_galeoes": 50,
+    "classe": "compravel"
+  },
+  "bisbilhoscopio": {
+    "nome": "Bisbilhoscópio",
+    "descricao": "O bisbilhoscópio foi inventado no século XVIII por Edgar Stroulger e é um tipo de detector de presença das trevas que se parece com um pião de vidro. Ele acende, gira e assobia se alguém estiver fazendo algo indigno de confiança nas proximidades.",
+    "custo_galeoes": 50,
+    "classe": "compravel"
+  },
+  "aliancas_conjuntivas_prata_prata_muito_ingrata": {
+    "nome": "Alianças Conjuntivas Prata-prata-muito-ingrata",
+    "descricao": "Um item escasso e particularmente romântico dos estoques da loja bruxa Prata-Prata-Muito-Ingrata, mas que pode ser empregado para os mais diferentes e perturbadores fins: consiste em um par de idênticos anéis de prata e ferro que, quando aproximados um do outro, unem-se por uma força mágica que muito lembra o magnetismo. Quando conectados os objetos, seus usuários experimentam uma forte conexão mental, permitindo que compartilhem memórias e pensamentos entre si, troquem segredos ou façam declarações em total sigilo. O elo telepático cessa imediatamente após os portadores suspenderem o contato dos objetos.",
+    "custo_galeoes": 50,
+    "classe": "compravel"
+  },
+  "sensor_de_segredos": {
+    "nome": "Sensor de Segredos",
+    "descricao": "Um sensor de segredos é um tipo de detector de presença das trevas. Tem a forma de uma antena, mas é dourado e muito ondulado. Ele vibra quando detecta ocultação e mentiras.",
+    "custo_galeoes": 50,
+    "classe": "compravel"
+  },
+  "caldeirao_hermetico_anti_furto": {
+    "nome": "Caldeirão Hermético Anti-furto",
+    "descricao": "O Caldeirão Hermético Anti-Furto é uma peça invejada por todos os bruxos que gostam do preparo de misturas e elixires mágicos. Fabricado com um design hermeticamente projetado para potencializar os efeitos das misturas e, além disso, facilitar a utilização e o preparo do elixir pelo bruxo, o caldeirão é de cobre avermelhado e possui, em sua estrutura, cristais mágicos retirados dos confins da mata Atlântica que, magicamente, têm o poder de armazenar frio ou calor, à depender da necessidade da mistura a ser preparada. Portando ainda feitiços extensivos anti-furto, quando roubado, o caldeirão volta pro seu dono e, como se não bastasse, o caldeirão também ostenta feitiços de inexpansão física que pode ser ativado pela voz de seu proprietário. Quando o bruxo falar \"guarde-se\", enfim, o caldeirão se dobra sozinho feito uma sanfona, até parecer um pedaço de pergaminho vermelho e surrado. Assim, pode-se guardar até no bolso de um paletó, pois além de não ocupar espaço fica tão leve quanto.",
+    "custo_galeoes": 50,
+    "classe": "compravel"
+  },
+  "feiticos_patenteados_para_devanear": {
+    "nome": "Feitiços Patenteados para Devanear",
+    "descricao": "É uma substância gasosa engarrafada que produz sonhos e alucinações muito realistas com duração de trinta minutos. Os efeitos colaterais podem incluir salivação e/ou expressão aturdida. Por esta razão, não são vendidos para clientes abaixo de 14 (quatorze) anos.",
+    "custo_galeoes": 50,
+    "classe": "compravel"
+  },
+  "mao_da_gloria": {
+    "nome": "Mão da Glória",
+    "descricao": "Um objeto comumente vendido na Borgin e Burkes, obviamente não necessitando de uma licença e sendo contrabandeado como forma de auxiliar os bruxos das trevas em suas missões de interesse. A Mão da Glória, é uma mão humana seca e cortada que funciona como um suporte de vela. A pessoa que a segura pode enxergar na escuridão mais completa usando essa vela, mas, para todas as outras pessoas, a luz é invisível.",
+    "custo_galeoes": 60,
+    "classe": "compravel"
+  },
+  "gargantilha_neerlandersa": {
+    "nome": "Gargantilha Neerlandersa",
+    "descricao": "Uma gargantilha originada nos Países Baixos, com cidades famosamente aquáticas, cuja utilidade é inspirada no vasto número de meio-sereianos que residem na nação. Permite ao portador que respire embaixo d'água e ignore, até onde for possível, o atrito com a água, conseguindo locomover-se com mais agilidade quando em terreno subaquático.",
+    "custo_galeoes": 60,
+    "classe": "compravel"
+  },
+  "conchas_gemeas": {
+    "nome": "Conchas Gêmeas",
+    "descricao": "As Conchas Gêmeas são produtos mágicos criados pelos sereianos e bastante utilizadas por sua prole mestiça, embora nem sempre essas sejam as pessoas que consigam acesso a eles. Confeccionadas em madrepérola e encantamentos místicos invisíveis a olho nu, a conexão das Conchas só é efetuada por meio de gotículas de sangue do par de interlocutores e o anúncio dos seus nomes no orifício do dispositivo mágico, o que garante o início da conversação entre os bruxos que as utilizam. A distância não interfere no telefonema mágico; mesmo que estejam a quilômetros uma da outra, a mensagem acústica é teletransportada simultaneamente para o outro par da concha, e vice-versa, por tempo indeterminado.",
+    "custo_galeoes": 60,
+    "classe": "compravel"
+  },
+  "tagarela_portatil": {
+    "nome": "Tagarela Portátil",
+    "descricao": "Uma espécie de aparelho em formato de uma boca que pode ser transportado dentro do bolso, o utensílio serve como uma espécie de segunda boca para o possuidor, auxiliando-o nos momentos em que estiver privado de fala. O objeto é ativado automaticamente e passa a pronunciar tudo que o dono pensar em falar. Em casos de feitiços de silêncio, a conjuração de encantamentos também pode ser utilizada verbalmente através desse objeto, necessitando apenas dos movimentos da varinha.",
+    "custo_galeoes": 80,
+    "classe": "compravel"
+  },
+  "botas_da_ocasiao": {
+    "nome": "Botas da Ocasião",
+    "descricao": "Um par de botas que permite ao utilizador desafiar a gravidade, andando por superfícies como paredes ou tetos como se estivesse no próprio chão; recomenda-se, contudo, que os cadarços estejam bem amarrados para evitar quedas incalculadas. Entre os bruxos, é a fama deste item que originou a expressão \"a ocasião faz o ladrão\".",
+    "custo_galeoes": 80,
+    "classe": "compravel"
+  },
+  "oculos_de_rubi": {
+    "nome": "Óculos de Rubi",
+    "descricao": "Raros óculos mágicos com as lentes moldadas em finas lascas de Rubi, estes objetos são encantados magicamente para ver contornos de alguma coisa que esteja magicamente invisível. Podem ser desde capas da invisibilidade até feitiços desilusórios, eles conseguem perceber se existe alguma coisa escondida magicamente através da invisibilidade ou então se alguém está dela utilizando para esconder-se. Afirma-se que Heplétio, o desconfiado, jamais tirava seus óculos de rubis com medo de um ataque surpresa de assassinos. Possuem também a capacidade de inviabilizar o olhar petrificador do Basilisco.",
+    "custo_galeoes": 80,
+    "classe": "compravel"
+  },
+  "tapete_voador": {
+    "nome": "Tapete Voador",
+    "descricao": "Muito mais rápido, confortável e aerodinâmico que uma vassoura, o tapete voador é o meio de transporte natural para bruxos e bruxas orientais. Vendido pela loja de artigos internacionais do Beco Diagonal, o tapete voador é uma peça de tapeçaria macia, colorida e repleta de estampas que voa e comporta até três pessoas por vez. O controle do tapete se dá pelo bruxo que primeiro subir nele, que através de batidas e puxões nos cordões controla o tapete. Ideal para passeios tranquilos à luz do luar, o tapete ainda comporta feitiços de encolhimento sem danificar suas propriedades mágicas, facilitando assim o seu transporte em malões, bolsas e semelhantes de menor tamanho.",
+    "classe": "inegociavel"
+  },
+  "totem_do_curupira": {
+    "nome": "Totem do Curupira",
+    "descricao": "Importado de Castelobruxo, a escola de magia brasileira, pela loja de artigos internacionais do Beco Diagonal, o Totem do Curupira é uma das relíquias mais cobiçadas por colecionadores assíduos. Os totens são entalhes de madeira ou de ouro adornados com pinturas especiais que decorrem dos impérios antigos. Na Antiguidade, aliás, somente os mais bravos guerreiros receberiam tais honrarias. O totem Curupira é a honraria máxima alcançável por aqueles que, compreendendo a necessidade e a beleza da fauna e da flora, resguardam a vida natural do mal alheio. É o único totem que vem acompanhado de um entalhe à parte: um muiraquitã de javali, representando o fiel acompanhante do espírito Curupira. Os donos desse totem são capazes de compreender o que a natureza lhe diz, assim como também são entendidos por ela. Em meios florestais, além disso, correrão menos riscos que os demais, assistidos pela natureza que protegeu com tanto afinco.",
+    "classe": "inegociavel"
+  },
+  "desiluminador": {
+    "nome": "Desiluminador",
+    "descricao": "O Desiluminador é um dispositivo peculiar e surpreendente, projetado pelo famoso bruxo Alvo Dumbledore. Semelhante a um isqueiro, esse objeto aparentemente comum guarda um segredo fascinante. Quando ativado, o Desiluminador é capaz de absorver toda a luz ao seu redor, mergulhando o ambiente em total escuridão. No entanto, seu propósito vai além de simplesmente apagar a luz. Ao ser utilizado por alguém, o Desiluminador revela-se uma ferramenta surpreendente, capaz de capturar e armazenar fragmentos de luz e energia que são dispersos pelo ambiente. Essa luz capturada pode ser liberada posteriormente, como pequenas esferas brilhantes, proporcionando uma iluminação suave e reconfortante. Além disso, o Desiluminador possui uma funcionalidade única: a capacidade de guiar o seu portador aos seus entes mais queridos, desde que estes também desejem encontrá-lo. As mesmas esferas brilhantes geradas para iluminar o ambiente, servem como guia para indicar o caminho ao portador àqueles que ele mais ama e busca.",
+    "classe": "inegociavel"
+  },
+  "magia_mui_maligna": {
+    "nome": "Magia Mui Maligna",
+    "descricao": "O Magia Mui Maligna é um dos livros mais perigosos e temidos no mundo da magia, conhecido por sua vasta coleção de feitiços e práticas das Artes das Trevas. Encadernado em couro negro e com páginas enegrecidas pelo tempo, este livro antigo emana uma aura sinistra e enigmática. Seu conteúdo abrange uma ampla gama de conhecimentos mágicos obscuros, incluindo rituais sombrios, maldições mortais e magias proibidas. No entanto, a característica mais assustadora deste livro reside no fato de que ele contém o segredo para a criação de horcruxes - objetos nos quais um bruxo das trevas divide sua alma para alcançar a imortalidade. Esses fragmentos da alma, ocultos em objetos específicos, permitem que o bruxo sobreviva mesmo após a morte física. O Magia Mui Maligna é uma fonte de conhecimento macabro e perigoso, atraindo bruxos sedentos por poder e imortalidade. Sua posse é estritamente regulamentada e mantida em segurança, para impedir que suas trevas se espalhem pelo mundo mágico. A presença do segredo das horcruxes torna esse livro uma força destrutiva e corruptora, uma lembrança sinistra das profundezas a que a ambição desenfreada pode levar.",
+    "classe": "inegociavel"
+  },
+  "medalhao_de_aparatacao": {
+    "nome": "Medalhão de Aparatação",
+    "descricao": "O Medalhão de Aparatação de Alvo Dumbledore é um artefato singular e exclusivo usado pelo renomado Diretor de Hogwarts. Esse medalhão encantado confere a Dumbledore o poder de aparatar, uma forma avançada de teletransporte, exclusivamente dentro dos limites dos terrenos da escola. Enquanto a aparatação é uma habilidade mágica comum entre os bruxos, normalmente é proibido aparatar em locais protegidos ou com restrições, como Hogwarts. No entanto, graças ao Medalhão de Aparatação, Dumbledore é capaz de superar essas restrições e se movimentar instantaneamente para outros locais a partir da escola ou vice-versa.",
+    "classe": "inegociavel"
+  },
+  "vassoura_escudo": {
+    "nome": "Vassoura-Escudo",
+    "descricao": "A Vassoura-Escudo é uma vassoura encantada de notável engenhosidade e proteção. Equipada com um poderoso feitiço, ela possui a capacidade de criar um escudo translúcido ao redor do piloto, proporcionando uma defesa eficaz contra ataques de inimigos. Esse escudo tem características semelhantes ao feitiço Protego, oferecendo uma barreira mágica que bloqueia e desvia feitiços adversários. Com a Vassoura-Escudo, o piloto tem a vantagem de poder se proteger rapidamente durante uma batalha ou situação perigosa, permitindo-lhe reagir com maior segurança e agilidade. Essa vassoura especial é altamente valorizada por bruxos e bruxas que buscam uma vantagem defensiva nas competições de quadribol e também por aqueles que enfrentam perigos em suas jornadas mágicas. A Vassoura-Escudo é um símbolo de proteção e confiança, oferecendo ao piloto uma camada extra de segurança em um mundo cheio de ameaças e desafios. O feitiço de escudo se refaz três turnos depois de ser quebrado por um feitiço inimigo.",
+    "classe": "inegociavel"
+  },
+  "pena_da_inspiracao": {
+    "nome": "Pena da Inspiração",
+    "descricao": "A Pena da Inspiração é uma ferramenta encantada de escrita envolta em mistério e lendas. Além de seu poder de aumentar a criatividade e tornar as palavras persuasivas, há boatos intrigantes sobre sua origem. Conta-se que a pena foi encantada da mesma forma que o lendário Diadema de Rowena Ravenclaw, por uma bruxa também da Casa Corvinal, cujo nome permanece desconhecido, motivo pelo qual foi utilizada uma pena de águia-real, o símbolo da casa fundada por Rowena. Essa conexão com um artefato tão icônico desperta ainda mais interesse e curiosidade em relação à Pena da Inspiração. Cada palavra escrita com esta relíquia ganha um toque persuasivo e envolvente, capaz de cativar os leitores e transmitir emoções intensas. Seu traço fluído e elegante dá vida às histórias e desperta a imaginação, tornando as narrativas ainda mais vívidas e empolgantes. A Pena da Inspiração é um instrumento valioso para poetas, autores e qualquer pessoa que deseje transmitir suas ideias de maneira inesquecível. No entanto, é importante lembrar que a verdadeira magia está nas palavras e na criatividade do escritor, e a Pena da Inspiração é apenas um auxílio para potencializar esse dom. É uma relíquia cobiçada por aqueles que buscam aprimorar sua habilidade de comunicação e deixar sua marca no mundo literário.",
+    "classe": "inegociavel"
+  },
+  "manto_de_grifinoria": {
+    "nome": "Manto de Grifinória",
+    "descricao": "Um dos quatro fundadores de Hogwarts, Godric Gryffindor é famoso pela espada encravada com rubis. Porém, outra relíquia do Grande Bruxo foi repassada através dos tempos, restante até hoje devido ao seu grande poderio e sua bela confecção. O Manto de Godric Gryffindor é feito com um tecido vermelho sangue forte e possui bordados em fios de ouro ornando toda a capa. Um traje imponente que muitos bruxos já usaram ao longo do tempo, sendo alvo de cobiça não só pela sua beleza mas também pelo poder magico que carrega. Sendo Godric um bruxo que apreciava a coragem e as emoções fortes, seus olhos sempre foram muito voltados ao fogo, que como os grandes sentimentos, é capaz de um poder destrutivo invejável. Assim, a capa de Godric Griffyndor, quando seu dono fala \"Dai-me a força para combater um Dragão\" fica durante 10 minutos encantada por um poderoso feitiço anti-chamas. As lendas e alguns historiadores bruxos afirmam que, por causa da frase, Godric Gryffindor gostava de caçar dragões junto com Salazar Sonserina, na época em que eram grandes amigos.",
+    "classe": "inegociavel"
+  },
+  "anel_da_lufa_lufa": {
+    "nome": "Anel da Lufa-Lufa",
+    "descricao": "Sendo uma das grandes bruxas da antiguidade, as relíquias de Helga Hufflepuff vão sendo, aos poucos, descobertas. Embora Helga não tivesse restrições a ensinar alunos em magia, os conhecimentos mágicos por ela desenvolvidos sempre tiveram idéias como a lealdade, o justo e o bom coração na mente. Sua casa foi a que mais produziu Herbólogos em toda a história bruxa, principalmente os de grande qualidades. Estes Herbólogos acreditam que a Relíquia de Helga chamada \"O Anel de Quatro Pétalas\", sendo que cada uma das pétalas representaria uma das qualidades valorizada por Helga. Ainda existe incerteza quanto aos poderes mágicos do anel, contudo, há quem afirme que, quando Helga o utilizava, ela não precisava de sua varinha para fazer as plantas crescerem ou realizarem pequenos movimentos. Contudo não usava estes poderes excessivamente porque Helga acreditava no poder individual de cada planta, não podendo nela interferir malignamente.",
+    "classe": "inegociavel"
+  },
+  "safiras_de_corvinal": {
+    "nome": "Safiras de Corvinal",
+    "descricao": "Uma das mais vaidosas bruxas de seu tempo, Rowena Ravenclaw era a possuidora de uma coleção de jóias mágicas invejáveis. Seu colar de Safiras é um destes exemplos. Ele já pertenceu a rainhas bruxas e até mesmo a uma das atrizes mais ricas da Rede Radiofônica dos Bruxos. Quando voltou a Hogwarts, Alvo Dumbledore o guardou para dar ao verdadeiro merecedor da Relíquia de Ravenclaw, que com inteligência e beleza deverá obtê-lo. Não se conhecem grandes poderes mágicos do colar como o Diadema, entretanto, alguns bruxos creêm que tenha sido alvo de diversos feitiços de beleza e fascinação já que toda vez que a pessoa que o usa entra num salão, os olhares voltam-se direto para o colar e a pessoa que o usa. Esta idéia parece ser verdadeira já que uma das antigas donas do colar, Lady Amelina Chez, enlouqueceu olhando para as pedras por muito tempo.",
+    "classe": "inegociavel"
+  },
+  "taca_de_prata": {
+    "nome": "Taça de Prata",
+    "descricao": "Dentre diversos contos e lendas, há um que chama muita atenção de Herbólogos e Mestres de Poções. Alguns relatam que Helga, cansada da produção de poções para as plantas mágicas, resolveu criar uma mediana Taça de Prata. Muitos dizem que quando Helga Hufflepuff dizia o nome da poção, imediatamente a água contida na Taça se transformava na poção desejada. Com a cobiça de muitos, Helga permitiu que os Mestres de Poções usufruíssem das habilidades do artefato, sendo assim de grande auxílio na produção de poções. Para se usar a Taça, você deve conhecer totalmente a poção, já que o objeto vasculha sua mente atrás dos ingredientes e modo de preparo.",
+    "classe": "inegociavel"
+  },
+  "boina_de_sonserina": {
+    "nome": "Boina de Sonserina",
+    "descricao": "Salazar Slytherin, sendo um dos bruxos mais temidos e poderosos da antiguidade, deixou para trás diversas relíquias recém-descobertas, dentre elas podemos citar sua Boina predileta. Rumores indicam que a boina foi enfeitiçada com o propósito de impor superioridade a todos aqueles que ousavam contrariar Salazar, já que vinha sendo acusado de atacar alunos nascidos trouxas, usando Artes das Trevas. A boina além de impor superioridade, atraía a atenção de todos do local e também servia como uma proteção a ataques de legilimente, inibindo seus efeitos contra Salazar. Quando utilizada por outra pessoa que não seja o possuidor, a boina emite um som agudo e estridente na mente do alvo, levando-o ao desmaio imediato.",
+    "classe": "inegociavel"
+  },
+  "vira_tempo": {
+    "nome": "Vira-Tempo",
+    "descricao": "O Vira-Tempo é um objeto extraordinário que se assemelha a uma ampulheta presa a um colar. Nele, um feitiço de reversão de horas foi habilmente encantado, garantindo sua estabilidade. Essa relíquia singular permite a viagem no tempo, sendo que cada volta completa da ampulheta corresponde a uma determinada quantidade de horas. No entanto, é importante destacar que o limite seguro de tempo que pode ser revisitado sem causar danos graves ao viajante ou à linha temporal é de aproximadamente cinco horas. O Vira-Tempo é uma ferramenta poderosa, capaz de desafiar as restrições do tempo e explorar possibilidades antes inimagináveis.",
+    "classe": "inegociavel"
+  },
+  "maleta_de_scamander": {
+    "nome": "Maleta de Scamander",
+    "descricao": "A Maleta de Scamander é uma relíquia intrigante e valiosa. Pouco se sabe sobre sua origem, mas rumores sugerem que o renomado autor Newt Scamander obteve-a através de um negociante de criaturas mágicas. Embora se assemelhe a uma maleta comum, seu interior abriga um universo completo, comparável ao Salão Principal de Hogwarts. Para acessá-lo, basta abrir a maleta e descer pelas escadas mágicas. No entanto, somente aqueles que dominam o feitiço Abruet são capazes de desvendar seus segredos e abri-la. A Maleta de Scamander também possui uma funcionalidade única: um acessório especial que permite a troca da entrada para o universo paralelo por um conjunto de roupas. Com essa capacidade camuflada, seu portador pode passar despercebido tanto por trouxas quanto por bruxos durante inspeções e fiscalizações. Uma relíquia fascinante para os amantes das criaturas mágicas e dos mistérios do mundo bruxo.",
+    "classe": "inegociavel"
+  },
+  "pedra_filosofal": {
+    "nome": "Pedra Filosofal",
+    "descricao": "A Pedra Filosofal, criada pelo lendário alquimista Nicolau Flamel, é uma relíquia de poder incomensurável. Diz-se que essa pedra mística possui propriedades alquímicas extraordinárias, sendo capaz de transformar metais em ouro e conceder o elixir da vida eterna a quem a possua. Seu brilho intenso e coloração avermelhada evocam um sentido de mistério e encantamento. Aqueles que buscam a imortalidade ou a riqueza desenfreada anseiam por essa relíquia lendária. Uma fonte de conhecimento e poder transcendental, a Pedra Filosofal permanece como um símbolo supremo da alquimia e seus mistérios ancestrais.",
+    "classe": "inegociavel"
+  },
+  "capa_da_invisibilidade": {
+    "nome": "Capa da Invisibilidade",
+    "descricao": "A Capa da Invisibilidade, uma das Relíquias da Morte, é um objeto lendário e extraordinário no mundo mágico. Feita de um tecido especial, ela possui a habilidade única de conceder ao seu usuário a completa invisibilidade. Quando envolvida ao redor do corpo, a Capa da Invisibilidade permite que seu portador se mova sem ser detectado por olhos humanos ou mesmo por magia de detecção. É uma proteção excepcional contra qualquer forma de vigilância, oferecendo um refúgio seguro nas sombras. Ao contrário de outras formas de ilusão ou feitiços de camuflagem, a Capa da Invisibilidade é infalível em sua eficácia, mantendo seu portador verdadeiramente oculto de todos ao seu redor. Essa relíquia é um tesouro valioso, passada de geração em geração, e aquele que a possui tem uma vantagem incomparável em situações perigosas ou de espionagem. No entanto, é importante lembrar que mesmo a invisibilidade não concede invulnerabilidade, e a prudência deve ser exercida ao utilizar essa relíquia poderosa. A Capa da Invisibilidade é um símbolo de mistério e escapismo, oferecendo aos seus portadores a liberdade de se moverem sem serem vistos, mas também carregando consigo a responsabilidade de usar seu poder com sabedoria.",
+    "classe": "inegociavel"
+  },
+  "varinha_das_varinhas": {
+    "nome": "Varinha das Varinhas",
+    "descricao": "A Varinha das Varinhas, uma das Relíquias da Morte, é uma relíquia lendária e poderosa no mundo bruxo. Dizem que sua origem remonta aos primórdios da magia. Esse artefato excepcional é feito de madeira de sabugueiro e é conhecido por sua habilidade extraordinária de dominar outras varinhas, sendo considerada a mais poderosa de todas. Aquele que a possuir ganha uma autoridade inigualável sobre a magia, capaz de superar qualquer adversário. No entanto, a busca pela posse da Varinha das Varinhas é perigosa, pois sua história está repleta de tragédias e traições. Apenas um verdadeiro mestre da magia pode controlar plenamente seu poder e evitar que ele se volte contra si mesmo.",
+    "classe": "inegociavel"
+  },
+  "a_pedra_da_ressurreicao": {
+    "nome": "A Pedra da Ressurreição",
+    "descricao": "A Pedra da Ressurreição, uma das Relíquias da Morte, é um artefato antigo e enigmático. De aparência lapidada e translúcida, essa pedra detém um poder extraordinário ligado à vida e à morte. Diz-se que aquele que a possui pode convocar as sombras dos entes queridos falecidos, permitindo encontros breves e fugazes com aqueles que já partiram deste mundo. No entanto, esses encontros são apenas sombras da realidade, pois a Pedra da Ressurreição não é capaz de trazer de volta a vida verdadeira. Seu poder reside na capacidade de proporcionar um momento de conexão e despedida para aqueles que carregam o fardo da saudade. É uma relíquia de consolo, mas também de aviso, pois a ânsia de trazer os mortos de volta pode ser uma tentação perigosa. A Pedra da Ressurreição é um lembrete de que a morte é uma parte inerente do ciclo da vida e que o verdadeiro descanso e paz são encontrados em aceitar a despedida e seguir em frente.",
+    "classe": "inegociavel"
+  },
+  "mapa_do_maroto": {
+    "nome": "Mapa do Maroto",
+    "descricao": "O Mapa do Maroto é um objeto mágico de notável engenhosidade e utilidade. Criado pelos famosos bruxos James Potter, Sirius Black, Remo Lupin e Pedro Pettigrew durante seus tempos em Hogwarts, esse mapa peculiar possui uma habilidade singular: revelar um detalhado e atualizado plano do castelo e dos arredores, mostrando a localização exata de cada pessoa em Hogwarts. Ao olhar para o mapa e recitar as palavras mágicas corretas, ele se torna interativo, exibindo os movimentos dos indivíduos em tempo real. O Mapa do Maroto também é capaz de identificar passagens secretas e salas ocultas, fornecendo uma valiosa vantagem aos que o possuem. Além de sua funcionalidade prática, o mapa carrega um rico legado de amizade e aventuras compartilhadas entre os Marotos. É um tesouro que evoca nostalgia e recordações de tempos passados, além de oferecer uma ferramenta poderosa para explorar os segredos e a vastidão de Hogwarts.",
+    "classe": "inegociavel"
+  }
+}

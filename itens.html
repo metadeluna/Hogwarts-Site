@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Itens e Relíquias — Hogwarts</title>
+    <!-- Tailwind CSS para estruturação responsiva básica -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP para animações mágicas de transição -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+            font-family: 'Georgia', serif;
+        }
+
+        /* =========================================================================
+           FONTES PERSONALIZADAS COM FALLBACK SEGURO
+           ========================================================================= */
+        @font-face {
+            font-family: 'Hogwarts-Titulo';
+            src: url('src/fonts/CitadelofBlackrose.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Hogwarts-Paragrafo';
+            src: url('src/fonts/Philosopher-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Hogwarts-SubTitulo';
+            src: url('src/fonts/OPTIColumna-Solid.otf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .hogwarts-title {
+            font-family: 'Hogwarts-Titulo', 'Georgia', serif;
+        }
+
+        .hogwarts-subtitle {
+            font-family: 'Hogwarts-SubTitulo', 'Times New Roman', serif;
+            letter-spacing: 2px;
+        }
+
+        .hogwarts-paragraph {
+            font-family: 'Hogwarts-Paragrafo', 'Georgia', serif;
+        }
+
+        /* =========================================================================
+           CENA PRINCIPAL E REVESTIMENTO
+           ========================================================================= */
+        #scene {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .layer,
+        .gifs,
+        .logo,
+        .scroll-area {
+            position: absolute;
+        }
+
+        .background {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            left: 0;
+            top: 0;
+            object-position: center center;
+            z-index: 1;
+        }
+
+        .gifs {
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* =========================================================================
+           BANDEIRA FLUTUANTE DE CABEÇALHO (CANTO SUPERIOR ESQUERDO)
+           ========================================================================= */
+        .hanging-banner {
+            position: absolute;
+            left: 2vw;
+            top: 1.5rem;
+            width: 260px;
+            height: 320px;
+            background: url('src/ui/Banner_bandeira.png') no-repeat center center;
+            background-size: 100% 100%;
+            z-index: 25;
+            padding: 4.2rem 1.6rem 1.6rem 1.6rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-radius: 0 0 6px 6px;
+            animation: bannerSway 6s ease-in-out infinite;
+            transform-origin: top center;
+        }
+
+        @keyframes bannerSway {
+            0%, 100% { transform: rotate(0.4deg); }
+            50% { transform: rotate(-0.4deg); }
+        }
+
+        .hanging-banner h2 {
+            font-size: 1.25rem;
+            color: #ffd88a;
+            text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.95);
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+            font-family: 'Hogwarts-SubTitulo', serif;
+        }
+
+        .hanging-banner p {
+            font-size: 0.8rem;
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+            line-height: 1.45;
+            font-style: italic;
+            font-family: 'Hogwarts-Paragrafo', sans-serif;
+        }
+
+        /* BOTÃO DE VOLTAR - AMPLIADO E CENTRALIZADO NO MEIO VERTICAL ESQUERDO */
+        #back-from-itens {
+            position: absolute;
+            left: 2vw;
+            top: 60%;
+            transform: translateY(-50%) rotate(180deg);
+            width: 5.2rem;
+            height: 5.2rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.25s ease;
+        }
+
+        #back-from-itens:hover {
+            transform: translateY(-50%) rotate(180deg) scale(1.12);
+            filter: brightness(1.25);
+        }
+
+        #back-from-itens::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('src/ui/banner-seta.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 145%;
+            z-index: 1;
+        }
+
+        #back-from-itens::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('src/ui/seta-aponta-direita.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 50%;
+            z-index: 2;
+        }
+
+        /* =========================================================================
+           MENU DE CATEGORIAS (3 BOTÕES) — SUBSTITUI O SIDEBAR DE ABAS
+           ========================================================================= */
+        .categorias-sidebar {
+            position: absolute;
+            left: 24%;
+            top: 11vh;
+            width: 20vw;
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            z-index: 15;
+            padding-left: 20px;
+        }
+
+        .categoria-tab {
+            position: relative;
+            width: 100%;
+            min-height: 58px;
+            background: url('src/ui/banner-titulo.png') no-repeat center center !important;
+            background-size: 100% 100% !important;
+            background-color: transparent !important;
+            border: none !important;
+            padding: 0.3rem 1.2rem;
+            color: #f7e6ca;
+            text-align: center;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform-origin: left center;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+        }
+
+        .categoria-tab h3 {
+            font-size: 0.85rem;
+            color: #ffd88a;
+            text-shadow: 1px 1.5px 2px rgba(0, 0, 0, 0.95);
+            font-weight: bold;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            line-height: 1.1;
+            font-family: 'Hogwarts-SubTitulo', serif;
+        }
+
+        .categoria-tab:hover:not(.active) {
+            transform: scale(1.02) translateX(8px);
+            filter: brightness(1.2) drop-shadow(0 0 6px rgba(255, 215, 122, 0.35));
+        }
+
+        .categoria-tab.active {
+            transform: scale(1.04) translateX(22px);
+            filter: brightness(1.35) drop-shadow(0 0 10px rgba(255, 222, 140, 0.6));
+        }
+
+        /* BOTÃO "SISTEMA" — DESTACADO, FICA POR CIMA DOS DEMAIS */
+        .sistema-tab-wrapper {
+            margin-bottom: 0.6rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid rgba(255, 216, 138, 0.25);
+        }
+
+        .categoria-tab.sistema-tab {
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 8px rgba(255, 216, 138, 0.35));
+        }
+
+        .categoria-tab.sistema-tab h3 {
+            color: #fff3d6;
+            letter-spacing: 0.12em;
+        }
+
+        .categoria-tab.sistema-tab:hover:not(.active) {
+            transform: scale(1.03) translateX(8px);
+            filter: brightness(1.25) drop-shadow(0 0 10px rgba(255, 215, 122, 0.5));
+        }
+
+        .categoria-tab.sistema-tab.active {
+            transform: scale(1.05) translateX(22px);
+            filter: brightness(1.4) drop-shadow(0 0 14px rgba(255, 222, 140, 0.75));
+        }
+
+        /* =========================================================================
+           PERGAMINHO & ÁREA DE CONTEÚDO (DIREITA)
+           ========================================================================= */
+        .pergaminho {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            object-position: center center;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        .scroll-area {
+            z-index: 6;
+            left: 53.5%;
+            top: 10vh;
+            width: 26.5vw;
+            height: 76vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 15px;
+            scrollbar-gutter: stable;
+        }
+
+        .scroll-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scroll-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .scroll-area::-webkit-scrollbar-thumb {
+            background: #8e6c43;
+            border-radius: 10px;
+            border: 2px solid transparent;
+        }
+
+        .content {
+            width: 100%;
+            height: auto;
+            padding: 5px 10px 50px 10px;
+            color: #120802;
+            font-size: clamp(12px, 1.05vw, 16px);
+            line-height: 1.55;
+            text-align: justify;
+        }
+
+        /* =========================================================================
+           ESTILIZAÇÃO DE ITEM NUMERADO (INSPIRADO NO LIVRO DE REGRAS / PDF)
+           ========================================================================= */
+        .categoria-titulo {
+            text-align: center;
+            font-family: 'Hogwarts-SubTitulo', serif;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #3b200e;
+            margin-bottom: 1.6rem;
+            border-bottom: 2px double rgba(40, 22, 8, 0.45);
+            padding-bottom: 10px;
+        }
+
+        .item-entry {
+            margin-bottom: 2.2rem;
+            text-align: left !important;
+        }
+
+        .item-header {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 0.4rem;
+        }
+
+        .item-number {
+            font-family: 'Times New Roman', Times, serif;
+            font-style: italic;
+            font-weight: 900;
+            font-size: clamp(2.6rem, 3.4vw, 4rem);
+            color: #120802;
+            line-height: 0.8;
+            letter-spacing: -2px;
+            flex-shrink: 0;
+        }
+
+        .item-header-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-nome {
+            font-family: 'Hogwarts-SubTitulo', 'Georgia', serif;
+            font-size: clamp(1.05rem, 1.3vw, 1.5rem);
+            font-weight: bold;
+            color: #120802;
+            text-transform: uppercase;
+            line-height: 1.05;
+            letter-spacing: 0.4px;
+        }
+
+        .item-custo {
+            font-family: 'Georgia', serif;
+            font-size: clamp(0.62rem, 0.7vw, 0.82rem);
+            font-weight: bold;
+            color: #6b4a14;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 2px;
+        }
+
+        .item-custo.inegociavel-label {
+            color: #7a1f1f;
+        }
+
+        .item-descricao {
+            font-family: 'Hogwarts-Paragrafo', 'Georgia', serif;
+            font-size: 0.92rem;
+            color: #1e0e03;
+            text-align: justify;
+            line-height: 1.55;
+            margin-top: 0.5rem;
+        }
+
+        .lista-vazia {
+            text-align: center;
+            font-style: italic;
+            color: #5c412e;
+            margin-top: 2rem;
+            font-family: 'Hogwarts-Paragrafo', serif;
+        }
+
+        .pergaminho-footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(92, 65, 46, 0.9);
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        /* =========================================================================
+           ÍCONE DE GALEÃO AO LADO DO CUSTO
+           ========================================================================= */
+        .item-custo {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .item-custo .custo-icone {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        /* =========================================================================
+           PÁGINA "SISTEMA" — INTRODUÇÃO DO RELICÁRIO
+           ========================================================================= */
+        .sistema-titulo-principal {
+            font-family: 'Hogwarts-SubTitulo', 'Georgia', serif;
+            font-size: clamp(1.6rem, 2.4vw, 2.6rem);
+            font-weight: bold;
+            color: #120802;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.2rem;
+        }
+
+        .sistema-imagem-container {
+            width: 100%;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5), 0 3px 6px rgba(0, 0, 0, 0.15);
+            margin-bottom: 1.4rem;
+            background: #201711;
+        }
+
+        .sistema-imagem-container img {
+            width: 100%;
+            height: auto;
+            max-height: 220px;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(0.2) sepia(0.2) contrast(1.1);
+        }
+
+        .sistema-intro-texto {
+            font-family: 'Hogwarts-Paragrafo', 'Georgia', serif;
+            font-size: 0.92rem;
+            color: #1e0e03;
+            text-align: justify;
+            line-height: 1.6;
+            margin-bottom: 0.9rem;
+        }
+
+        .sistema-secao {
+            margin-top: 2.2rem;
+            text-align: left !important;
+        }
+
+        .sistema-secao-titulo {
+            font-family: 'Hogwarts-SubTitulo', 'Georgia', serif;
+            font-size: clamp(1rem, 1.2vw, 1.3rem);
+            font-weight: bold;
+            color: #120802;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 0.2rem;
+        }
+
+        .sistema-secao-subtitulo {
+            display: block;
+            font-family: 'Georgia', serif;
+            font-size: clamp(0.65rem, 0.75vw, 0.85rem);
+            font-weight: bold;
+            color: #6b4a14;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.6rem;
+            border-bottom: 1px solid rgba(40, 22, 8, 0.35);
+            padding-bottom: 8px;
+        }
+
+        .sistema-secao-texto {
+            font-family: 'Hogwarts-Paragrafo', 'Georgia', serif;
+            font-size: 0.92rem;
+            color: #1e0e03;
+            text-align: justify;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="scene">
+        <!-- BANDEIRA FLUTUANTE DE DETALHES (CABEÇALHO) -->
+        <div class="hanging-banner">
+            <h2>Itens e Relíquias</h2>
+            <p>Itens e reliquias mágicas raras à venda no mercado, com propriedades e histórias únicas.</p>
+        </div>
+
+        <!-- BOTÃO VOLTAR PERSONALIZADO -->
+        <button id="back-from-itens" onclick="window.location.href='index.html'" aria-label="Voltar para o menu principal de Hogwarts"></button>
+
+        <!-- FUNDO INTEGRADO AO RPG -->
+        <img src="src/background.png" class="layer background" alt="Cenário do Salão Comunal" onerror="this.src='https://placehold.co/1920x1080/1a120b/d4a359?text=Salao+Comunal+Hogwarts'">
+
+        <div class="gifs"></div>
+
+        <!-- MENU DE CATEGORIAS (SISTEMA + 3 BOTÕES) -->
+        <nav class="categorias-sidebar" aria-label="Menu de Categorias de Itens">
+            <div class="sistema-tab-wrapper">
+                <button class="categoria-tab sistema-tab active" data-categoria="sistema">
+                    <h3>Sistema</h3>
+                </button>
+            </div>
+            <button class="categoria-tab" data-categoria="galeoes">
+                <h3>Por Galeões</h3>
+            </button>
+            <button class="categoria-tab" data-categoria="pms">
+                <h3>Por PMs</h3>
+            </button>
+            <button class="categoria-tab" data-categoria="inegociaveis">
+                <h3>Inegociáveis</h3>
+            </button>
+        </nav>
+
+        <!-- PERGAMINHO DE CONTEÚDO (DIREITA) -->
+        <img src="src/pergaminho.png" class="layer pergaminho" alt="Pergaminho Fundo" onerror="this.src='https://placehold.co/1920x1080/faf2db/ffffff?text=Pergaminho+Fundo'">
+
+        <!-- ÁREA DE ROLAGEM INTERNA DO PERGAMINHO -->
+        <div class="scroll-area" id="parchment-scroll-area">
+            <div class="content" id="itens-container">
+                <!-- Injetado dinamicamente via JavaScript -->
+            </div>
+        </div>
+
+        <!-- VITROLA MUSICAL -->
+        <div class="vitrola" role="button" aria-label="Tocar vitrola clássica de Hogwarts">
+            <img src="src/vitrola.png" class="vitrola-img" alt="Vitrola Vintage" onerror="this.src='https://placehold.co/150x150/d4a359/000000?text=Vitrola'">
+        </div>
+        <button class="vitrola-next site-arrow-button" aria-label="Passar para próxima música do vinil"></button>
+        <audio id="vinyl-audio" src="src/hogsmeade.mp3" preload="auto"></audio>
+    </div>
+
+    <script>
+        // =========================================================================
+        // CARREGAMENTO DO BANCO DE ITENS (itens.json)
+        // =========================================================================
+        let itensDatabase = {};
+
+        async function carregarItens() {
+            try {
+                const resposta = await fetch('itens.json');
+                if (!resposta.ok) throw new Error('Falha ao carregar itens.json');
+                itensDatabase = await resposta.json();
+            } catch (err) {
+                console.warn('Não foi possível carregar itens.json:', err);
+                itensDatabase = {};
+            }
+        }
+
+        // Converte o objeto { id: {...} } em uma lista ordenada e numerada (01, 02, 03...)
+        function obterItensPorCategoria(categoria) {
+            const todos = Object.values(itensDatabase);
+
+            let filtrados;
+            if (categoria === 'galeoes') {
+                filtrados = todos.filter(item => item.classe === 'compravel' && item.custo_galeoes != null);
+            } else if (categoria === 'pms') {
+                filtrados = todos.filter(item => item.classe === 'compravel' && item.custo_pm != null);
+            } else {
+                filtrados = todos.filter(item => item.classe === 'inegociavel');
+            }
+
+            return filtrados.map((item, index) => ({
+                ...item,
+                numero: String(index + 1).padStart(2, '0')
+            }));
+        }
+
+        function formatarCusto(item, categoria) {
+            if (categoria === 'inegociaveis') {
+                return '<span class="item-custo inegociavel-label">Inegociável</span>';
+            }
+            if (categoria === 'galeoes') {
+                const valor = item.custo_galeoes;
+                return `<span class="item-custo"><img src="src/galeoes01.webp" class="custo-icone" alt="Galeões" onerror="this.style.display='none'">${valor} ${valor === 1 ? 'Galeão' : 'Galeões'}</span>`;
+            }
+            const valor = item.custo_pm;
+            return `<span class="item-custo">${valor} PM${valor === 1 ? '' : 's'}</span>`;
+        }
+
+        const titulosCategoria = {
+            galeoes: 'Itens Compráveis por Galeões',
+            pms: 'Itens Compráveis por Pontos Mágicos',
+            inegociaveis: 'Itens Inegociáveis'
+        };
+
+        // =========================================================================
+        // CONTEÚDO ESTÁTICO DA PÁGINA "SISTEMA" (INTRODUÇÃO DO RELICÁRIO)
+        // =========================================================================
+        const sistemaConteudo = {
+            titulo: "Relicário",
+            imagemUrl: "https://i.imgur.com/OWds20s.jpg",
+            introducao: [
+                "As Relíquias podem ter diferentes escalas de importância e poder, assim como o aumento da dificuldade para tê-las. Sejam elas artefatos de família ou de propriedade histórica, algumas podem ser mais difíceis de se conseguir do que outras, e algumas podem até ser compradas.",
+                "Contudo, como em qualquer outro sistema, algumas regras estão estipuladas para evitar possíveis problemas futuros na obtenção de objetos e relíquias mágicas em Hogwarts."
+            ],
+            secoes: [
+                {
+                    titulo: "01. ITENS COMPRÁVEIS",
+                    subtitulo: "por Galeões ou Pontos Mágicos",
+                    texto: "São aquele itens que podem ser adquiridos facilmente no Mundo Bruxo, desde que você tenha os fundos necessários para isso. As compras são feitas automaticamente pelo bot Chapéu Seletor, no discord. Elas podem ser ser feitas no canal #beco-diagonal, no servidor oficial do RPG. E, uma vez tendo efetuado o pedido do item comprável, você só poderá usufruir dele IC se o bot efetuar a compra."
+                },
+                {
+                    titulo: "02. DESCRIÇÃO DE ITENS",
+                    subtitulo: "Aviso sobre Furtos",
+                    texto: "Em caso do item não trazer consigo, em sua introdução descritiva, que trata-se de um \"item encantado com feitiço anti-furto e anti-destruição\" significa, portanto, que o item pode sim ser furtado ou destruído por outro player. Contudo, o furto tem regras próprias que deverão ser consultadas junto à Organização."
+                },
+                {
+                    titulo: "03. LIMITAÇÕES HÁBEIS",
+                    subtitulo: "Avisos sobre o manuseio",
+                    texto: "Não é porque seu personagem angariou uma relíquia que ele sabe utilizá-la. Você também deverá desenvolver seu roleplay aprendendo a utilizar o item, entendendo seus limites e suas serventias. Deve-se sempre, pois, partir do pressuposto que tudo é um mistério para o seu personagem."
+                }
+            ]
+        };
+
+        function renderSistema() {
+            const container = document.getElementById('itens-container');
+
+            gsap.to(container, {
+                opacity: 0,
+                y: 15,
+                duration: 0.22,
+                ease: "power2.in",
+                onComplete: () => {
+                    const introHTML = sistemaConteudo.introducao
+                        .map(p => `<p class="sistema-intro-texto">${p}</p>`)
+                        .join('');
+
+                    const secoesHTML = sistemaConteudo.secoes.map(secao => `
+                        <div class="sistema-secao">
+                            <h4 class="sistema-secao-titulo">${secao.titulo}</h4>
+                            <span class="sistema-secao-subtitulo">${secao.subtitulo}</span>
+                            <p class="sistema-secao-texto">${secao.texto}</p>
+                        </div>
+                    `).join('');
+
+                    container.innerHTML = `
+                        <h2 class="sistema-titulo-principal">${sistemaConteudo.titulo}</h2>
+                        <div class="sistema-imagem-container">
+                            <img src="${sistemaConteudo.imagemUrl}" alt="Relicário" onerror="this.parentElement.style.display='none'">
+                        </div>
+                        ${introHTML}
+                        ${secoesHTML}
+                        <div class="pergaminho-footer">MERCADO MÁGICO • Sistema de Itens e Relíquias</div>
+                    `;
+
+                    parchmentScrollArea.scrollTop = 0;
+
+                    gsap.fromTo(container,
+                        { opacity: 0, y: -15 },
+                        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
+                    );
+                }
+            });
+        }
+
+        function renderCategoria(categoria) {
+            const container = document.getElementById('itens-container');
+            const itens = obterItensPorCategoria(categoria);
+
+            gsap.to(container, {
+                opacity: 0,
+                y: 15,
+                duration: 0.22,
+                ease: "power2.in",
+                onComplete: () => {
+                    let listaHTML = '';
+
+                    if (itens.length === 0) {
+                        listaHTML = `<p class="lista-vazia">Nenhum item cadastrado nesta categoria ainda.</p>`;
+                    } else {
+                        itens.forEach(item => {
+                            listaHTML += `
+                                <div class="item-entry">
+                                    <div class="item-header">
+                                        <span class="item-number">${item.numero}.</span>
+                                        <div class="item-header-text">
+                                            <span class="item-nome">${item.nome}</span>
+                                            ${formatarCusto(item, categoria)}
+                                        </div>
+                                    </div>
+                                    <p class="item-descricao">${item.descricao}</p>
+                                </div>
+                            `;
+                        });
+                    }
+
+                    container.innerHTML = `
+                        <div class="categoria-titulo">${titulosCategoria[categoria]}</div>
+                        ${listaHTML}
+                        <div class="pergaminho-footer">MERCADO MÁGICO • Itens e Relíquias</div>
+                    `;
+
+                    parchmentScrollArea.scrollTop = 0;
+
+                    gsap.fromTo(container,
+                        { opacity: 0, y: -15 },
+                        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
+                    );
+                }
+            });
+        }
+
+        function setupCategoriaTabs() {
+            const tabs = document.querySelectorAll('.categoria-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    if (tab.classList.contains('active')) return;
+
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    const categoria = tab.getAttribute('data-categoria');
+                    if (categoria === 'sistema') {
+                        renderSistema();
+                    } else {
+                        renderCategoria(categoria);
+                    }
+                });
+            });
+        }
+
+        const parchmentScrollArea = document.getElementById('parchment-scroll-area');
+
+        // =========================================================================
+        // SISTEMA DE ÁUDIO E TRILHA SONORA DA VITROLA
+        // =========================================================================
+        const vitrola = document.querySelector('.vitrola');
+        const nextBtn = document.querySelector('.vitrola-next');
+        const audio = document.getElementById('vinyl-audio');
+
+        const tracks = ['hogsmeade.mp3', 'becodiagonal.mp3', 'housecup.mp3', 'overtue.mp3'];
+        const trackBasePath = 'src/';
+        let currentTrackIndex = 0;
+
+        function updateNextButton() {
+            if (audio.paused) {
+                nextBtn.classList.remove('visible');
+            } else {
+                nextBtn.classList.add('visible');
+            }
+        }
+
+        function setTrack(index) {
+            currentTrackIndex = ((index % tracks.length) + tracks.length) % tracks.length;
+            const fullPath = `${trackBasePath}${tracks[currentTrackIndex]}`;
+            audio.src = fullPath;
+            audio.load();
+        }
+
+        async function playTrack() {
+            try {
+                await audio.play();
+                vitrola.classList.add('playing');
+                updateNextButton();
+            } catch (err) {
+                console.warn("Autoplay impedido ou áudios locais indisponíveis:", err);
+            }
+        }
+
+        vitrola.addEventListener('click', () => {
+            if (audio.paused) {
+                playTrack();
+            } else {
+                audio.pause();
+                vitrola.classList.remove('playing');
+                updateNextButton();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            setTrack(currentTrackIndex + 1);
+            playTrack();
+        });
+
+        audio.addEventListener('ended', () => {
+            setTrack(currentTrackIndex + 1);
+            playTrack();
+        });
+
+        // =========================================================================
+        // DISPARADORES NO CARREGAMENTO DA PÁGINA
+        // =========================================================================
+        window.addEventListener('DOMContentLoaded', () => {
+            setupCategoriaTabs();
+            carregarItens();
+            renderSistema();
+            setTrack(currentTrackIndex);
+
+            gsap.from('.categoria-tab', {
+                opacity: 0,
+                x: -30,
+                duration: 0.65,
+                stagger: 0.07,
+                ease: "power2.out",
+                onComplete: () => {
+                    gsap.set('.categoria-tab', { clearProps: "transform" });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

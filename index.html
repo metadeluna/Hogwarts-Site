@@ -8,6 +8,7 @@
     <!-- Tailwind CDN para estilização rápida e adaptativa -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <!-- Dependência do GSAP para transições mágicas e fluidas de tela -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
@@ -149,7 +150,6 @@
                 flex-wrap: wrap;
                 row-gap: 1.5rem;
             }
-        }
     </style>
 </head>
 
@@ -163,27 +163,26 @@
         <div class="gifs"></div>
 
         <!-- Layout Central de Quadros do seu RPG -->
-        <div class="quadros-container flex justify-center items-center h-screen gap-6">
-            <div class="quadro quadro1 hover-left" data-title="Mural" style="--mask-left:25%; --mask-top:20%; --mask-width:64%; --mask-height:64%; --mask-image-fit:cover; --mask-image-position:center center;">
-                <div class="quadro-mask">
-                    <div class="mask-inner">
-                        <img src="" class="mask-image" alt="Conteúdo do quadro 1">
-                    </div>
-                </div>
-                <img src="src/mural.png" class="quadro-frame" alt="Quadro 1 frame">
-            </div>
+<div class="quadro quadro1 hover-left" data-title="Mural" style="--mask-left:25%; --mask-top:20%; --mask-width:64%; --mask-height:64%; --mask-image-fit:cover; --mask-image-position:center center;">
+    <div class="quadro-mask">
+        <div class="mask-inner">
+            <img src="" class="mask-image" alt="Conteúdo do quadro 1">
+        </div>
+    </div>
+    <img src="src/mural.png" class="quadro-frame" alt="Quadro 1 frame">
+</div>
+<div class="site-hover-title quadro1-banner">Mural</div>
 
-            <div class="quadro quadro2 hover-right" data-title="Memorandos" style="--mask-left:6%; --mask-top:17%; --mask-width:100%; --mask-height:65%; --mask-image-fit:cover; --mask-image-position:center center; --mask-image-crop-bottom:-40%; --mask-image-crop-left:-14%; --border-radius:70%;">
-                <div class="quadro-mask">
-                    <div class="mask-inner">
-                        <img src="src/GIFS/memorando.gif" class="mask-image" alt="Conteúdo do quadro 2">
-                    </div>
-                </div>
-                <img src="src/quadro2.png" class="quadro-frame" alt="Quadro 2 frame">
-            </div>
+<div class="quadro quadro2 hover-right" data-title="Memorandos" style="--mask-left:6%; --mask-top:17%; --mask-width:100%; --mask-height:65%; --mask-image-fit:cover; --mask-image-position:center center; --mask-image-crop-bottom:-40%; --mask-image-crop-left:-14%; --border-radius:70%;">
+    <div class="quadro-mask">
+        <div class="mask-inner">
+            <img src="src/GIFS/memorando.gif" class="mask-image" alt="Conteúdo do quadro 2">
+        </div>
+    </div>
+    <img src="src/quadro2.png" class="quadro-frame" alt="Quadro 2 frame">
+</div>
+<div class="site-hover-title quadro2-banner">Memorandos</div>
 
-            <div class="site-hover-title quadro1-banner">Mural</div>
-            <div class="site-hover-title quadro2-banner">Memorandos</div>
 
             <div class="quadro quadro3" data-title="Biblioteca" style="--mask-left:13%; --mask-top:16%; --mask-width:75%; --mask-height:75%; --mask-image-left:0; --mask-image-top:0; --mask-image-width:100%; --mask-image-height:100%; --mask-image-fit:cover; --mask-image-position:center center;">
                 <div class="quadro-mask">
@@ -195,15 +194,17 @@
                 <div class="site-hover-title">Biblioteca</div>
             </div>
 
-            <div class="quadro quadro4" data-title="Sistemas" style="--mask-left:6%; --mask-top:2%; --mask-width:89%; --mask-height:85%; --mask-image-fit:cover; --mask-image-position:center center; --mask-image-crop-top:10%; --mask-image-crop-bottom:-20%;">
-                <div class="quadro-mask">
-                    <div class="mask-inner">
-                        <img src="src/GIFS/sistemas2.gif" class="mask-image" alt="Conteúdo do quadro 4">
-                    </div>
-                </div>
-                <img src="src/quadro4.png" class="quadro-frame" alt="Quadro 4 frame">
-                <div class="site-hover-title">Sistemas</div>
+<a href="/sistemas.html" class="quadro-link" style="text-decoration: none; display: block;">
+    <div class="quadro quadro4" data-title="Sistemas" style="--mask-left:6%; --mask-top:2%; --mask-width:89%; --mask-height:85%; --mask-image-fit:cover; --mask-image-position:center center; --mask-image-crop-top:10%; --mask-image-crop-bottom:-20%;">
+        <div class="quadro-mask">
+            <div class="mask-inner">
+                <img src="src/GIFS/sistemas2.gif" class="mask-image" alt="Conteúdo do quadro 4" >
             </div>
+        </div>
+        <img src="src/quadro4.png" class="quadro-frame" alt="Quadro 4 frame">
+        <div class="site-hover-title">Sistemas</div>
+    </div>
+</a>
 
             <div class="quadro quadro5" data-title="Maestrias" style="--mask-left:0; --mask-top:0; --mask-width:100%; --mask-height:100%; --mask-image-fit:cover; --mask-image-position:center center; cursor: pointer;">
                 <div class="quadro-mask">
@@ -1106,7 +1107,29 @@ data.levels.forEach((lvl, index) => {
             maestriasQuadro.removeAttribute('onclick'); 
             maestriasQuadro.addEventListener('click', openMaestriasPage);
         }
+
+// ==========================================
+// REDIRECIONAMENTO DOS QUADROS 1 E 2
+// ==========================================
+const quadroMural = document.querySelector('.quadro1');
+const quadroMemorandos = document.querySelector('.quadro2');
+
+if (quadroMural) {
+    quadroMural.style.cursor = 'pointer';
+    quadroMural.addEventListener('click', () => {
+        window.location.href = '/mural.html';
+    });
+}
+
+if (quadroMemorandos) {
+    quadroMemorandos.style.cursor = 'pointer';
+    quadroMemorandos.addEventListener('click', () => {
+        window.location.href = '/memorandos.html';
+    });
+}
     </script>
+
+
 </body>
 
 </html>

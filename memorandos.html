@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memorandos — Hogwarts</title>
+    <!-- Tailwind CSS para estruturação responsiva básica -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP para animações mágicas de transição -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+            font-family: 'Georgia', serif;
+        }
+
+        /* =========================================================================
+           FONTES PERSONALIZADAS COM FALLBACK SEGURO
+           ========================================================================= */
+        @font-face {
+            font-family: 'Hogwarts-Titulo';
+            src: url('src/fonts/CitadelofBlackrose.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Hogwarts-Paragrafo';
+            src: url('src/fonts/Philosopher-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Hogwarts-SubTitulo';
+            src: url('src/fonts/OPTIColumna-Solid.otf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .hogwarts-title {
+            font-family: 'Hogwarts-Titulo', 'Georgia', serif;
+        }
+
+        .hogwarts-subtitle {
+            font-family: 'Hogwarts-SubTitulo', 'Times New Roman', serif;
+            letter-spacing: 2px;
+        }
+
+        .hogwarts-paragraph {
+            font-family: 'Hogwarts-Paragrafo', 'Georgia', serif;
+        }
+
+        /* =========================================================================
+           CENA PRINCIPAL E REVESTIMENTO
+           ========================================================================= */
+        #scene {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .layer,
+        .gifs,
+        .logo,
+        .scroll-area {
+            position: absolute;
+        }
+
+        .background {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            left: 0;
+            top: 0;
+            object-position: center center;
+            z-index: 1;
+        }
+
+        .gifs {
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* =========================================================================
+           BANDEIRA FLUTUANTE DE CABEÇALHO (CANTO SUPERIOR ESQUERDO)
+           ========================================================================= */
+        .hanging-banner {
+            position: absolute;
+            left: 2vw;
+            top: 1.5rem;
+            width: 260px;
+            height: 320px;
+            background: url('src/ui/Banner_bandeira.png') no-repeat center center;
+            background-size: 100% 100%;
+            z-index: 25;
+            padding: 4.2rem 1.6rem 1.6rem 1.6rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-radius: 0 0 6px 6px;
+            animation: bannerSway 6s ease-in-out infinite;
+            transform-origin: top center;
+        }
+
+        @keyframes bannerSway {
+            0%, 100% { transform: rotate(0.4deg); }
+            50% { transform: rotate(-0.4deg); }
+        }
+
+        .hanging-banner h2 {
+            font-size: 1.25rem;
+            color: #ffd88a;
+            text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.95);
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+            font-family: 'Hogwarts-SubTitulo', serif;
+        }
+
+        .hanging-banner p {
+            font-size: 0.8rem;
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+            line-height: 1.45;
+            font-style: italic;
+            font-family: 'Hogwarts-Paragrafo', sans-serif;
+        }
+
+        /* BOTÃO DE VOLTAR - AMPLIADO E CENTRALIZADO NO MEIO VERTICAL ESQUERDO */
+        #back-from-memorandos {
+            position: absolute;
+            left: 2vw;
+            top: 60%;
+            transform: translateY(-50%) rotate(180deg);
+            width: 5.2rem;
+            height: 5.2rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.25s ease;
+        }
+
+        #back-from-memorandos:hover {
+            transform: translateY(-50%) rotate(180deg) scale(1.12);
+            filter: brightness(1.25);
+        }
+
+        #back-from-memorandos::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('src/ui/banner-seta.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 145%;
+            z-index: 1;
+        }
+
+        #back-from-memorandos::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('src/ui/seta-aponta-direita.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 50%;
+            z-index: 2;
+        }
+
+        /* =========================================================================
+           MENU DE MEMORANDOS (BOTÕES LATERAIS)
+           ========================================================================= */
+        .categorias-sidebar {
+            position: absolute;
+            left: 24%;
+            top: 11vh;
+            width: 20vw;
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            z-index: 15;
+            padding-left: 20px;
+        }
+
+        .categoria-tab {
+            position: relative;
+            width: 100%;
+            min-height: 58px;
+            background: url('src/ui/banner-titulo.png') no-repeat center center !important;
+            background-size: 100% 100% !important;
+            background-color: transparent !important;
+            border: none !important;
+            padding: 0.3rem 1.2rem;
+            color: #f7e6ca;
+            text-align: center;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform-origin: left center;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+        }
+
+        .categoria-tab h3 {
+            font-size: 0.85rem;
+            color: #ffd88a;
+            text-shadow: 1px 1.5px 2px rgba(0, 0, 0, 0.95);
+            font-weight: bold;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            line-height: 1.1;
+            font-family: 'Hogwarts-SubTitulo', serif;
+        }
+
+        .categoria-tab:hover:not(.active) {
+            transform: scale(1.02) translateX(8px);
+            filter: brightness(1.2) drop-shadow(0 0 6px rgba(255, 215, 122, 0.35));
+        }
+
+        .categoria-tab.active {
+            transform: scale(1.04) translateX(22px);
+            filter: brightness(1.35) drop-shadow(0 0 10px rgba(255, 222, 140, 0.6));
+        }
+
+        /* =========================================================================
+           PERGAMINHO & ÁREA DE CONTEÚDO (DIREITA)
+           ========================================================================= */
+        .pergaminho {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            object-position: center center;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        .scroll-area {
+            z-index: 6;
+            left: 53.5%;
+            top: 10vh;
+            width: 26.5vw;
+            height: 76vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 15px;
+            scrollbar-gutter: stable;
+        }
+
+        .scroll-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scroll-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .scroll-area::-webkit-scrollbar-thumb {
+            background: #8e6c43;
+            border-radius: 10px;
+            border: 2px solid transparent;
+        }
+
+        .content {
+            width: 100%;
+            height: auto;
+            padding: 5px 10px 50px 10px;
+            color: #120802;
+            font-size: clamp(12px, 1.05vw, 16px);
+            line-height: 1.55;
+            text-align: justify;
+        }
+
+        .pergaminho-footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(92, 65, 46, 0.9);
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        /* =========================================================================
+           BLOCOS DE CONTEÚDO GENÉRICOS (PADRÃO REUTILIZÁVEL DE "SISTEMA")
+           ========================================================================= */
+
+        /* Título principal do sistema */
+        .bloco-titulo-principal {
+            font-family: 'Hogwarts-SubTitulo', 'Georgia', serif;
+            font-size: clamp(1.6rem, 2.4vw, 2.6rem);
+            font-weight: bold;
+            color: #120802;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.2rem;
+        }
+
+        /* Bloco de imagem */
+        .bloco-imagem {
+            width: 100%;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5), 0 3px 6px rgba(0, 0, 0, 0.15);
+            margin-bottom: 1.4rem;
+            background: #201711;
+        }
+
+        .bloco-imagem img {
+            width: 100%;
+            height: auto;
+            max-height: 240px;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(0.2) sepia(0.2) contrast(1.1);
+        }
+
+        /* Bloco de texto comum */
+        .bloco-texto {
+            font-family: 'Hogwarts-Paragrafo', 'Georgia', serif;
+            font-size: 0.92rem;
+            color: #1e0e03;
+            text-align: justify;
+            line-height: 1.6;
+            margin-bottom: 0.9rem;
+        }
+
+        .bloco-texto .drop-cap {
+            float: left;
+            font-family: 'Georgia', serif;
+            font-size: clamp(3.2rem, 4vw, 4.8rem);
+            line-height: 0.75;
+            padding-top: 4px;
+            padding-right: 10px;
+            padding-left: 2px;
+            color: #241906;
+            font-weight: bold;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Subtítulo de seção (não-acordeão) */
+        .bloco-subtitulo {
+            display: block;
+            font-family: 'Hogwarts-SubTitulo', serif;
+            font-size: clamp(1rem, 1.2vw, 1.3rem);
+            font-weight: bold;
+            color: #120802;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin: 1.6rem 0 0.5rem 0;
+        }
+
+        /* Divisória mágica entre blocos */
+        .bloco-divisoria {
+            width: 70%;
+            max-width: 200px;
+            height: auto;
+            margin: 1.4rem auto;
+            display: block;
+            opacity: 0.85;
+        }
+
+        /* Lista numerada (regras, ações, etc.) */
+        .bloco-lista {
+            list-style: none;
+            counter-reset: bloco-lista-contador;
+            margin-bottom: 0.9rem;
+            padding-left: 0;
+        }
+
+        .bloco-lista li {
+            counter-increment: bloco-lista-contador;
+            position: relative;
+            padding-left: 2.1rem;
+            margin-bottom: 0.85rem;
+            font-family: 'Hogwarts-Paragrafo', 'Georgia', serif;
+            font-size: 0.92rem;
+            color: #1e0e03;
+            text-align: justify;
+            line-height: 1.55;
+        }
+
+        .bloco-lista li::before {
+            content: counter(bloco-lista-contador) ".";
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-family: 'Georgia', serif;
+            font-weight: bold;
+            color: #b38530;
+            font-size: 0.95rem;
+        }
+
+        /* =========================================================================
+           SEÇÕES EM ACORDEÃO
+           ========================================================================= */
+        .acordeao-secao {
+            margin-bottom: 0.9rem;
+            border: 1px solid rgba(92, 65, 46, 0.35);
+            border-radius: 6px;
+            background: rgba(246, 237, 219, 0.55);
+            overflow: hidden;
+        }
+
+        .acordeao-cabecalho {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 0.9rem 1.1rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            font-family: 'Hogwarts-SubTitulo', serif;
+            font-size: 0.98rem;
+            font-weight: bold;
+            color: #120802;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            transition: background 0.25s ease;
+        }
+
+        .acordeao-cabecalho:hover {
+            background: rgba(179, 133, 48, 0.12);
+        }
+
+        .acordeao-cabecalho .acordeao-icone {
+            font-family: 'Georgia', serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #b38530;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .acordeao-secao.aberta .acordeao-cabecalho .acordeao-icone {
+            transform: rotate(45deg);
+        }
+
+        .acordeao-corpo {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+            padding: 0 1.1rem;
+        }
+
+        .acordeao-secao.aberta .acordeao-corpo {
+            padding: 0 1.1rem 1.1rem 1.1rem;
+        }
+
+        .acordeao-corpo .bloco-texto,
+        .acordeao-corpo .bloco-lista,
+        .acordeao-corpo .bloco-subtitulo {
+            margin-top: 0;
+        }
+
+        .acordeao-corpo .bloco-subtitulo {
+            font-size: 0.92rem;
+            margin: 1.1rem 0 0.4rem 0;
+        }
+
+        .acordeao-corpo .bloco-subtitulo:first-child {
+            margin-top: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="scene">
+        <!-- BANDEIRA FLUTUANTE DE DETALHES (CABEÇALHO) -->
+        <div class="hanging-banner" id="hanging-banner-memorandos">
+            <h2>Memorandos</h2>
+            <p>Publicações de caráter extra e bônus, sem relação direta com o conteúdo do RPG escrito neste site.</p>
+        </div>
+
+        <!-- BOTÃO VOLTAR PERSONALIZADO -->
+        <button id="back-from-memorandos" onclick="window.location.href='index.html'" aria-label="Voltar para o menu principal de Hogwarts"></button>
+
+        <!-- FUNDO INTEGRADO AO RPG -->
+        <img src="src/background.png" class="layer background" alt="Cenário do Salão Comunal" onerror="this.src='https://placehold.co/1920x1080/1a120b/d4a359?text=Salao+Comunal+Hogwarts'">
+
+        <div class="gifs"></div>
+
+        <!-- MENU DE MEMORANDOS (BOTÕES) -->
+        <nav class="categorias-sidebar" aria-label="Menu de Memorandos do RPG">
+            <button class="categoria-tab active" data-sistema="agradecimentos">
+                <h3>Agradecimentos</h3>
+            </button>
+            <button class="categoria-tab" data-sistema="inmemoriam">
+                <h3>In Memoriam</h3>
+            </button>
+        </nav>
+
+        <!-- PERGAMINHO DE CONTEÚDO (DIREITA) -->
+        <img src="src/pergaminho.png" class="layer pergaminho" alt="Pergaminho Fundo" onerror="this.src='https://placehold.co/1920x1080/faf2db/ffffff?text=Pergaminho+Fundo'">
+
+        <!-- ÁREA DE ROLAGEM INTERNA DO PERGAMINHO -->
+        <div class="scroll-area" id="parchment-scroll-area">
+            <div class="content" id="memorandos-container">
+                <!-- Injetado dinamicamente via JavaScript -->
+            </div>
+        </div>
+
+        <!-- VITROLA MUSICAL -->
+        <div class="vitrola" role="button" aria-label="Tocar vitrola clássica de Hogwarts">
+            <img src="src/vitrola.png" class="vitrola-img" alt="Vitrola Vintage" onerror="this.src='https://placehold.co/150x150/d4a359/000000?text=Vitrola'">
+        </div>
+        <button class="vitrola-next site-arrow-button" aria-label="Passar para próxima música do vinil"></button>
+        <audio id="vinyl-audio" src="src/hogsmeade.mp3" preload="auto"></audio>
+    </div>
+
+    <script>
+        // =========================================================================
+        // BANCO DE DADOS DOS MEMORANDOS — CADA SISTEMA É UMA LISTA DE "BLOCOS"
+        // =========================================================================
+        // Tipos de bloco suportados:
+        //   { tipo: "titulo", texto: "..." }
+        //   { tipo: "imagem", url: "...", alt: "..." }
+        //   { tipo: "subtitulo", texto: "..." }
+        //   { tipo: "texto", texto: "...", dropCap: "X" (opcional) }
+        //   { tipo: "lista", itens: ["...", "..."] }
+        //   { tipo: "divisoria" }
+        //   { tipo: "acordeao", titulo: "...", blocos: [ ...blocos internos... ] }
+        const memorandosDatabase = {
+            "agradecimentos": {
+                titulo: "Memorandos",
+                blocos: [
+                    { tipo: "titulo", texto: "Créditos" },
+                    { tipo: "imagem", url: "https://i.imgur.com/3Gpnfpr.jpg", alt: "Agradecimentos" },
+                    {
+                        tipo: "texto",
+                        dropCap: "P",
+                        texto: " ela <strong>realização e execução do projeto do nosso RPG da temática 'Hogwarts', credita-se as seguintes entidades:</strong>"
+                    },
+                    {
+                        tipo: "texto",
+                        texto: "Pela implementação dos quartos, créditos ao <strong>Trovatto</strong>, que emprestou a conta <strong>CastWizarding</strong> para a realização do RPG. Ademais, creditamos a Light pela construção de quartos complementares."
+                    },
+                    {
+                        tipo: "texto",
+                        texto: "Pelo embasamento, inspiração e reutilização para criação de alguns conteúdos sobre 'Mercado Mágico', agradecemos <strong>Max, Laurel, Vinicius Monteiro, Ettrian e Marc</strong>, além de todo o corpo organizacional da <strong>Hogwarts 1991 (hogwarts-1991.tumblr.com) </strong>."
+                    },
+                    {
+                        tipo: "texto",
+                        texto: "É valido relembrar que este RPG e todo o seu conteúdo original pertence a <strong>Light, Max, Sredle e Themora.</strong>"
+                    },
+
+                    {
+                        tipo: "texto",
+                        texto: "Pelo funcionamento prático do projeto, assim como o desenvolvimento de tramas, núcleos e eventos dentro do RPG, créditos a toda a incrível equipe composta pela organização, veteranos e professores: <strong>Light, Max, Sredle, Themora, Huagge, Thai, Chase, Deville, Rowan.</strong>"
+                    },
+
+                    {
+                        tipo: "texto",
+                        texto: "<strong>Pela realização de projetos da temática Mundo Bruxo previamente ao atual, credita-se:</strong.."
+                    },
+
+                    { tipo: "lista",
+                         itens: [
+                        "DrBlack (2006), por Hogwarts",
+                        "Alvo.Dumbledore (2008), por Hogwarts e Vilarejo de Hogsmeade",
+                         ".Felipe.S.Flach (2009), por Hogwarts e Spell CampS",
+                         "Tenebro (2010), por Hogwarts",
+                         "CedBr (2011), por Hogwarts",
+                         "Mr.Lumiere (2011), por Hogwarts",
+                         "Al-Dumbledore (2012), por Hogwarts, Sociedade Bruxa e Durmstrang",
+                         "Dellaris (2012), por Hogwarts",
+                         "Furio (2013), por Sociedade Bruxa",
+                         "Toute (2013), por Hogwarts",
+                         "Avannah (2015), por Spell Camp",
+                         "Tamroc (2015) por Sociedade Bruxa",
+                         "Aldebaron (2018), por Hogwarts",
+                         "Apollaris (2019), por Hogwarts",
+                         "Arweris (2020), por Fortaleza Fidelius",
+                         "Light (2020), por Hogwarts Witchery",
+                         "Vulchanov (2020), por Durmstrang",
+                         "Nothie e Eathelyn (2020), por Castelobruxo",
+                         "Taurwen (2021), por Hogwarts",
+                         "Eathelyn e Canarie (2021), por Castelobruxo",
+                         "Ojesed (2022), por Hogwarts",
+                         "Auror (2022), por Ordem dos 27",
+                         "Incantatem (2022), por Refúgio Incantatem",
+                         "Amaryllie (2023), por Beauxbatons"
+                                ]
+                         },
+                    
+                ]
+            },
+            "inmemoriam": {
+                titulo: "Memorandos",
+                blocos: [
+                    { tipo: "titulo", texto: "In Memoriam" },
+                    { tipo: "imagem", url: "https://i.imgur.com/3Gpnfpr.jpg", alt: "In Memoriam" },
+
+                    {
+                        tipo: "texto",
+                        dropCap: "E",
+                        texto: " m nome de todos aqueles que entraram para a história."
+                    },
+
+                    { tipo: "titulo", texto: "A" },
+                    { tipo: "lista",
+                         itens: [
+                        "A. Kobayashi", 
+                        "A. Ogundimo", 
+                        "Aaralyn Albatrox", 
+                        "Aaron Cardwick", 
+                        "Aaron Carson", 
+                        "Aaron Verhoeven", 
+                        "Aart Keer", 
+                        "Abel Duncombe", 
+                        "Abel Tremblay", 
+                        "Abigail Grant", 
+                        "Abigail Travers", 
+                        "Abraxas Greenwood", 
+                        "Acacia Howffer", 
+                        "Acacia Opry", 
+                        "Ace Lionheart", 
+                        "Ace Sangster", 
+                        "Acrux Crannel", 
+                        "Ada Carthwright", 
+                        "Adam Callegher", 
+                        "Adam Cavanaugh", 
+                        "Adam Greengrass", 
+                        "Adam Monfort", 
+                        "Adam Rees", 
+                        "Addison Nott", 
+                        "Adelina Dourado", 
+                        "Adella Brancaster", 
+                        "Adler McLaggen", 
+                        "Adrian Kauanzo", 
+                        "Adrian Moogreyd", 
+                        "Adrian Pendragon", 
+                        "Adrien Hillt", 
+                        "Adrien Lauthier", 
+                        "Aduf Adkins", 
+                        "Agatha Murray", 
+                        "Agatha Sharcock", 
+                        "Agatha Southeil", 
+                        "Agnes Burbidge", 
+                        "Agnes Erenkyl", 
+                        "Agnes Losnedahl", 
+                        "Agnes Scabior", 
+                        "Aiden Bordeaux", 
+                        "Aiden Nixon", 
+                        "Aiden ONeill", 
+                        "Aird Olsen", 
+                        "Aiwass Crownley", 
+                        "Ajax Legrand", 
+                        "Akshara Patel", 
+                        "Alabie Shafiq", 
+                        "Alain Dean", 
+                        "Alasca Sperrow", 
+                        "Alaska Monsoon", 
+                        "Alastair Cunningham", 
+                        "Alastair Nott", 
+                        "Alastiel Grewt", 
+                        "Alberich Madtopper", 
+                        "Aldrich Leonhart", 
+                        "Alec Blight", 
+                        "Alec Courdett", 
+                        "Alec Gibbon", 
+                        "Alec Greymmond", 
+                        "Alec Printky", 
+                        "Alecia Carrow", 
+                        "Alecia Folchart", 
+                        "Alek Krawl", 
+                        "Alena Hurley", 
+                        "Alenna Horbach", 
+                        "Alesso Voelkel", 
+                        "Alesteir Crowley", 
+                        "Alex Kim", 
+                        "Alex Purplemoon", 
+                        "Alexa Albatrox", 
+                        "Alexa Selwyn", 
+                        "Alexander Minteoun", 
+                        "Alexis Vargas", 
+                        "Alfie Goodwin", 
+                        "Ali Plasticine", 
+                        "Alice Chambber", 
+                        "Alice Crane", 
+                        "Alice Delacour", 
+                        "Alice Dunf", 
+                        "Alicent Bristow", 
+                        "Alickina 'Ali' Wichbest", 
+                        "Alina Blavatsky", 
+                        "Alina Skovgaard", "Alina Zukyanova", "Alison Lovelook", "Ally Othersiack", "Alma Greengrass", "Alonso Huerta", "Alonso Santoyo", "Alphonse LeSueur", "Alren Nightwood", "Althea Fawcett", "Althea Leavitt", "Alyssa Dovetail", "Alysterir Deglak", "Amabella Nott", "Amala Lanvin", "Aman Patterjee", "Amanda Botelho", "Amanita Styx", "Amaryllie Lamonier", "Amber Sinclair", "Amber Voelkel", "Amber Weirhold", "Ambrose LaBow", "Ambrose Wiser", "Amelia Ormond", "Amelie Handrelt", "Amelie Malkov", "America Lynch", "Amerigo Martinni", "Amity Dairpott", "Amos Carrow", "Amos Royce", "Amos Whitlock", "Amoux Pottinger", "Amrash Kanwal", "Amy Maidenkine", "Ana Gamplar", "Ana Lidenbrok", "Anakin Lowell", "Anastacio Odds", "Anastasia Beaufoy", "Anastasia Malkov", "Anders Chaloner", "Andras Travers", "Andreas Biancucchi", "Andreas Versalius", "Andrew Atkinson", "Andrew Bathory", "Andrew Huang", "Andrew Koston", "Andromeda Moody", "Andros Leonhart", "Andrzej Rurkan", "Andy Camentodd", "Andy Jones", "Andy Karloff", "Andy Milsteiner", "Angela Albatrox", "Angelica Hyde", "Angelina Piaf", "Angelle Cartier", "Angelo LaBarthe", "Angelo Verhoeven", "Angelus Valencourt", "Anna Fairchild", "Annabeth Jones", "Annebeth Petrova", "Annelise Telles", "Ansel Hawley", "Antoine Nott", "Antonela Selwyn", "Antônio Bofronte", "Antwan Mopp", "Apolineu Branderburger", "Apollaris", "Apollo Monroe", "Apolo Villanova", "Aquaria Malfoy", "Aquarius Fowl", "Arabella Berry", "Arceus Lestrange", "Arch Burbidge", "Archer Hassan", "Archibald Fowl", "Archie Westerkamp", "Aren Okoye", "Argos Villin", "Argus Windham", "Aria Cavanaugh", "Aria Dumbledore", "Aria Endhawtt", "Ariel Redfield", "Ariella Seydoux", "Arista Dashwood", "Arizon Crannel", "Arlo Lestrange", "Arnaud Rooks", "Artas Malliyev", "Artemis Travers", "Artemisia White", "Arthas Cromloo", "Arthur Duarte", "Arthur Russel", "Arthur Wheeler", "Artie Cromloo", "Arya Ahmed", "Arya Vogelmann", "Asa McTargett", "Asakami Hisui", "Asakami Hisuia", "Asani Okoye", "Ash Ellsword", "Ash Evans", "Ashley Oddling", "Ashlin Wendelin", "Ashton Bloodworth", "Ast Longbottom", "Astoria Charlton", "Astrid Bjorndonttir", "Astrid Lestrange", "Astrid Pravenov", "Athene Dairpott", "Atlas Rotherham", "Atreus Axford", "Aubrey Handrelt", "Audrey Douglas", "Audrey Gallen", "August Lewin", "August Loviest", "August Vicent", "Augustine Everett", "Augustus Earle", "Augustus Pevensie", "Aura Goldrudder", "Auro Dumbledore", "Aurora Dawnvern", "Aurora Landvett", "Aurora McCarthy", "Austin Collier", "Austin Laglie", "Austine Sardothien", "Ava Bradwitt", "Ava Greengrass", "Avalon Heisler", "Averil Wendelin", "Avery Cardwick", "Avery Cunningham", "Avery Pearl", "Avis Minks", "Axel Hendeston", "Axell Clifford Vizla", "Axl Dwyer", "Ayla Aysel", "Ayo Nzeogwu", "Ayo Zunduri", "Ayzen Silver", "Azir Linklater", "Azucena Madero"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "B" },
+                    { tipo: "lista",
+                         itens: [
+                        "Babu Kassoma", "Bacco Veslpucy", "Bahir Hakim", "Bailey Ledwith", "Bakery Carter", "Baldit Lopez", "Baldoretta Baldor", "Baldur Rosciano", "Baltazar Tremblay", "Baltazhar Avery", "Balthazar", "Barba LaCourt", "Barnabas Selway", "Bart Waldorf", "Bartzen Bengelmer", "Bea LeBlanc", "Beau Flavigni", "Belladona Lestrange", "Ben Atwell", "Ben Denbrough", "Ben Greenfeld", "Ben Vaughn", "Benjamin LaCourt", "Benjamin Nabar", "Benjamin Price", "Benjamin Wearlodge", "Benjicot Pompey", "Bernadine Hooke", "Bernard Hughes", "Berto Burke", "Bianca Lopes", "Billy Parkinson", "Bjorn Steensen", "Blaine Azurita", "Blair Griffin", "Blair Horowitz", "Bliss Mensaett", "Blob Frost", "Blumos", "Bobby Parkinson", "Bolena Borgham", "Bon Fishclaw", "Bonnie Flavigni", "Bonnie Lynch", "Boony Parkinson", "Boris Yakolev", "Bóris, o gambozino", "Boyd Ludwig", "Branko Horvat", "Braun Reinhardt", "Brett Agnew", "Brett Orthraw", "Brian Gallagher", "Brianna Helfotz", "Bridge Noctus", "Bruce Hunboldt", "Bruna Monteiro", "Brutus Godunov", "Bryan Colonomou", "Bryan Kehl", "Bryan W. Bool", "Byno", "Byron Nott"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "C" },
+                    { tipo: "lista",
+                         itens: [
+                        "C. Walsh", "Caden Prescott", "Cadmian Hershaw", "Cadmus Ordway", "Cadmus Valencourt", "Caelestis Roux", "Caim Tremblay", "Cain Blavatsky", "Cain Scamander", "Caitlyn Baxter", "Caius Guevara", "Calina Ramsey", "Calliope Danves", "Calliope Scamander", "Callista Black", "Callista Scamander", "Calvin Hanson", "Camden Headfort", "Cameron Laydrer", "Camille Claudel", "Camille LaCourt", "Camille Sângea", "Cara Fassbender", "Carissa Romani", "Carl Danvers", "Carmel Mercer", "Carmela Laine", "Carmen Salvatore", "Carmen Sandiego", "Caroline Rowle", "Carter Buchmann", "Carter Losnedahl", "Casey Woolridge", "Caspian Lisburn", "Caspian Seafarer", "Cassandra Owens", "Cassie Montequio", "Cassie Rohrbach", "Castel Guevara", "Catherine Rosier", "Cathy Sheridan", "Cecil Heather", "Cedric Wakstok", "Celestia Deorwine", "Celia Jamerson", "Celicia Ludlow", "Celina Hardrow", "Celine Byrne", "Celine Watts", "Cesar Heartorn", "Cesar Hurley", "Chandler Owen", "Chang Lii", "Chantal Verhoeven", "Charles Gardner", "Charles Preston", "Charlie Atwood", "Charlie Beaufort", "Charlos Eugid", "Charlotte Fitz", "Charlotte Piaf", "Cherry Flavour", "Cheryl Whitbourne", "Chiamaka Abaddu", "Chiaro Chandriano", "Chrétien Dupont", "Chris Blunt", "Chris Griffin", "Chris Hecthren", "Christian Okoye", "Christopher Diaz", "Christopher Morris", "Cian Penttrey", "Cicero Dolohov", "Claire Delahoy", "Claire Dunaway", "Claire-Antoinette Dulevant", "Clara Lafaiete", "Clare Spengler", "Clarissa Warbreaker", "Clark Schmuller", "Clary Santiago", "Claude Dupont", "Claudinho Melo", "Clive Tumnus", "Coby Nassir", "Cody Hayter", "Cody Russell", "Cole Blanchard", "Collin Jackson", "Connifer Longsworth", "Connor Derwent", "Conor Armstrong", "Conrad Turner", "Conrad Weasley", "Conrado Rowle", "Cora Grimley", "Cordelia Rowle", "Corey Bridge", "Corina Wettiowl", "Cornelius Sauvierre", "Corvus Black", "Corvus Maverick", "Cory Rudson", "Cory Wheeler", "Craig Kilborn", "Cristopher Marin", "Crystal Duval", "Crystal Sparkles", "Cygnus Windham", "Cyrill Wilkes", "Cyrus Albright"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "D" },
+                    { tipo: "lista",
+                         itens: [
+                        "Daario Malyshev", "Daemon Ravenloft", "Dafne Hiddleston", "Dale Persimmom", "Daliana Crawley", "Dallas Seyhount", "Damian Blackthorn", "Damian Fray", "Damian Scozzari", "Damien Launfal", "Damien Orlov", "Damon Cornwell", "Damon Royce", "Dan Bequaert", "Dan Shackebolt", "Dandara Malkov", "Dane Glover", "Daniel Hoffman", "Daniel Lupin", "Daniels Morgan", "Danio Ascensio", "Danso Okoye", "Dante Verrasi", "Daphne Buttons", "Daphne Meyer", "Dara Mubarak", "Darcy Undergrove", "Daren Aziwike", "Dario Frasheed", "Darius Petrov", "Darkel Godfrey", "Darren Hartley", "Darwin Erenkyl", "Darwin Macbeth", "Daryl Atreides", "Daud McKee", "Dav Fac", "Dave Harrison", "Dave Nowotny", "Dave Pearson", "David Eisenbud", "Dawn Kelly", "Dawn Shacklebolt", "Dean Baldrick", "Dean Kardwinn", "Deborah Marstorn", "Declan Rolstroy", "Declan Westerkamp", "Demetrius Desmond", "Dener Bishop", "Derian Berdsain", "Devon Wolfhard", "Dewey Beaufort", "Dexter Walcott", "Dian Cahya", "Diana Corsgone", "Diana Velasquez", "Diane Safra", "Diarmaid Caine", "Diego Hernández", "Diego Maradona", "Dietrich Geissler", "Digby Penbutler", "Dimitri Belmont", "Dinah Calderone", "Dino Belfist", "Diof Gambinno", "Dmitri Ablyazin", "Docile Huslow", "Dolores Valenc", "Dom Lancaster", "Dominic Kingman", "Dominic Rousset", "Donatella Leonardi", "Donna Haylock", "Dorian Beesbury", "Dorian McCarthy", "Dorothy Kohlung", "Dove Bloom", "Drawde Eyre", "Drummond-Costt Wolfhard", "Duda Pitanga", "Duke Heyward", "Duncan Berwick", "Duncan Ebendorf", "Duncan Quagmire", "Duncan Rose", "Dunstan Toads", "Dwane Gallagher", "Dycn Llarnwt", "Dylan Brassard", "Dylan Halford", "Dylan Malyshev", "Dylan Sanders", "Dyrk Dungarth"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "E" },
+                    { tipo: "lista",
+                         itens: [
+                        "Eartt Bequaert", "Easton Pemberton", "Eddie Goldrudde", "Eddie Stuart", "Eden Schimidt", "Edgar Stockwell", "Edgard Rose", "Edmund Burbank", "Edmund Crane", "Edmund Muhlett", "Edren Heaven", "Edric Wilmott", "Edward Bunker", "Edward Ein", "Edward Petran", "Edward Rose", "Edward Thorne", "Edwin Caverly", "Edwin Godfrey", "Edwin Kewiff", "Edwina Derwin", "Effie Pevillard", "Effy Maverick", "Egberto Burke", "Elanor Slasher", "Eleanor Bridger", "Eleanor Hartmann", "Elena Carrow", "Eleonora Ellis", "Eli Targaryen", "Eliah Podemski", "Elio Callenreese", "Elisa Duncan", "Elizabeth Gaunt", "Elizabeth Grant", "Elizabeth Rowle", "Ella Evergreen", "Ellen Song", "Ellerie Scavederich", "Elliot Pretzburg", "Elliot Rothbard", "Elliott Pretzburg", "Ellitor Pheare", "Élodie Bellerose", "Elodie Dearmost", "Elodie Love", "Eloise Brissaile", "Eloise Laforet", "Eloise Shinohara", "Eloisie Laforet", "Elric Romanov", "Else Rosenquist", "Elspeth Grimley", "Elwe Campbell", "Elwyn Blackrose", "Embry Camelli", "Emerald Mortensen", "Emilia Chaves", "Emily Minteoun", "Emily Winford", "Emma Longbottom", "Emma Monfort", "Enola Bulstrode", "Enrico Boni", "Enzio Salazar", "Enzo Page", "Eric Maynard", "Eric Sallow", "Erich Geissler", "Erik Skarsgaard", "Erik Thorns", "Erin Fancourt", "Erin Mannrich", "Ernest Buck", "Ernest Grimstone", "Eros Hallstrom", "Erwan Bassett", "Esdras Kwroeger", "Esme Dupressis", "Esra Dannason", "Esther Rookwood", "Ethan Anderson", "Ethan Couplet", "Ethan Rose", "Ethan Vasseur", "Eugene Zadra", "Eugenia Velichkov", "Eugenne Pradere", "Eunice Coignard", "Eva Gallagher", "Evan Brucie", "Evan Crossdale", "Evan Dostoievski", "Evan Hugrovik", "Evan Rockhold", "Evangeline Evans", "Evangeline Nouzen", "Eve Beckenridge", "Eve Calore", "Eveline Rosier", "Evelyn Gonzalez", "Evert Macnair", "Evy Exholic", "Ezechiel Guerra", "Ezekiel Langley", "Ezra Ertz", "Ezra Grimshaw"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "F" },
+                    { tipo: "lista",
+                         itens: [
+                        "Faer Bulstrode", "Faith Callahan", "Faith LeBlanc", "Farj Bwolegard", "Faustus Malfoy", "Fay Chamberlain", "Fazeema Canapeia Teiardus", "Fedora Malkov", "Felice Fortune", "Félice Vaillancourt", "Felix Albarn", "Felix Biddlecombe", "Felix Wright", "Ferdra Naldgarret", "Fergus Elsworth", "Fern Mordaut", "Fingal McGauley", "Finley Dupont", "Finn Hetfield", "Finney Pierlot", "Finx Coux", "Flint Reddish", "Flora Guenevaire", "Flora Ringwald", "Florian LeFleur", "Flynn Arceneaux", "Flynn Dempsey", "Flynn McDemortt", "Forsythe Wordk", "Foxie Wishart", "Frances McPhee", "Frances Monroe", "Franco Maugieri", "Franz Adelgrief", "Fred Bucley", "Frederich Byers", "Freyr Burkhart", "Freyr Merigold"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "G" },
+                    { tipo: "lista",
+                         itens: [
+                        "Gabe Passelewe", "Gabriel Barbosa", "Gael Cavalera", "Gael Dostoievski", "Gahiji Maalouf", "Gaia Blackwell", "Gaia Seydoux", "Gaia Warner", "Gail Wardwell", "Gal Moonlight", "Garasu", "Garfield Briggs", "Garfield Hurley", "Gary Garland", "Gaspard Baashger", "Gavin Wyatt", "Gendric Dwyner", "Georgina Thindrel", "Geraldine di Laviolètte", "Geralt Bellgard", "Ghoulia Davies", "Gideon Pemberton", "Gildour Kasimur", "Ginevra Getty", "Giulia Peixoto", "Glenn Dixon", "Gobe Passelewe", "Gontia Gossweiler", "Grace Archdall", "Gramus Aritgram", "Grant Matthams", "Grayer Edgell", "Gregory Hovig", "Greta Crawford", "Grigor Tusk", "Grimdale Fawley", "Gryffin Gangrel", "Gus Bortolassi", "Gus Longbottom", "Gwean Wearlodge", "Gwen Delacroix", "Gwen Staples", "Gwen Vanderwaal", "Gwendoline Longbottom", "Gwendolyn Le Fay", "Gwendolyn Yafel", "Gwilym Jenkins"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "H" },
+                    { tipo: "lista",
+                         itens: [
+                        "Hadassa Fawley", "Hadassa Martin", "Haddock Teach", "Hadrie Walserye", "Haldir Bryn", "Hamish MacGregor", "Haniel M. Beckll", "Hannah Kwroeger", "Harlee Azfall", "Harol Corbridge", "Harold Poirot", "Harper Munwoff", "Harriet Selway", "Harrison Lupin", "Harry Derwent", "Harry Okres", "Harry Potter", "Hawk Hawthrone", "Hazel Partridge", "Hazel Scarglioni", "Heath Ayers", "Heaven Ragazzi", "Hector Mountbatten", "Hector Saint Cloud", "Heinrich Foster", "Heitor Abujamra", "Helena Ravene", "Helena Scar", "Helendor Roses", "Helene McLoughlin", "Helenea Mishler", "Hendrick Umbrax", "Henri Moulin", "Henry Aleister", "Henry Blanchett", "Henry Middlesex", "Hercolobus Skander", "Herculo Cienfuegos", "Hermen Vasters", "Herminio Hownernann", "Hevel Bissailon", "Higor Norwzth", "Holden Norwood", "Honorine Lis", "Hooxa Laveerin", "Hope Fassbender", "Hope Flamebird", "Hope Metatron", "Howie Rowntree", "Hugo Depardieu", "Hugo Valentine", "Hyuk-kyu Kim"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "I" },
+                    { tipo: "lista",
+                         itens: [
+                        "Ian Carmichael", "Ian Rundle", "Icarus Cardwick", "Ichika Kajiyashiki", "Ida Morgenstern", "Igor Borsweek", "Igor Ema", "Imogen Maveroll", "Imogen Rooks", "Ioan Hovland", "Iracema Abati", "Irina Alyvievna", "Iris Godfrey", "Irwin Dolohov", "Irya Turgenev", "Isaac Beaufort", "Isaac Ebert", "Isaac Mountbatten", "Isaak Hughes", "Isabela Pitanga", "Isaiah Thomas", "Isake Valtersen", "Isis Lancy", "Ivan Yaxley", "Ivar Kozlovsky", "Ivar Mashfoy", "Ivo Guadagnino", "Ivo Spellman", "Ivor Wilkes", "Ivory Weswick", "Ivy Mortensen", "Ivy Taylor", "Izabel Birtwire", "Izzie Waldorf"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "J" },
+                    { tipo: "lista",
+                         itens: [
+                        "Jace Yaxley", "Jack Ayers", "Jack Growdy", "Jackson Fluff", "Jacob Baddock", "Jacob Meyer", "Jade Carrington", "Jade Lenaire", "Jaden Houston", "Jafar Al-Samir", "Jake Growdy", "Jake Santiago", "Jalen Godfrey", "James Allen", "James Bourdieu", "James Hayter", "James Koenig", "James Owen", "James Weaver", "Jamie Bradley", "Jane Wilkinson", "Janice Lythegoe", "Jannik Sinner", "Jaqen Hghar", "Jaqen Maxine", "Jaseem El Kamali", "Jason Baldrick", "Jasper Iedrich", "Javier Mondragón", "Jax Letholdus", "Jay Harper", "Jeffrey Althoff", "Jeffrey Morgan", "Jeffrey Watkins", "Jenny Winslow", "Jeremiah Hodge", "Jeremiah Selwyn", "Jes Nodaletto", "Jesse Millhouse", "Jesse Moore", "Ji Wei", "Jim Forscher", "Jim Hawlareth", "Jimmy Bortless", "Jimmy Neptune", "JimmyWillians", "Joakim Kweidden", "Joe Collalto", "Joe Gambinno", "Joe Goetheer", "Johann Koston", "John Bernabeth", "John Maverick", "John Rodwell", "John Stewarzhy", "Jojen Reed", "Jolie Roseblanc", "Jon Gerwood", "Jon Weasley", "Joohan Aldegrief", "Jorge Martins", "Joseph Carlton", "Joseph Handler", "Joseph Law", "Joseph Lincoln", "Joseph William", "Josephine Gabor", "Josh Brian", "Joshua Campbell", "Joshua Narwhal", "Joy Corrigan", "Judah Selwyn", "Judas Blackbane", "Judas Mordrake", "Jude Aleister", "Jude Ward", "Judith Selwyn", "Julian Bradley", "Julietta Baudelaire Baldor", "Jun Sakuragi", "Jun Walcott", "June Lawson", "June Moogreyd", "Jung Sae-Hyun", "Juniper Cohen", "Juno Farley", "Justin Forren", "Justin Hairleigh", "Justin Diamond"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "K" },
+                    { tipo: "lista",
+                         itens: [
+                        "Kael Bathory", "Kaiser Kiramman", "Kaiser Reeves", "Kaldur Fawley", "Kalista Fleury", "Kane Mulciber", "Kane Nowotny", "Karnos", "Katarina Fernsby", "Katarina Schwarz", "Katherine Berry", "Katherine Mohn", "Katia Petrova", "Katie Mudgett", "Kavon Eyo", "Kawe Lizewski", "Kaya Feuerbach", "Kaynan Seaweed", "Keisuke Honda", "Kenai Inuvialuit", "Kenji Watanabe", "Kevin Longworth", "Kevry Lashoure", "Kevv Tanezuko", "Keyth Hurtz", "Khia Groenveld", "Khia Makanaky", "Kian Salvatore", "Kiara Gestberger", "Kid Kako", "Kieran Westerkamp", "Kim Bleyt", "Klaus Noah", "Klyn Arkauss", "Knox Hargrove", "Konstantin Popov", "Koter Aeggis", "Kun Callaghan", "Kurt Campbell", "Kvothe Grokhart", "Kyle Abbacchio", "Kyle Haffner", "Kyle Mormont"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "L" },
+                    { tipo: "lista",
+                         itens: [
+                        "Labado Talarico", "Lanna Covier", "Lara Southerns", "Lara Weissbier", "Laszlo Brisnley", "Laura Fides", "Laurel Morindew", "Laurent Swif", "Layne Staley", "Lazarus Gaunt", "Lazlo Mondragón", "Lea Boulanger", "Leah Gawdat", "Leah Hawk", "Lean van Leeuwen", "Leandro Montoya", "Leena Gallagher", "Leighton Wood", "Leilani Cordle", "Lena Storti", "Lenn Armstrong", "Leo Moogreyd", "Leon Namizawa", "Leonard Frizzel", "Leonor Azevedo", "Leonora Goldfinch", "Leroy Herlwin", "Lestat d'Eath", "Lettie Henstock", "Levi Ekholm", "Levi Heartlore", "Levi Lorganthal", "Levi Morganthal", "Levi Warrington", "Levi Weisshart", "Levon Slora", "Lewis Brownrigg", "Lewis Warrington", "Liam Baldrick", "Liam Conway", "Liam Kloppers", "Liana Farshid", "Libatius Driscoll", "Libbie Hewitt", "Liebe Bradshaw", "Lieke Ayers", "Lil dos Zwart", "Lili Ambroov", "Lili Harkonenn", "Lilith Howard", "Lilith Petrova", "Lily Gaia", "Lilya S. Ormond", "Lilya Wunrose", "Lincoln Guenevaire", "Lindsay Gwenith", "Lindsay Pretzk", "Line Johnson", "Linie Savanne", "Lio Evangelista", "Lisie Savanne", "Lissa S.", "Lissandra Gallagher", "Liv Bradshaw", "Lizzie Vaillant", "Lizzy Jones", "Logab Becker", "Logan Baldrick", "Lohnny Flynn", "Loisa Prinslock", "Lola Depardieu", "Lolla Fahir", "Lonzo Eugid", "Lorenzo Vergara", "Loretta Lynn", "Loretta Rowle", "Lorie Baltzer", "Lorie Wesschant", "Lorna Wisebluff", "Lou Ferrigno", "Louie Loveless", "Louis Cavendish", "Louis Depardieu", "Louis Fourier", "Louis Mountbatten", "Louis Palmer", "Louis Parslow", "Louis Tiffin", "Louise Hurley", "Luc Margiela", "Luca Caprari", "Lucas Muhlett", "Lucca Ebendorf", "Lucca Trevisano", "Lucie Minteoun", "Lucie Scabbia", "Lucien Sanguina", "Lucius Guillebeaux", "Lucius Valerius", "Luck Saami", "Lucretia Maluvius", "Luddo Dawlish", "Ludevine Farrow", "Ludovika Wezner", "Ludwig Blake", "Luiza Wenninger", "Luka Eckhart", "Luke Bones", "Luke Perkins", "Luke Thorburn", "Lumia F. Noah", "Luna Bevilacqua", "Luna Morningstar", "Luna Valduff", "Lunna Evans", "Lya Boersman", "Lydia Sieghart", "Lynn", "Lynn LeBlanc", "Lynner Cambridge"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "M" },
+                    { tipo: "lista",
+                         itens: [
+                        "M. Fassbender", "Mabel Winford", "Machabee Foley", "Mackenzie Blunt", "Mackenzie Dwyer", "Maddie Grimes", "Maddison Pokeby", "Maddy Fawley", "Madeleine Barahona", "Madeline Dyok", "Madeline Mayers", "Madeline Rosier", "Madison Laydrer", "Madison Stewart", "Mafalda Jones", "Magda Spielburg", "Magno LeWorjt", "Magnus Donelly", "Magnus Maverick", "Magnus Neptune", "Mai-lee Young", "Maila Zandile", "Maira Malshter", "Maisie Hill", "Maite Rosanova", "Malcolm Fawcett", "Malcolm Flint", "Maleve Sinclair", "Mallory Harlow", "Maloisa", "Malvo Grourdett", "Manaus Riodoce", "Mance Mallister", "Mand Theon", "Mandy Dufour", "Manuel Sagarra", "Mara Walsh", "Marc van Leuween", "Marcel Sheppard", "Marcelo Benevenuto", "Marcos Sampaio", "Margareth Shacklebolt", "Margot Doyle", "Maria Lamonier", "Maria Tilly", "Marietta Gusev", "Marina Diamandis", "Marisa Coulter", "Marisol Alencar", "Marius Tour", "Mark Zamarit", "Marte Castellano", "Martim Ayers", "Martin Monroe", "Mary Hartel", "Mason Karloff", "Mason Pokeby", "Mason Yaxley", "Mathew Dickerson", "Matilda Soller", "Mats Kildahl", "Matt Corvus", "Matteo Rossini", "Matthew Angler", "Matthew Gray", "Maud Spats", "Maud Sheridan", "Maureen Blythe", "Maverick Oyster", "Mawina Scabbia", "Max Constantine", "Max Deorwine", "Max Mayfield", "Max Rose", "Max Royce", "Maximiliam Goth", "Maximilian Verrasi", "Maxine Snakin", "Maxwell Daemon", "Maxwell Ravenne", "May Chermont", "Maya Boursade", "Maya Marburg", "Maya Stronghold", "Maya Swarzman", "Maybell Pevensie", "Maycon Wallnut", "Maysee Swihes", "Maziyar Shakur", "Medora Knotehad", "Megan Holmstrom", "Megara Wenlock", "Mei Hwang", "Mei Thornbury", "Mel Depailler", "Melina Bouviett", "Melina Hammonds", "Melissa Rowle", "Menghui Ye", "Merida Maverick", "Merisa Evenwood", "Mevey", "Mia Delacour", "Mia Mikaelson", "Michael Simons", "Mick Opportum Parety", "Mick Parety", "Mifeng Nephthys", "Miguel Maverick", "Mike Hesmiile", "Mike Mayfield", "Mike Milsteiner", "Mikkel Dammen", "Mikkel Satchell", "Milarts Clark", "Miles Lefford", "Miles Roy", "Millicent Goyle", "Millie Barlow", "Min Tae-hyun", "Min-Tae Kim", "Mina Wengyoon", "Mindy Hastings", "Mindy Seiffert", "Minerva Cienfuegos", "Mingo Sunflower", "Minnie Ainsworth", "Minos Morgengaard", "Miranda Kross", "Miranda Mirys", "Miria Yacoub", "Misano Tominaga", "Misty Riverwall", "Mitch Cassowary", "Mitya Malkov", "Miwa S. Noe`lani", "Modesty Milner", "Mohammed El-Kamali", "Mohammed Faheem", "Moira Fabelle", "Mollie Barlow", "Mona Lovetinss", "Monika Lang", "Monx Roux", "Morel Legrant", "Morgan Blackwood", "Morgan Eli Tremblay", "Morgan Kline", "Morgan Tremblay", "Morgana Fray", "Morgana Gwrlais", "Morgana la Bow", "Morgana Vigatti", "Morph", "Morphast", "Mortiz", "Mumbi Unweagba", "Murilo Bezerra", "Mya Odsaffyr", "Myrtle Scoots"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "N" },
+                    { tipo: "lista",
+                         itens: [
+                        "Nadja Mulroney", "Nalla Sachnall", "Naomi A. H. Gastta", "Narciss Dupont", "Nash Campbell", "Nastya Kusakina", "Natalie Dawson", "Nate Hildebrand", "Nate Moncorvus", "Nate Mulciber", "Nathan Grant", "Nathan Gray", "Nathanael Tsai", "Necotino", "Ned Nowatt", "Neda Grossarth", "Neil Breuer", "Neil Macmillan", "Nerissa Diehl", "Nero Dessaint", "Niamh Gossweiler", "Nicco Calafiori", "Niccolo Rowle", "Nicholas Grant", "Nicholas Hill", "Nick Barton", "Nick Longworth", "Nico Auriccio", "Nicolas Ballard", "Nicolas Bassett", "Nicolas Gonzaga", "Nicolas Ito Ahnertt", "Nicolau Vercov", "Nicolle Howlsk Bruning", "Nicolo Fraser", "Nidia Cadlowtt", "Nikko Beharden", "Nina Moreau", "Ninel Blavatsky", "Noah Bennet", "Noah Bonneville", "Noah Breuer", "Noah Crawford", "Noah Erenkyl", "Noah Macmillan", "Noah Maitland", "Noah Neumann", "Noah Okres", "Noah Pomeroy", "Noah Ziggs", "Noel Pleawett", "Noemie LeBlanc", "Noor Wendelin", "Norberto Burke", "Norman Bandolin", "Norman Lupin", "North Landress", "Nouvel Fontaine", "Nowak Wick", "Numento Blossombury", "Nunos"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "O" },
+                    { tipo: "lista",
+                         itens: [
+                        "Obsessor, o fantasma.", "Octavian Cardwick", "Octavio Wurn", "Octus Hormofeus", "Odisseu Constantine", "Olga Baclanova", "Olga Tmoth", "Oliver Lamont", "Oliver Loyale", "Oliver Pentaghast", "Oliver Petrova", "Oliver Sangrey", "Oliver Vatnajok", "Olivia Griffin", "Olivia Lamont", "Olivia Lohengrin", "Olivia Losnedahl", "Olivia Mongrave", "Olivia Morindew", "Olivia Zehnder", "Olivier Sangrey", "Olivio Figueiredo", "Omari Kimpembe", "Ondina Prisket", "Ophelia Burnham", "Orion Blackbane", "Orion Greyback", "Orion Wexler", "Orpheus Ward", "Orun e Eyvar Hefjotur", "Oscard Brodwick", "Osiris Orville", "Otto Greyback", "Otto Wojciech", "Owen Stump", "Ozzil Laskyv", "Ozzy Bawerk"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "P" },
+                    { tipo: "lista",
+                         itens: [
+                        "Paige Waisley", "Palmer Saltcoat", "Pamela Eilien", "Pandora Bengelmer", "Paris Sparks", "Parisa Morschel", "Parker Cannon", "Pat Sonerghy", "Pearl Bouviett", "Penelope Fawley", "Peony Fontaine", "Pepe Thundell", "Pepper Hyx", "Percival Fawkes", "Percy Bennett", "Peridot Owlett", "Perola Selwyn", "Perseu Ban", "Perseus Maysun", "Perth Hufner", "Pete Hayworth", "Pete Valentine", "Peteca, o dragonete.", "Peter Forscher", "Peter Grunnion", "Peter Miekkelsen", "Peter Moynihan", "Peter O'Brien", "Peter Percey", "Peter Ricci", "Peter Rothmans", "Peter Veloso", "Petra Godfrey", "Petra Losnedahl", "Petra Miller", "Petra Wettiowl", "Petrus Kruger", "Peyton Griffiths", "Phineas Rose", "Pierre Beaufort", "Pierre Lamonier", "Pietro Tamiv", "Pietro Versace", "Pilar Duarte", "Pingo, o Elfo", "Pip Pickett", "Pippa Swanepool", "Pluma Ebendorf", "Pluto Wittrock", "Polar Correia", "Pollux Brockwood", "Pollux Hill", "Polly Plouvier", "Poppo Pleydenwurff", "Poppy Spinster", "Prashant Kaur", "Primrose Chardt", "Primrose Dubois", "Prince Whitetorn", "Prismatico", "Priya Doyle", "Professor Barbossa", "Professor Seydoux", "Professor Tyssember", "Professora Jones", "Prudence Scott", "Pyotr Golovkin"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "Q" },
+                    { tipo: "lista",
+                         itens: [
+                        "Quentin Duxbury", "Quentin Fleming", "Quew Abrandeck", "Quinn Melrose", "Quinn Thornbury", "Quirino Quirrell", "Qyubb Nekrise"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "R" },
+                    { tipo: "lista",
+                         itens: [
+                        "Rachel Dilaver", "Rae Rosenstock", "Rafael Buarque", "Rafe Lovegood", "Ragnar Dalseth", "Raito Yagamii", "Ralph Ilngardh", "Ramona Blythe", "Raven Crowther", "Ravena Callenreese", "Ravi Calhoun", "Ravi Rosier", "Ravyn Nwogu", "Ray Brockwood", "Raya Glythood", "Raymond Tusk", "Raze Scarbrough", "Rebecca Calvert", "Reese Davenport", "Reeve Schreven", "Regulus Scientia", "Rehor Vojtech", "Rei Hino", "Remi Mortensen", "Remi-Antoine Dulevant", "Renata Torres", "Reyna Belligham", "Rhea Damesy", "Rhea Seydoux", "Rhia Verhoeven", "Rhian Verhoeven", "Rhys Kaepernick", "Richard Hoobes", "Richard Pavan", "Richard Warber", "Richie Lawbrook", "Rick Bassianvs", "Rick Parkinson", "Riden Lenchster", "Riley Watherm", "Rio River", "Rip Barnes", "Rizzo Barbieri", "Robbie Walker", "Robert Bennet", "Robert Downey", "Robert Wartsnid", "Roberto Dettmann", "Robin Lexington", "Robson Thompson", "Rodrigo Minteoun", "Roma Virac", "Roman Czejavik", "Romee Cavencci", "Romeo Cavencci", "Romeo Moorgate", "Ron Landerson", "Ron Whitman", "Ronan Kluivert", "Rosa Calafiori", "Rose Gonsalez", "Rose Newcastle", "Rose Stampford", "Rosie Waldorf", "Rowan Beyard", "Rowan Olridge", "Rowan Sanguineus", "Rowan Vermontt", "Ruan Mondragon", "Ruben Casmeyer", "Ruby Moon", "Rudan Blislimi", "Rudy Borntreger", "Ryan Murph", "Ryan W. Bool", "Ryo Sawayama"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "S" },
+                    { tipo: "lista",
+                         itens: [
+                        "Savina Caparelli", "Sabine Thyrid", "Sabrina Barthet", "Sabrina Waldegrave", "Sage Burkhart", "Sage Montagner", "Salacia Crowley", "Sally Dawlish", "Sam Beaublunt", "Samantha Diaz", "Sami Callanaupa", "Samuel Rothman", "Samvel Gasparin", "Santina Eargit", "Sapphire Sardothien", "Sara Haylock", "Sara Learhise", "Sarah Evergreen", "Sarah Michele", "Sarita del Lotus", "Savina Caparelli", "Scarlett Delaford", "Scorpius Carrow", "Scott Appelman", "Scott Forlew", "Seamus Heaney", "Sean Brailford", "Sean Howllie", "Sean Olawale", "Sebastian Blunt", "Sebastian Montfalcon", "Selina Langford", "Septa Gottschall", "Serafina", "Serena Dessero", "Serena Kurtz", "Seth Drummond", "Seth Mansfield", "Seth Orville", "Sett Oskwlav", "Shale Staghart", "Shane Horsetail", "Shane Kingmann", "Shane Maynard", "Shauntal Hawley", "Shawn Beasselot", "Shawn Chawdick", "Shiloh Moogreyd", "Shinei Nouzen", "Sierra Burges", "Silas Godfrey", "Sillea Pretzburg", "Simon Scott", "Siobhan Weasley", "Sioux Dessewfy", "Sissyphus", "Sky Monteclaire", "Slaugord Redhor", "Sofia Cienfuegos", "Sofie Waldorf", "Sol Castellano", "Solara Fallon", "Solomun Rowe", "Song So-Young", "Sonny Huxley", "Sophia Wanderogh", "Sophie Gallagher", "Sophie Kass", "Sorcha Huntress", "Soyane Porango", "Space Blythe", "Specialis", "Spencer Fields", "Spencer Sazl", "Stanley Hoffman", "Stanley Price", "Ste Avery", "Stefan MacDuff", "Stefani Bristow", "Stefano Avenicci", "Stephanie Roberts", "Stephen Forsyth", "Stephen Mallory", "Steven Harvey", "Stewart Fray", "Sthella Crane", "Stormi Buckwood", "Suki Mayumi", "Sumi Beauchesne", "Suzi Montagner", "Svendsen Kruger", "Swein Vermillion", "Sylas Burkhart", "Sylas Lashbrick"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "T" },
+                    { tipo: "lista",
+                         itens: [
+                        "Tabitha Davnser", "Tariro Salazar", "Tawsh.Stewarzhy", "Teddy Hewitt", "Teobaldo, a Planta", "Teresa Valle", "Teresa Versace", "Terry Tyler", "Thaio Lancaster", "Thalles Xavier", "Tharto Lancaster", "Tharto Rowle", "Theo Azrael", "Theo Bassert", "Theo Dunaway", "Theo Leonhart", "Theodal Walters", "Theodor England", "Theodore Gibbon", "Theodore Moss", "Theodore Whitlock", "Theodric Bavent", "Thiago Haylock", "Thomas Beaufort", "Thomas Dayne", "Thomas Flanagan", "Thomas Ohorat", "Thomas Picklebohr", "Thomas Weasley", "Tiana Bowman", "Tiana Melnikov", "Tim Haeffner", "Tim Huddlestone", "Timur Ozturk", "Toan Minshew", "Tobb Arbuthnott", "Todd Gessinger", "Toka Vaugnh", "Tom Flanagan", "Tom Howell", "Tom Krahanst", "Tom Shaarawy", "Tommy Owen", "Tonny Haugen", "Tori Belrose", "Trace Heaffrey", "Traugott Bergelmer", "Trevor Jugson", "Trina Fancourt", "Triss Brownrigg", "Trixie R. Bancroft", "Trixie Rodwell", "Troy Goldenhorn", "Twyla Magnolia", "Tyler Ayrthwill", "Tyler McPherson", "Tyler Valentine", "Tyler Wulfric", "Tyree Obscurus", "Tysunai Ynarato"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "U" },
+                    { tipo: "lista",
+                         itens: [
+                        "Ullr Sigurdson", "Usdoul Cox", "Uzui Kamado"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "V" },
+                    { tipo: "lista",
+                         itens: [
+                        "Val Plasticine", "Valdirenne", "Vale Trevelyan", "Valentim Borghesan", "Valentim Hoffman", "Vanellope Alyed", "Vasco da Gama", "Vashti Shirazi", "Vayne Sardothien", "Vega Bishop", "Vega Dolohov", "Venefica White", "Venus Cohen", "Verity Denebria", "Vernand Lurs", "Verona Wright", "Veronica Haft", "Victor Apollo", "Victor Bigfield", "Victor Maynard", "Victoria Cowen", "Victoria Houser", "Vik Hughes", "Viktor Kelleher", "Vince Horvarth", "Vince Losnedahl", "Vincent Murray", "Vincent Weasley", "Vino Scamander", "Viola Larrieu", "Violet Ribbons", "Violet.Ribbons", "Virginia Ordway", "Vito Bianchi", "Vitor Camargo", "Vivian Alves", "Viviane Gwrlais", "Vivianne Sayers", "Void Taintedheart"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "W" },
+                    { tipo: "lista",
+                         itens: [
+                        "Walburga Snakin", "Warren Macnair", "Warren Osborne", "Wayne Covington", "Wendy Honeywood", "Wendy Tsai", "Whitney Abott", "Wilhelm Whispers", "Will Grayson", "Will Hockstetter", "Will Silver", "William Blake", "William Faiat", "William Nott", "Willy Bonneville", "Willy Dromber", "Wolfgang Love", "Wong", "Wurth Olivaras"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "X" },
+                    { tipo: "lista",
+                         itens: [
+                            
+                                ]
+                         },
+                    { tipo: "titulo", texto: "Y" },
+                    { tipo: "lista",
+                         itens: [
+                        "Yan Blachowicz", "Yara Karauchi", "Ye-jin Baek", "Yennefer Goldberg", "Yohan Mulroney", "Yoko Watanabe", "Yun Guang", "Yuri Buckarev", "Yuri Muserskiy", "Yves Niemien"
+                                ]
+                         },
+                    { tipo: "titulo", texto: "Z" },
+                    { tipo: "lista",
+                         itens: [
+                            "Zaack Rowle", "Zac Ollivander", "Zac Whitewell", "Zach Driscoll", "Zach Stormadge", "Zachary Miah", "Zack Bertram", "Zack Hellsing", "Zadael Robevine", "Zahara Okoye", "Zaila Okonkwo", "Zander Walker", "Zayne Brody", "Zee Norland", "Zeno Zarroth", "Zeth Zervakis", "Zizi.Sparrow", "Zoe Althoff", "Zoe Kettleback", "Zoe McGonagall", "Zoe Yeborath", "Zuri Okoye"
+                                ]
+                         },
+
+                ]
+            }
+        };
+
+        // =========================================================================
+        // RENDERIZADOR GENÉRICO DE BLOCOS
+        // =========================================================================
+        function renderBloco(bloco) {
+            switch (bloco.tipo) {
+                case "titulo":
+                    return `<h2 class="bloco-titulo-principal">${bloco.texto}</h2>`;
+
+                case "imagem":
+                    return `
+                        <div class="bloco-imagem">
+                            <img src="${bloco.url}" alt="${bloco.alt || ''}" onerror="this.parentElement.style.display='none'">
+                        </div>
+                    `;
+
+                case "subtitulo":
+                    return `<h4 class="bloco-subtitulo">${bloco.texto}</h4>`;
+
+                case "texto": {
+                    const dropCapHTML = bloco.dropCap
+                        ? `<span class="drop-cap">${bloco.dropCap}</span>`
+                        : '';
+                    return `<p class="bloco-texto">${dropCapHTML}${bloco.texto}</p>`;
+                }
+
+                case "lista": {
+                    const itensHTML = bloco.itens.map(item => `<li>${item}</li>`).join('');
+                    return `<ol class="bloco-lista">${itensHTML}</ol>`;
+                }
+
+                case "divisoria":
+                    return `<img src="src/ui/divisoria.png" class="bloco-divisoria" alt="Divisor Rúnico" onerror="this.style.display='none'">`;
+
+                case "acordeao": {
+                    const corpoHTML = bloco.blocos.map(renderBloco).join('');
+                    return `
+                        <div class="acordeao-secao">
+                            <button class="acordeao-cabecalho" type="button">
+                                <span>${bloco.titulo}</span>
+                                <span class="acordeao-icone">+</span>
+                            </button>
+                            <div class="acordeao-corpo">
+                                ${corpoHTML}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                default:
+                    return '';
+            }
+        }
+
+        function renderBlocos(blocos) {
+            return blocos.map(renderBloco).join('');
+        }
+
+        // =========================================================================
+        // MOTOR DE ATUALIZAÇÃO DO PERGAMINHO (GSAP INTEGRADO)
+        // =========================================================================
+        const parchmentScrollArea = document.getElementById('parchment-scroll-area');
+        const memorandosContainer = document.getElementById('memorandos-container');
+
+        function setupAcordeoes() {
+            const cabecalhos = memorandosContainer.querySelectorAll('.acordeao-cabecalho');
+            cabecalhos.forEach(cabecalho => {
+                cabecalho.addEventListener('click', () => {
+                    const secao = cabecalho.closest('.acordeao-secao');
+                    const corpo = secao.querySelector('.acordeao-corpo');
+                    const estaAberta = secao.classList.contains('aberta');
+
+                    if (estaAberta) {
+                        secao.classList.remove('aberta');
+                        corpo.style.maxHeight = '0px';
+                    } else {
+                        secao.classList.add('aberta');
+                        corpo.style.maxHeight = corpo.scrollHeight + 'px';
+                    }
+                });
+            });
+        }
+
+        function updateSistema(sistemaId) {
+            const sistema = memorandosDatabase[sistemaId];
+            if (!sistema) return;
+
+            gsap.to(memorandosContainer, {
+                opacity: 0,
+                y: 15,
+                duration: 0.22,
+                ease: "power2.in",
+                onComplete: () => {
+                    memorandosContainer.innerHTML = `
+                        ${renderBlocos(sistema.blocos)}
+                        <div class="pergaminho-footer">MEMORANDOS • Hogwarts RPG</div>
+                    `;
+
+                    parchmentScrollArea.scrollTop = 0;
+                    setupAcordeoes();
+
+                    gsap.fromTo(memorandosContainer,
+                        { opacity: 0, y: -15 },
+                        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
+                    );
+                }
+            });
+        }
+
+        // Configuração e interações das abas do menu lateral
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.categoria-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    if (tab.classList.contains('active')) return;
+
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    const sistemaId = tab.getAttribute('data-sistema');
+                    updateSistema(sistemaId);
+                });
+            });
+        }
+
+        // =========================================================================
+        // SISTEMA DE ÁUDIO E TRILHA SONORA DA VITROLA
+        // =========================================================================
+        const vitrola = document.querySelector('.vitrola');
+        const nextBtn = document.querySelector('.vitrola-next');
+        const audio = document.getElementById('vinyl-audio');
+
+        const tracks = ['hogsmeade.mp3', 'becodiagonal.mp3', 'housecup.mp3', 'overtue.mp3'];
+        const trackBasePath = 'src/';
+        let currentTrackIndex = 0;
+
+        function updateNextButton() {
+            if (audio.paused) {
+                nextBtn.classList.remove('visible');
+            } else {
+                nextBtn.classList.add('visible');
+            }
+        }
+
+        function setTrack(index) {
+            currentTrackIndex = ((index % tracks.length) + tracks.length) % tracks.length;
+            const fullPath = `${trackBasePath}${tracks[currentTrackIndex]}`;
+            audio.src = fullPath;
+            audio.load();
+        }
+
+        async function playTrack() {
+            try {
+                await audio.play();
+                vitrola.classList.add('playing');
+                updateNextButton();
+            } catch (err) {
+                console.warn("Autoplay impedido ou áudios locais indisponíveis:", err);
+            }
+        }
+
+        vitrola.addEventListener('click', () => {
+            if (audio.paused) {
+                playTrack();
+            } else {
+                audio.pause();
+                vitrola.classList.remove('playing');
+                updateNextButton();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            setTrack(currentTrackIndex + 1);
+            playTrack();
+        });
+
+        audio.addEventListener('ended', () => {
+            setTrack(currentTrackIndex + 1);
+            playTrack();
+        });
+
+        // =========================================================================
+        // DISPARADORES NO CARREGAMENTO DA PÁGINA
+        // =========================================================================
+        window.addEventListener('DOMContentLoaded', () => {
+            setupTabs();
+            updateSistema('agradecimentos');
+            setTrack(currentTrackIndex);
+
+            gsap.from('.categoria-tab', {
+                opacity: 0,
+                x: -30,
+                duration: 0.65,
+                stagger: 0.07,
+                ease: "power2.out",
+                onComplete: () => {
+                    gsap.set('.categoria-tab', { clearProps: "transform" });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
