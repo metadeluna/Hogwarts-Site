@@ -1,44 +1,44 @@
 {
-    "pontuacaoMaxima": 500,
+    "pontuacaoMaxima": 0,
     "casas": [
         {
             "id": "grifinoria",
             "nome": "Grifinória",
-            "logo": "src/grifinoria.png",
+            "logo": "src/grifinoria.PNG",
             "cor": "#740001",
             "corClara": "#d3a625",
-            "pontos": 320
+            "pontos": 0
         },
         {
             "id": "sonserina",
             "nome": "Sonserina",
-            "logo": "src/sonserina.png",
+            "logo": "src/sonserina.PNG",
             "cor": "#1a472a",
             "corClara": "#aaaaaa",
-            "pontos": 285
+            "pontos": 0
         },
         {
             "id": "corvinal",
             "nome": "Corvinal",
-            "logo": "src/corvinal.png",
+            "logo": "src/corvinal.PNG",
             "cor": "#0e1a40",
             "corClara": "#946b2d",
-            "pontos": 260
+            "pontos": 0
         },
         {
             "id": "lufalufa",
             "nome": "Lufa-Lufa",
-            "logo": "src/lufa-lufa.png",
+            "logo": "src/lufa-lufa.PNG",
             "cor": "#ecb939",
             "corClara": "#372e29",
-            "pontos": 190
+            "pontos": 0
         }
     ],
     "historico": [
-        { "ano": "2000–2001", "campea": "Sonserina" },
+        { "ano": "2000–2001 (atualmente)", "campea": "Desconhecido" },
         { "ano": "1999–2000", "campea": "Grifinória" },
-        { "ano": "1998–1999", "campea": "Corvinal" },
+        { "ano": "1998–1999", "campea": "Lufa-Lufa" },
         { "ano": "1997–1998", "campea": "Grifinória" },
-        { "ano": "1996–1997", "campea": "Lufa-Lufa" }
+        { "ano": "1996–1997", "campea": "Grifinória" }
     ]
 }
