@@ -196,30 +196,26 @@
            ========================================================================= */
         .habilidades-sidebar {
             position: absolute;
-            left: 24%; /* Mantém perto do pergaminho */
+            left: 24%;
             top: 11vh;
             width: 20vw;
-            height: 75vh;
             display: flex;
             flex-direction: column;
-            gap: 0.35rem;
-            justify-content: space-between;
-            overflow: visible; /* Mantém visible para evitar cortes na lateral dos botões */
-            padding-left: 20px; /* Buffer de segurança para os efeitos de escala */
+            gap: 0.9rem;
             z-index: 15;
+            padding-left: 20px;
         }
 
         /* Botão principal */
         .maestria-tab {
             position: relative;
             width: 100%;
-            flex: 1;
-            max-height: 52px;
+            min-height: 58px;
             background: url('src/ui/banner-titulo.png') no-repeat center center !important;
             background-size: 100% 100% !important;
-            background-color: transparent !important; 
+            background-color: transparent !important;
             border: none !important;
-            padding: 0.2rem 1.2rem;
+            padding: 0.3rem 1.2rem;
             color: #f7e6ca;
             text-align: center;
             cursor: pointer;
@@ -227,13 +223,13 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transform-origin: left center; /* O alinhamento e ancoragem partem da esquerda */
+            transform-origin: left center;
             transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.3s ease;
             filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
         }
 
         .maestria-tab h3 {
-            font-size: 0.72rem;
+            font-size: 0.85rem;
             color: #ffd88a;
             text-shadow: 1px 1.5px 2px rgba(0, 0, 0, 0.95);
             font-weight: bold;
