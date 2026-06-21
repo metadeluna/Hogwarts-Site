@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mural — Hogwarts</title>
+    <!-- Tailwind CSS para estruturação responsiva básica -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP para animações mágicas de transição -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+            font-family: 'Georgia', serif;
+        }
+
+        /* =========================================================================
+           FONTES PERSONALIZADAS COM FALLBACK SEGURO
+           ========================================================================= */
+        @font-face {
+            font-family: 'Hogwarts-Titulo';
+            src: url('src/fonts/CitadelofBlackrose.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Hogwarts-Paragrafo';
+            src: url('src/fonts/Philosopher-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Hogwarts-SubTitulo';
+            src: url('src/fonts/OPTIColumna-Solid.otf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .hogwarts-title {
+            font-family: 'Hogwarts-Titulo', 'Georgia', serif;
+        }
+
+        .hogwarts-subtitle {
+            font-family: 'Hogwarts-SubTitulo', 'Times New Roman', serif;
+            letter-spacing: 2px;
+        }
+
+        .hogwarts-paragraph {
+            font-family: 'Hogwarts-Paragrafo', 'Georgia', serif;
+        }
+
+        /* =========================================================================
+           CENA PRINCIPAL E REVESTIMENTO
+           ========================================================================= */
+        #scene {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .layer,
+        .gifs,
+        .logo {
+            position: absolute;
+        }
+
+        .background {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            left: 0;
+            top: 0;
+            object-position: center center;
+            z-index: 1;
+        }
+
+        .gifs {
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* =========================================================================
+           BANDEIRA FLUTUANTE DE CABEÇALHO (CANTO SUPERIOR ESQUERDO)
+           ========================================================================= */
+        .hanging-banner {
+            position: absolute;
+            left: 2vw;
+            top: 1.5rem;
+            width: 260px;
+            height: 320px;
+            background: url('src/ui/Banner_bandeira.png') no-repeat center center;
+            background-size: 100% 100%;
+            z-index: 25;
+            padding: 4.2rem 1.6rem 1.6rem 1.6rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-radius: 0 0 6px 6px;
+            animation: bannerSway 6s ease-in-out infinite;
+            transform-origin: top center;
+        }
+
+        @keyframes bannerSway {
+            0%, 100% { transform: rotate(0.4deg); }
+            50% { transform: rotate(-0.4deg); }
+        }
+
+        .hanging-banner h2 {
+            font-size: 1.25rem;
+            color: #ffd88a;
+            text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.95);
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+            font-family: 'Hogwarts-SubTitulo', serif;
+        }
+
+        .hanging-banner p {
+            font-size: 0.8rem;
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+            line-height: 1.45;
+            font-style: italic;
+            font-family: 'Hogwarts-Paragrafo', sans-serif;
+        }
+
+        /* BOTÃO DE VOLTAR - AMPLIADO E CENTRALIZADO NO MEIO VERTICAL ESQUERDO */
+        #back-from-sistemas {
+            position: absolute;
+            left: 2vw;
+            top: 60%;
+            transform: translateY(-50%) rotate(180deg);
+            width: 5.2rem;
+            height: 5.2rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.25s ease;
+        }
+
+        #back-from-sistemas:hover {
+            transform: translateY(-50%) rotate(180deg) scale(1.12);
+            filter: brightness(1.25);
+        }
+
+        #back-from-sistemas::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('src/ui/banner-seta.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 145%;
+            z-index: 1;
+        }
+
+        #back-from-sistemas::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('src/ui/seta-aponta-direita.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 50%;
+            z-index: 2;
+        }
+
+        /* =========================================================================
+           MENU DE SISTEMAS (BOTÕES LATERAIS)
+           ========================================================================= */
+        .categorias-sidebar {
+            position: absolute;
+            left: 24%;
+            top: 6vh;
+            width: 20vw;
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+            z-index: 15;
+            padding-left: 20px;
+            max-height: 88vh;
+            overflow: visible;
+        }
+
+        .categoria-tab {
+            position: relative;
+            width: 100%;
+            min-height: 46px;
+            background: url('src/ui/banner-titulo.png') no-repeat center center !important;
+            background-size: 100% 100% !important;
+            background-color: transparent !important;
+            border: none !important;
+            padding: 0.25rem 1.1rem;
+            color: #f7e6ca;
+            text-align: center;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform-origin: left center;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+        }
+
+        .categoria-tab h3 {
+            font-size: 0.74rem;
+            color: #ffd88a;
+            text-shadow: 1px 1.5px 2px rgba(0, 0, 0, 0.95);
+            font-weight: bold;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            line-height: 1.1;
+            font-family: 'Hogwarts-SubTitulo', serif;
+        }
+
+        .categoria-tab:hover:not(.active) {
+            transform: scale(1.02) translateX(8px);
+            filter: brightness(1.2) drop-shadow(0 0 6px rgba(255, 215, 122, 0.35));
+        }
+
+        .categoria-tab.active {
+            transform: scale(1.04) translateX(22px);
+            filter: brightness(1.35) drop-shadow(0 0 10px rgba(255, 222, 140, 0.6));
+        }
+
+        /* =========================================================================
+           PLACA DE MADEIRA (MURAL) — substitui o pergaminho
+           ========================================================================= */
+        .mural-wrapper {
+            position: absolute;
+            left: 53%;
+            top: 6.5vh;
+            width: 30vw;
+            height: 84vh;
+            z-index: 6;
+            display: flex;
+            flex-direction: column;
+            filter: drop-shadow(0 18px 34px rgba(0, 0, 0, .75)) drop-shadow(0 4px 10px rgba(0, 0, 0, .55));
+        }
+
+        /* halo escuro atrás do mural inteiro, para separá-lo do fundo */
+        .mural-wrapper::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 120%;
+            height: 108%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(ellipse at center, rgba(0, 0, 0, .55) 0%, rgba(0, 0, 0, .25) 55%, transparent 80%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* topo triangular (frontão) */
+        .placa-topo {
+            position: relative;
+            width: 100%;
+            height: 6vh;
+            min-height: 46px;
+            margin-bottom: -2px;
+            flex-shrink: 0;
+        }
+
+        .placa-topo::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 70%;
+            background:
+                url('src/madeira.png'),
+                linear-gradient(135deg, #6b4a2e 0%, #4a3220 45%, #2e1f12 100%);
+            background-size: cover, cover;
+            background-blend-mode: overlay;
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, .55);
+        }
+
+        .placa-topo::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 86%;
+            height: 32%;
+            background:
+                url('src/madeira.png'),
+                linear-gradient(180deg, #5e4128 0%, #3a2715 100%);
+            background-size: cover, cover;
+            background-blend-mode: overlay;
+            border-radius: 3px;
+            box-shadow:
+                0 4px 8px rgba(0, 0, 0, .5),
+                inset 0 1px 0 rgba(255, 220, 170, .12);
+        }
+
+        /* corpo principal (moldura de madeira que envolve o papel) */
+        .placa-corpo {
+            position: relative;
+            width: 100%;
+            flex: 1;
+            min-height: 0;
+            padding: 1.1rem;
+            background:
+                url('src/madeira.png'),
+                repeating-linear-gradient(90deg, #5a3d24 0px, #4a3119 6px, #5a3d24 12px);
+            background-size: cover, cover;
+            background-blend-mode: overlay;
+            border-radius: 4px;
+            border: 2px solid rgba(0, 0, 0, .5);
+            box-shadow:
+                0 10px 26px rgba(0, 0, 0, .6),
+                inset 0 0 0 2px rgba(0, 0, 0, .35),
+                inset 0 0 30px rgba(0, 0, 0, .3);
+            display: flex;
+        }
+
+        /* pregos decorativos nos cantos */
+        .placa-prego {
+            position: absolute;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #c9a05a, #5a3f1f 70%);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+            z-index: 5;
+        }
+
+        .placa-prego.tl { top: 10px; left: 10px; }
+        .placa-prego.tr { top: 10px; right: 10px; }
+        .placa-prego.bl { bottom: 10px; left: 10px; }
+        .placa-prego.br { bottom: 10px; right: 10px; }
+
+        /* friso interno mais claro */
+        .placa-friso {
+            position: relative;
+            flex: 1;
+            min-height: 0;
+            padding: 9px;
+            background: linear-gradient(180deg, #7a5530, #4f3520);
+            border-radius: 3px;
+            box-shadow: inset 0 0 0 1px rgba(255, 210, 150, .15);
+            display: flex;
+        }
+
+        /* "papel" — onde o conteúdo do RPG é injetado (substitui scroll-area) */
+        .scroll-area {
+            position: relative;
+            flex: 1;
+            min-height: 0;
+            width: 100%;
+            background: linear-gradient(180deg, #f7f1e2 0%, #ece2c9 100%);
+            border-radius: 2px;
+            box-shadow:
+                inset 0 0 25px rgba(120, 90, 40, .25),
+                inset 0 2px 4px rgba(0, 0, 0, .25);
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 15px;
+            scrollbar-gutter: stable;
+        }
+
+        .scroll-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scroll-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .scroll-area::-webkit-scrollbar-thumb {
+            background: #8e6c43;
+            border-radius: 10px;
+            border: 2px solid transparent;
+        }
+
+        /* cadeado decorativo lateral */
+        .placa-cadeado {
+            position: absolute;
+            right: -14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 26px;
+            height: 34px;
+            z-index: 16;
+        }
+
+        .placa-cadeado::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 14px;
+            border: 3px solid #9c7a3f;
+            border-bottom: none;
+            border-radius: 50% 50% 0 0;
+        }
+
+        .placa-cadeado::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 20px;
+            background: linear-gradient(180deg, #c9a05a, #7a5a28);
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+        }
+
+        /* base/pedestal da placa */
+        .placa-base {
+            position: relative;
+            width: 92%;
+            margin: 0 auto;
+            height: 22px;
+            min-height: 18px;
+            flex-shrink: 0;
+            background:
+                url('src/madeira.png'),
+                linear-gradient(180deg, #4a3220, #2e1f12);
+            background-size: cover, cover;
+            background-blend-mode: overlay;
+            border-radius: 0 0 4px 4px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, .55);
+        }
+
+        .placa-base::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -8px;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 8px;
+            background: linear-gradient(180deg, #2e1f12, #1a1108);
+            border-radius: 0 0 6px 6px;
+        }
+
+        /* mãozinha decorativa (aponta-direita), uso: <span class="mao-indicadora"></span> */
+        .mao-indicadora {
+            display: inline-block;
+            width: 1.3em;
+            height: 1.3em;
+            background: url('src/mao.webp') no-repeat center / contain;
+            vertical-align: middle;
+            margin-right: 0.4em;
+            transform: translateY(-1px);
+        }
+
+        .content {
+            width: 100%;
+            height: auto;
+            padding: 18px 14px 50px 14px;
+            color: #120802;
+            font-size: clamp(12px, 1.05vw, 16px);
+            line-height: 1.55;
+            text-align: justify;
+        }
+
+        .pergaminho-footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(92, 65, 46, 0.9);
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        /* =========================================================================
+           BLOCOS DE CONTEÚDO GENÉRICOS (PADRÃO REUTILIZÁVEL DE "SISTEMA")
+           ========================================================================= */
+
+        /* Título principal do sistema */
+        .bloco-titulo-principal {
+            font-family: 'Hogwarts-SubTitulo', 'Georgia', serif;
+            font-size: clamp(1.6rem, 2.4vw, 2.6rem);
+            font-weight: bold;
+            color: #120802;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.2rem;
+        }
+
+        /* Bloco de imagem */
+        .bloco-imagem {
+            width: 100%;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5), 0 3px 6px rgba(0, 0, 0, 0.15);
+            margin-bottom: 1.4rem;
+            background: #201711;
+        }
+
+        .bloco-imagem img {
+            width: 100%;
+            height: auto;
+            max-height: 240px;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(0.2) sepia(0.2) contrast(1.1);
+        }
+
+        /* Bloco de texto comum */
+        .bloco-texto {
+            font-family: 'Hogwarts-Paragrafo', 'Georgia', serif;
+            font-size: 0.92rem;
+            color: #1e0e03;
+            text-align: justify;
+            line-height: 1.6;
+            margin-bottom: 0.9rem;
+        }
+
+        .bloco-texto .drop-cap {
+            float: left;
+            font-family: 'Georgia', serif;
+            font-size: clamp(3.2rem, 4vw, 4.8rem);
+            line-height: 0.75;
+            padding-top: 4px;
+            padding-right: 10px;
+            padding-left: 2px;
+            color: #241906;
+            font-weight: bold;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Subtítulo de seção (não-acordeão) */
+        .bloco-subtitulo {
+            display: block;
+            font-family: 'Hogwarts-SubTitulo', serif;
+            font-size: clamp(1rem, 1.2vw, 1.3rem);
+            font-weight: bold;
+            color: #120802;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin: 1.6rem 0 0.5rem 0;
+        }
+
+        /* Divisória mágica entre blocos */
+        .bloco-divisoria {
+            width: 70%;
+            max-width: 200px;
+            height: auto;
+            margin: 1.4rem auto;
+            display: block;
+            opacity: 0.85;
+        }
+
+        /* Lista numerada (regras, ações, etc.) */
+        .bloco-lista {
+            list-style: none;
+            counter-reset: bloco-lista-contador;
+            margin-bottom: 0.9rem;
+            padding-left: 0;
+        }
+
+        .bloco-lista li {
+            counter-increment: bloco-lista-contador;
+            position: relative;
+            padding-left: 2.1rem;
+            margin-bottom: 0.85rem;
+            font-family: 'Hogwarts-Paragrafo', 'Georgia', serif;
+            font-size: 0.92rem;
+            color: #1e0e03;
+            text-align: justify;
+            line-height: 1.55;
+        }
+
+        .bloco-lista li::before {
+            content: counter(bloco-lista-contador) ".";
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-family: 'Georgia', serif;
+            font-weight: bold;
+            color: #b38530;
+            font-size: 0.95rem;
+        }
+
+        /* =========================================================================
+           SEÇÕES EM ACORDEÃO
+           ========================================================================= */
+        .acordeao-secao {
+            margin-bottom: 0.9rem;
+            border: 1px solid rgba(92, 65, 46, 0.35);
+            border-radius: 6px;
+            background: rgba(246, 237, 219, 0.55);
+            overflow: hidden;
+        }
+
+        .acordeao-cabecalho {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 0.9rem 1.1rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            font-family: 'Hogwarts-SubTitulo', serif;
+            font-size: 0.98rem;
+            font-weight: bold;
+            color: #120802;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            transition: background 0.25s ease;
+        }
+
+        .acordeao-cabecalho:hover {
+            background: rgba(179, 133, 48, 0.12);
+        }
+
+        .acordeao-cabecalho .acordeao-icone {
+            font-family: 'Georgia', serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #b38530;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .acordeao-secao.aberta .acordeao-cabecalho .acordeao-icone {
+            transform: rotate(45deg);
+        }
+
+        .acordeao-corpo {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+            padding: 0 1.1rem;
+        }
+
+        .acordeao-secao.aberta .acordeao-corpo {
+            padding: 0 1.1rem 1.1rem 1.1rem;
+        }
+
+        .acordeao-corpo .bloco-texto,
+        .acordeao-corpo .bloco-lista,
+        .acordeao-corpo .bloco-subtitulo {
+            margin-top: 0;
+        }
+
+        .acordeao-corpo .bloco-subtitulo {
+            font-size: 0.92rem;
+            margin: 1.1rem 0 0.4rem 0;
+        }
+
+        .acordeao-corpo .bloco-subtitulo:first-child {
+            margin-top: 0;
+        }
+
+        /* =========================================================================
+           CRONOGRAMA — PAINEL DE DATA, CLIMA, LUA E EVENTOS
+           ========================================================================= */
+        .cronograma-cabecalho {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+            margin-bottom: 1.2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(92, 65, 46, 0.35);
+        }
+
+        .cronograma-data {
+            font-family: 'Hogwarts-SubTitulo', serif;
+            font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+            color: #120802;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        .cronograma-diasemana {
+            font-family: 'Hogwarts-Paragrafo', serif;
+            font-style: italic;
+            font-size: 0.85rem;
+            color: #5c412e;
+        }
+
+        .cronograma-ano {
+            font-family: 'Hogwarts-Paragrafo', serif;
+            font-size: 0.78rem;
+            color: #7a5a3a;
+            margin-top: 2px;
+        }
+
+        .cronograma-painel-duplo {
+            display: flex;
+            gap: 0.9rem;
+            margin-bottom: 1.3rem;
+        }
+
+        .cronograma-card {
+            flex: 1;
+            background: rgba(246, 237, 219, 0.55);
+            border: 1px solid rgba(92, 65, 46, 0.3);
+            border-radius: 6px;
+            padding: 0.8rem 0.6rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.35rem;
+        }
+
+        .cronograma-card-titulo {
+            font-family: 'Hogwarts-SubTitulo', serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #7a5a3a;
+        }
+
+        .cronograma-card-valor {
+            font-family: 'Hogwarts-Paragrafo', serif;
+            font-size: 0.85rem;
+            color: #1e0e03;
+            line-height: 1.3;
+        }
+
+        /* ícone de clima, desenhado em CSS puro */
+        .clima-icone {
+            width: 38px;
+            height: 38px;
+            position: relative;
+        }
+
+        .clima-icone.nublado::before,
+        .clima-icone.nublado::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(180deg, #cfc6b0, #8f8472);
+            box-shadow: inset -3px -3px 4px rgba(0, 0, 0, .15);
+        }
+
+        .clima-icone.nublado::before {
+            width: 26px;
+            height: 26px;
+            left: 4px;
+            top: 6px;
+        }
+
+        .clima-icone.nublado::after {
+            width: 20px;
+            height: 20px;
+            left: 16px;
+            top: 10px;
+        }
+
+        .clima-icone.chuva::before,
+        .clima-icone.chuva::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(180deg, #cfc6b0, #8f8472);
+        }
+
+        .clima-icone.chuva::before {
+            width: 26px;
+            height: 26px;
+            left: 4px;
+            top: 2px;
+        }
+
+        .clima-icone.chuva::after {
+            width: 20px;
+            height: 20px;
+            left: 16px;
+            top: 6px;
+        }
+
+        .clima-icone.sol {
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffd877, #d99a2b);
+            box-shadow: 0 0 10px 3px rgba(255, 200, 90, .55);
+        }
+
+        /* fase da lua, controlada via classe (ex: .lua-cheia, .lua-crescente) */
+        .lua-icone {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #f3ecd6, #b9ab87 75%);
+            box-shadow: 0 0 8px 2px rgba(230, 220, 180, .35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lua-icone.lua-nova {
+            background: radial-gradient(circle at 35% 35%, #4a4536, #221f17 75%);
+            box-shadow: none;
+        }
+
+        .lua-icone.lua-crescente::after,
+        .lua-icone.lua-minguante::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #221f17;
+        }
+
+        .lua-icone.lua-crescente::after {
+            left: -55%;
+            box-shadow: 8px 0 0 0 #221f17;
+        }
+
+        .lua-icone.lua-minguante::after {
+            left: 55%;
+            box-shadow: -8px 0 0 0 #221f17;
+        }
+
+        .lua-icone.lua-quarto-crescente::after,
+        .lua-icone.lua-quarto-minguante::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: #221f17;
+        }
+
+        .lua-icone.lua-quarto-crescente::after {
+            left: 0;
+        }
+
+        .lua-icone.lua-quarto-minguante::after {
+            right: 0;
+        }
+
+        .cronograma-lua-obs {
+            font-size: 0.7rem;
+            color: #7a5a3a;
+            font-style: italic;
+            margin-top: 2px;
+        }
+
+        .cronograma-eventos-titulo {
+            font-family: 'Hogwarts-SubTitulo', serif;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #120802;
+            margin-bottom: 0.8rem;
+            text-align: center;
+        }
+
+        .cronograma-evento {
+            position: relative;
+            padding: 0.7rem 0.8rem 0.7rem 1rem;
+            margin-bottom: 0.7rem;
+            background: rgba(246, 237, 219, 0.5);
+            border-left: 3px solid #b38530;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .cronograma-evento-data {
+            font-family: 'Hogwarts-SubTitulo', serif;
+            font-size: 0.68rem;
+            color: #b38530;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.2rem;
+        }
+
+        .cronograma-evento-titulo {
+            font-family: 'Hogwarts-Paragrafo', serif;
+            font-weight: bold;
+            font-size: 0.88rem;
+            color: #120802;
+            margin-bottom: 0.2rem;
+        }
+
+        .cronograma-evento-desc {
+            font-family: 'Hogwarts-Paragrafo', serif;
+            font-size: 0.8rem;
+            color: #3b2a1c;
+            line-height: 1.45;
+        }
+
+        /* =========================================================================
+           TAÇA DAS CASAS — AMPULHETAS E HISTÓRICO
+           ========================================================================= */
+        .taca-fileira {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin: 1.2rem 0 1.6rem 0;
+        }
+
+        .taca-casa {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .taca-logo {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, .4));
+        }
+
+        .taca-nome {
+            font-family: 'Hogwarts-SubTitulo', serif;
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: #120802;
+            text-align: center;
+        }
+
+        /* ampulheta construída em CSS puro */
+        .ampulheta {
+            position: relative;
+            width: 46px;
+            height: 92px;
+        }
+
+        .ampulheta-vidro {
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.12);
+            clip-path: polygon(8% 0%, 92% 0%, 58% 48%, 92% 100%, 8% 100%, 42% 48%);
+            border: 2px solid #4a3320;
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, .35);
+        }
+
+        .ampulheta-cap-topo,
+        .ampulheta-cap-base {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(180deg, #c9a05a, #6b4a2e);
+            border-radius: 2px;
+        }
+
+        .ampulheta-cap-topo { top: -4px; }
+        .ampulheta-cap-base { bottom: -4px; }
+
+        .ampulheta-areia-cima {
+            position: absolute;
+            left: 8%;
+            right: 8%;
+            top: 2px;
+            background: linear-gradient(180deg, #e8c878, #c9a05a);
+            clip-path: polygon(0% 0%, 100% 0%, 58% 92%, 42% 92%);
+            transition: height 0.6s ease;
+        }
+
+        .ampulheta-areia-baixo {
+            position: absolute;
+            left: 8%;
+            right: 8%;
+            bottom: 2px;
+            background: linear-gradient(0deg, #e8c878, #c9a05a);
+            clip-path: polygon(42% 8%, 58% 8%, 100% 100%, 0% 100%);
+            transition: height 0.6s ease;
+        }
+
+        .taca-pontos {
+            font-family: 'Hogwarts-Paragrafo', serif;
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: #120802;
+        }
+
+        .taca-lider-banner {
+            text-align: center;
+            font-family: 'Hogwarts-SubTitulo', serif;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #7a5a3a;
+            margin-bottom: 1.4rem;
+        }
+
+        .taca-lider-banner strong {
+            color: #b38530;
+        }
+
+        .taca-historico-titulo {
+            font-family: 'Hogwarts-SubTitulo', serif;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #120802;
+            margin-bottom: 0.7rem;
+            text-align: center;
+        }
+
+        .taca-historico-lista {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .taca-historico-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0.7rem;
+            margin-bottom: 0.4rem;
+            background: rgba(246, 237, 219, 0.45);
+            border-radius: 4px;
+            font-family: 'Hogwarts-Paragrafo', serif;
+            font-size: 0.82rem;
+            color: #1e0e03;
+        }
+
+        .taca-historico-ano {
+            font-weight: bold;
+            color: #5c412e;
+        }
+
+        .taca-historico-campea {
+            color: #b38530;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="scene">
+        <!-- BANDEIRA FLUTUANTE DE DETALHES (CABEÇALHO) -->
+        <div class="hanging-banner" id="hanging-banner-sistemas">
+            <h2>Mural</h2>
+            <p>Editais, decretos e proclamações fixados no mural de avisos de Hogwarts.</p>
+        </div>
+
+        <!-- BOTÃO VOLTAR PERSONALIZADO -->
+        <button id="back-from-sistemas" onclick="window.location.href='index.html'" aria-label="Voltar para o menu principal de Hogwarts"></button>
+
+        <!-- FUNDO INTEGRADO AO RPG -->
+        <img src="src/background.png" class="layer background" alt="Cenário do Salão Comunal" onerror="this.src='https://placehold.co/1920x1080/1a120b/d4a359?text=Salao+Comunal+Hogwarts'">
+
+        <div class="gifs"></div>
+
+        <!-- MENU DE SISTEMAS (BOTÕES) -->
+        <nav class="categorias-sidebar" aria-label="Menu de Sistemas do RPG">
+            <button class="categoria-tab active" data-sistema="duelos">
+                <h3>Duelos</h3>
+            </button>
+            <button class="categoria-tab" data-sistema="quadribol">
+                <h3>Quadribol</h3>
+            </button>
+            <button class="categoria-tab" data-sistema="ambientacao">
+                <h3>Ambientação</h3>
+            </button>
+            <button class="categoria-tab" data-sistema="tramas">
+                <h3>Tramas</h3>
+            </button>
+            <button class="categoria-tab" data-sistema="notas">
+                <h3>Notas</h3>
+            </button>
+            <button class="categoria-tab" data-sistema="cronograma">
+                <h3>Cronograma</h3>
+            </button>
+            <button class="categoria-tab" data-sistema="taca">
+                <h3>Taça das Casas</h3>
+            </button>
+        </nav>
+
+        <!-- MURAL DE MADEIRA (CONTEÚDO) -->
+        <div class="mural-wrapper">
+            <div class="placa-topo"></div>
+            <div class="placa-corpo">
+                <div class="placa-prego tl"></div>
+                <div class="placa-prego tr"></div>
+                <div class="placa-prego bl"></div>
+                <div class="placa-prego br"></div>
+                <div class="placa-friso">
+                    <div class="placa-cadeado"></div>
+                    <!-- ÁREA DE ROLAGEM INTERNA DO MURAL (equivalente ao pergaminho) -->
+                    <div class="scroll-area" id="parchment-scroll-area">
+                        <div class="content" id="sistemas-container">
+                            <!-- Injetado dinamicamente via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="placa-base"></div>
+        </div>
+
+        <!-- VITROLA MUSICAL -->
+        <div class="vitrola" role="button" aria-label="Tocar vitrola clássica de Hogwarts">
+            <img src="src/vitrola.png" class="vitrola-img" alt="Vitrola Vintage" onerror="this.src='https://placehold.co/150x150/d4a359/000000?text=Vitrola'">
+        </div>
+        <button class="vitrola-next site-arrow-button" aria-label="Passar para próxima música do vinil"></button>
+        <audio id="vinyl-audio" src="src/hogsmeade.mp3" preload="auto"></audio>
+    </div>
+
+    <script>
+        // =========================================================================
+        // BANCO DE DADOS DOS SISTEMAS — CADA SISTEMA É UMA LISTA DE "BLOCOS"
+        // =========================================================================
+        // Tipos de bloco suportados:
+        //   { tipo: "titulo", texto: "..." }
+        //   { tipo: "imagem", url: "...", alt: "..." }
+        //   { tipo: "subtitulo", texto: "..." }
+        //   { tipo: "texto", texto: "...", dropCap: "X" (opcional) }
+        //   { tipo: "lista", itens: ["...", "..."] }
+        //   { tipo: "divisoria" }
+        //   { tipo: "acordeao", titulo: "...", blocos: [ ...blocos internos... ] }
+        const sistemasDatabase = {
+            "duelos": {
+                titulo: "Sistemas",
+                blocos: [
+                    { tipo: "titulo", texto: "Duelos" },
+                    { tipo: "imagem", url: "https://i.imgur.com/Rj2HNr3.jpg", alt: "Sistema de Duelos" },
+                    {
+                        tipo: "texto",
+                        dropCap: "A",
+                        texto: " forma mais genérica — e também a mais popular — de se duelar consiste no ato em que dois bruxos se posicionam em extremidades opostas de um elevado, o tablado, onde travarão seu combate até que um de ambos tenha sido, de algum modo, incapacitado pelo outro. Não é permitido matar, humilhar ou ferir de maneira grave e intencional outro duelista, e fazê-lo irá acarretar na imediata desclassificação do infrator."
+                    },
+                    {
+                        tipo: "texto",
+                        texto: "Nesse caso, o tablado geralmente será uma superfície lisa, plana e limpa, onde não há nenhum tipo de obstáculo ou poluição a princípio — e onde objetos externos a ele não podem ser utilizados, com exceção daqueles produzidos no decorrer do próprio duelo."
+                    },
+                    {
+                        tipo: "texto",
+                        texto: "Embora não seja necessário, é prática comum se ter uma terceira parte responsável por arbitrar o duelo. Nos casos em que isso aconteça, a sua palavra é absoluta — à exceção de posicionamentos que claramente violem as regras estabelecidas abaixo, casos nos quais o seu discernimento pode e deve ser questionado."
+                    },
+                    { tipo: "divisoria" },
+                    {
+                        tipo: "acordeao",
+                        titulo: "Regras",
+                        blocos: [
+                            {
+                                tipo: "texto",
+                                texto: "A regra mais básica e recorrente dos duelos, que não foi alterada aqui, é a conhecida regra de esquiva, que observa o esquema FEITIÇO-FEITIÇO-DESVIO. E, dentro dessa ordem, entende-se que entre cada esquiva é necessário que o bruxo faça uso de ao menos dois feitiços. A contagem inclui feitiços que sejam executados durante o seu turno de esquiva (ex: Esquiva-se para o lado e contra-ataca com um lampejo no tórax), mas:"
+                            },
+                            {
+                                tipo: "lista",
+                                itens: [
+                                    "Em regra, somente um feitiço, habilidade ou poder será usado a cada turno — essa regra está sujeita a receber algumas exceções no futuro por motivos de dinamicidade;",
+                                    "A menos que especificado de outra forma, não é permitido usar azarações em duelos;",
+                                    "Em duelos que ocorrem no tablado, não é permitido que o público externo interfira. A única exceção é quando isso é feito para salvar uma pessoa de se ferir gravemente, a exemplo de um oponente que continue atacando mesmo com o outro incapacitado;",
+                                    "O juiz tem total controle sobre o decurso do duelo. É permitido debater via sussurro algum assunto que se ache pertinente com ele, mas por questão de ordem ele sempre tem a palavra final;",
+                                    "Não é permitido utilizar o Feitiço-Escudo, Protego, duas vezes consecutivas em locais muito distantes do corpo (por exemplo, um no ombro e um no joelho);",
+                                    "Em regra, não é possível movimentar-se enquanto se conjura Protego. Entretanto, ao longo do RPG exceções a essa regra surgirão;",
+                                    "Quando se está fora do seu turno de esquiva, não é permitido \"se jogar para o lado e tomar o feitiço de raspão\";",
+                                    "O duelo só termina quando um dos lados for de alguma maneira incapacitado, seja por desistência, imobilização, perda de consciência, saída do tablado ou desarme. No caso de pessoas proficientes em magia desarmada, a derrota ainda acontece;",
+                                    "No caso de duelos prolongados, o juiz pode e deve interpretar o cansaço das partes e suas consequências caso os próprios duelistas não o façam. Consequências possíveis de cansaço acumulado são: errar a execução de um feitiço, imprecisão na mira, levar mais tempo do que o normal para executá-lo, perder o equilíbrio durante uma esquiva ou defesa, dentre outros. Em duelos oficiais será usado um dado a partir de um certo número de turnos para se interpretar as adversidades do duelo. Mais a respeito disso será explicado adiante;",
+                                    "Não é permitido o uso de objetos externos ao tablado durante um duelo formal, com exceção de objetos que tenham sido produzidos durante e por consequência direta do duelo em si. Por exemplo, um Esferi que saia do tablado ainda pode ser utilizado pelos duelistas;",
+                                    "A movimentação está limitada a 1q por turno, em quaisquer direções;",
+                                    "A fórmula mágica dos feitiços deve ser escrita corretamente em TODAS as ações em que ocorra a execução do feitiço. No caso de feitiços não-verbais, a fórmula deve seguir o formato >Protego<;",
+                                    "O uso de sotaque na execução de algum feitiço (ex: Expelliarrrmus!) é válido, porém ele deve obrigatoriamente ser descrito na ação (O sotaque francês arranha o R da fórmula, …), do contrário será tratado como um erro e o feitiço falhará. Além disso, é preciso que a fórmula original seja claramente compreensível."
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        tipo: "acordeao",
+                        titulo: "Ações",
+                        blocos: [
+                            {
+                                tipo: "texto",
+                                texto: "Esse tipo de ação é utilizada para o uso de feitiços, e é aplicado exaustivamente em duelos, devendo normalmente ser escritas em negrito ou com balões coloridos para facilitar o destaque dos duelistas. Quando se faz uso de um feitiço, a fórmula mágica deve ser escrita da maneira correta, fora dos asteriscos da ação."
+                            },
+                            {
+                                tipo: "lista",
+                                itens: [
+                                    "Fórmula do Feitiço. Lampejo, lugar-alvo, efeito",
+                                    "Fórmula do Feitiço. Natureza do feitiço, lugar-alvo, efeito",
+                                    "Fórmula do Feitiço. Descrição do movimento, descrição do lampejo, descrição do alvo, efeito",
+                                    "Fórmula do Feitiço. Descrição do movimento, descrição do lampejo, descrição detalhada do lugar-alvo, descrição detalhada do efeito"
+                                ]
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "Embora duelos em geral devam ser rápidos, e por isso se prioriza ações com menos detalhes, existe um nível mínimo que deve ser respeitado: é necessário sempre deixar clara a natureza do feitiço executado — é um lampejo? Um objeto? Uma rajada elemental? —, o local em que se está mirando no corpo do alvo e o efeito que terá sobre ele."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "Ações mais detalhadas são muito apreciadas, visto que oferecem uma dinâmica ainda maior para os duelos. Por exemplo, é possível utilizar o feitiço Incendio Erupto da maneira padrão — uma rajada elemental em uma parte do corpo do alvo —, mas também é perfeitamente possível espalhar as chamas em horizontal com um movimento adequado da varinha."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "Por outro lado, a não-descrição de feitiço, lugar ou efeito compete ao bruxo que executa a ação uma punição no duelo, que pode vir na mesma ação ou em ações de reação. Por exemplo, um feitiço pode sair mais fraco do que deveria, talvez ele simplesmente erre o alvo, talvez atinja e não produza efeito algum. Isso fica a critério do juiz, mas a consequência deve existir."
+                            }
+                        ]
+                    },
+                    {
+                        tipo: "acordeao",
+                        titulo: "Interpretação",
+                        blocos: [
+                            {
+                                tipo: "texto",
+                                texto: "Em todos os casos, é importante ter em mente a interpretação do personagem. Não é incomum que jogadores simplesmente parem de interpretar a personalidade da personagem pelo tempo em que sobem ao tablado, esquecendo-se do aspecto de roleplay."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "Pensando nisso, é importante ter em mente que o fato de as regras permitirem que você faça algo (por ex: \"esse é o meu turno de esquiva, logo eu vou desviar\") não significa que o seu personagem possa fazê-lo naquele momento. Alunos mais novos e inexperientes não têm a percepção que adultos possuem duelando. Talvez a poluição visual impediu que o seu personagem visse o lampejo vindo em sua direção. Talvez ele se distraia com a audiência e perca o tempo de bloquear um feitiço."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "Assim, por mais contra-intuitivo que possa parecer, em diversos momentos importa ter em mente o que a sua personagem faria em determinado momento. Recompensas dentro do sistema não serão dadas apenas para os vencedores dos duelos, mas sim de acordo com a maneira como o RP foi seguido. Por exemplo, uma personagem que expressamente detesta duelos e subitamente se vê duelando."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "O \"senso\" duelístico dentro de Hogwarts não tem o seu foco principal no sistema em si, mas sim em observar se a interação acontece de maneira orgânica, que faça sentido dentro do contexto, o que novamente remete ao sistema rolamento de dados que volta e meia será aplicado em duelos, explicado mais abaixo."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "O importante é ter em mente que a sua personagem não é uma máquina de duelos, e sim uma pessoa. Situações como bloquear um feitiço em um ponto do corpo e imediatamente em um ponto muito distante no turno seguinte, esquivar-se sem ter visão do feitiço que o seu oponente utilizou, dentre outras coisas em alguns momentos serão rejeitadas em favor de se manter o senso proposto no RPG, onde todos são alunos que ainda estão aprendendo a duelar."
+                            }
+                        ]
+                    },
+                    {
+                        tipo: "acordeao",
+                        titulo: "Defesa / Esquiva",
+                        blocos: [
+                            {
+                                tipo: "texto",
+                                texto: "É necessário ter em mente as regras de defesa, desvio e de distância. São normas feitas para o balanceamento dos duelos e a inteligência da dinâmica do RPG para a canalização das habilidades mágicas através de varinhas. Estude-as e compreenda-as antes de duelar para não acabar caindo na velha armadilha do sábio burro, que pensa que sabe tudo, mas não sabe nada."
+                            },
+                            { tipo: "subtitulo", texto: "I. Defendendo" },
+                            {
+                                tipo: "texto",
+                                texto: "Assim como no caso de feitiços ofensivos, para se defender com Protego é necessário citar alguns detalhes na sua ação, seguindo o molde: Protego! Barreira translúcida, peito, defender."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "Note que, embora o propósito do feitiço seja diferente, o esquema é similar: natureza do feitiço, local defendido e efeito produzido. O Feitiço-Escudo é um dos feitiços básicos do mundo bruxo, e ao mesmo tempo um dos mais difíceis de se dominar. Por essa razão, não é possível fazer uso desse feitiço ao mesmo tempo em que se movimenta, sob pena de perder a força do feitiço e ser atingido pelo impacto do ataque defendido."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "Embora popular, Protego não é o único feitiço defensivo. Além das suas variações que buscam proteção em área, existem diversos feitiços que podem ser empregados como forma de se defender de outros feitiços, todos a depender da situação."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "Por exemplo, não é possível, em regra, utilizar o Feitiço-Escudo para defender-se de um feitiço elemental ou um feitiço corpóreo, mas existem outros feitiços apropriados para se fazer isso, como outros elementais, transfiguratórios ou feitiços de efeito. É tudo questão de bom senso, tendo sempre em mente que a proporção na defesa é importante — por exemplo, não é possível defender um feitiço Incendio Erupto com Aquamenti, visto que, embora seja água confrontando fogo, a diferença proporcional de forças entre os dois feitiços é gigantesca e não permite o seu bloqueio efetivo."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "Da mesma forma, feitiços mais potentes usados em defesa podem produzir um contra-ataque imediato, \"atropelando\" o feitiço do seu oponente. Nesses casos é importante ter em mente que o feitiço perde força, e com isso tamanho, na colisão."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "Não é possível usar feitiços corpóreos para bloquear lampejos, tampouco confrontar o lampejo do seu adversário com outro. De mesma forma, objetos demasiadamente pequenos, como pedras, não são capazes de bloquear um lampejo, sendo \"atropelados\" por ele."
+                            },
+                            { tipo: "subtitulo", texto: "II. Desviando" },
+                            {
+                                tipo: "texto",
+                                texto: "O desvio é uma característica recorrente em RPG, sendo utilizado primariamente para inverter a ordem de ataque, seguindo a regra explicada mais acima de Feitiço-Feitiço-Desvio."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "É importante estar ciente de que a regra é um parâmetro geral, mas o mero fato de ser o seu turno de esquiva não significa que seja possível realizar um desvio naquele turno, o que será explicado mais adiante."
+                            }
+                        ]
+                    },
+                    {
+                        tipo: "acordeao",
+                        titulo: "Desvios Impossíveis",
+                        blocos: [
+                            {
+                                tipo: "texto",
+                                texto: "Formulada pela primeira vez na Fortaleza Fidelius, a regra de desvios impossíveis visa justamente tornar os duelos menos robóticos e dependentes de um sistema de contagem de turnos e passos. Em diversos momentos durante um duelo, um duelista se deparará com a impossibilidade de realizar uma esquiva, seja por causa da distância entre ele e o outro bruxo, seja por conta do posicionamento ou do efeito do feitiço."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "Entretanto, expandindo essa regra, é importante também considerar a impossibilidade por condições do tablado e pelas condições dos duelistas. Por exemplo, um bruxo exausto dificilmente conseguirá desviar de um lampejo disparado em sua direção, independentemente da ordem dos turnos de esquiva."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "Desse modo, a mera aplicação do conceito geral Feitiço-Feitiço-Desvio, considerada superficial demais por conta própria, é insuficiente para determinar todas as variantes dentro do duelo."
+                            },
+                            { tipo: "subtitulo", texto: "I. Distância" },
+                            {
+                                tipo: "texto",
+                                texto: "Em regra, a distância mínima para esquivas em um duelo é de 4 quadrados, de modo que um bruxo fica incapaz de esquivar-se a partir do momento em que fica a 3 quadrados de seu atacante. Assim, a forma mais básica de se finalizar um duelo é rompendo a distância de esquiva do oponente e o atacando de dentro dela."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "Entretanto, essa regra é um dos principais fatores que \"manjaram\" o sistema. Tendo isso em mente, alguns feitiços terão distâncias de esquiva próprias. Por exemplo, a Maldição da Morte tem uma distância mínima de esquiva de 7 quadrados, ao contrário dos 4 habituais. Feitiços não-verbais têm sempre +1q de distância mínima, ou seja, um desarmante que seja executado de maneira não-verbal tem distância mínima de desvio de 5 quadrados, e não 4."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "Alguns feitiços sem lampejo, como Confundus, também têm uma distância mínima de esquiva aumentada em +1q, visto a dificuldade de se calcular a mira do feitiço."
+                            },
+                            { tipo: "subtitulo", texto: "II. Posicionamento" },
+                            {
+                                tipo: "texto",
+                                texto: "A ideia do Desvio Impossível por posicionamento se respalda em movimentações que não façam sentido dentro do contexto da esquiva. Por exemplo, se o seu ombro esquerdo é alvejado por um lampejo e você se esquiva saltando para a sua esquerda, o lampejo atingirá a sua personagem. Lampejos são muito rápidos, e portanto a movimentação deve ser sempre precisa e ágil."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "A posição relativa entre ambos os duelistas sempre é considerada nesses casos, e em alguns é possível que a posição simplesmente não possibilite um desvio. Em determinados momentos é possível se abaixar para desviar de um feitiço, mas essa situação impossibilita se levantar ou avançar no mesmo turno, devendo ser feito no seguinte."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "Em alguns casos, é possível que o posicionamento simplesmente não permita esquiva, independente da movimentação do personagem. Por exemplo, ao cair por algum motivo é muito difícil se esquivar do feitiço seguinte."
+                            },
+                            { tipo: "subtitulo", texto: "III. Raio de Alcance" },
+                            {
+                                tipo: "texto",
+                                texto: "Nem todos os feitiços se concentram especificamente no corpo do alvo. Em alguns casos, principalmente no que diz respeito a feitiços elementais, é possível espalhá-los para que se cause um efeito em área, atingindo até um máximo de 3 quadrados, seja horizontal, vertical ou diagonalmente, simultaneamente. Isso em regra visa impossibilitar que o seu alvo se esquive mesmo tendo turno para fazê-lo, já que nessas situações desviar normalmente se torna uma impossibilidade."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "Assim, alguns feitiços elementais são capazes de atingir uma área abrangente, mas só as suas versões mais potentes — como Incendio Erupto e Aqua Erupto —, entendendo-se que feitiços como Incendio e Aquamenti não são intensos o suficiente para se espalharem por uma área maior do que o corpo do alvo."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "De forma semelhante, certos feitiços corpóreos, por produzirem uma quantidade muito grande de objetos, podem ser utilizados de maneira parecida. Por exemplo, o feitiço Petrus dispara até três pedras, o que pode ser utilizado para fechar o ângulo de esquiva de um bruxo. A regra continua assim para outros, à exemplo de Spinus, mas em todos os casos não é possível escolher pontos específicos e diferentes do corpo de um alvo que serão alvejados. Todos os objetos produzidos devem ser disparados na mesma linha horizontal, não sendo possível mirar cada um deles de forma seletiva."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "É importante sempre ficar atento à descrição feita pelo conjurador para entender o raio de efeito e a possibilidade (ou impossibilidade) de esquiva gerada por ele."
+                            },
+                            { tipo: "subtitulo", texto: "IV. Condições de Campo" },
+                            {
+                                tipo: "texto",
+                                texto: "As condições de campo são uma adição à regra de Desvios Impossíveis. Assim como no caso do Raio de Alcance, essas condições geralmente são criadas por feitiços, embora em alguns casos possam ser parte natural do cenário ou consequência de efeitos externos, e a sua importância nesses casos é a dificuldade que certos fatores criam para a realização de desvios no duelo."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "Por exemplo, uma pista molhada se torna mais escorregadia, dificultando as esquivas feitas pelos duelistas. Nesses casos, existe a possibilidade de ser apenas água, decorrente de feitiços como Aqua Erupto ou Aquamenti, ou a água ensaboada do feitiço Escorrego. Água normal não compromete, por si só, o equilíbrio dos duelistas, mas diminui o seu tempo de esquiva em +1q — ou seja, sua distância mínima de esquiva vai de 4 para 5 quadrados. No caso de água ensaboada, qualquer movimento feito imediatamente causará a queda do bruxo."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "Em casos de poluição visual, normalmente causada pelo uso de feitiços elementais de ampla escala, a reação de um bruxo também pode ficar comprometida. Obstáculos, ou mesmo o próprio limite do tablado são considerados nas condições de campo, e podem contribuir para a impossibilidade de esquiva. Por exemplo, se um lampejo lhe alveja do lado direito do corpo, mas o lado esquerdo está bloqueado pelo limite do tablado ou algum obstáculo, talvez não seja possível realizar uma esquiva."
+                            },
+                            { tipo: "subtitulo", texto: "V. Condições dos Duelistas" },
+                            {
+                                tipo: "texto",
+                                texto: "O cansaço também deve ser levado em conta em cada duelo. Um bruxo cansado tem um vigor muito menor do que o que tinha no começo do embate, o que pode incidir no seu tempo de reação. Nesse caso em específico, a partir de um número específico de turnos pelos quais um duelo perdure o juiz poderá rolar um dado para determinar o sucesso (ou falha) do bruxo em se esquivar, sendo que o dado nesses casos será rolado eventualmente ao longo do duelo de pouco em pouco, mas nunca continuamente."
+                            },
+                            {
+                                tipo: "texto",
+                                texto: "Em certos casos, a condição do duelista pode impossibilitar por completo o seu desvio em um turno, o que pode tanto ser causado pela sua fadiga quanto por algum ferimento que tenha vindo a sofrer no decurso do duelo."
+                            }
+                        ]
+                    }
+                ]
+            },
+            "quadribol": {
+                titulo: "Sistemas",
+                blocos: [
+                    { tipo: "titulo", texto: "Quadribol" },
+                    {
+                        tipo: "texto",
+                        dropCap: "C",
+                        texto: " onteúdo não encontrado."
+                    }
+                ]
+            },
+            "ambientacao": {
+                titulo: "Ambientação",
+                blocos: [
+                    { tipo: "titulo", texto: "Ambientação" },
+                    {
+                        tipo: "imagem",
+                        url: "https://i.imgur.com/Rj2HNr3.jpg",
+                        alt: "Castelo de Hogwarts"
+                    },
+                    {
+                        tipo: "texto",
+                        dropCap: "H",
+                        texto: "ogwarts não é apenas um castelo: é um organismo vivo, que respira junto com as estações e reage ao humor de seus habitantes. Escadas que mudam de lugar nas terças, retratos que cochicham fofocas, armaduras que pigarreiam quando alguém passa correndo pelos corredores depois do toque de recolher."
+                    },
+                    {
+                        tipo: "texto",
+                        texto: "O RPG se passa majoritariamente dentro dos limites de Hogwarts e Hogsmeade, com o calendário letivo seguindo de setembro a junho. Eventos sazonais — Halloween, o Baile, os exames finais — funcionam como marcos narrativos em torno dos quais várias tramas podem se entrelaçar."
+                    },
+                    { tipo: "divisoria" },
+                    {
+                        tipo: "acordeao",
+                        titulo: "O Castelo",
+                        blocos: [
+                            { tipo: "subtitulo", texto: "Salões Comunais" },
+                            {
+                                tipo: "texto",
+                                texto: "Cada casa possui seu próprio salão comunal e dormitórios, acessíveis apenas por seus membros através de senhas, enigmas ou — no caso da Sonserina — reconhecimento de sangue-puro nas masmorras."
+                            },
+                            { tipo: "subtitulo", texto: "Salão Principal" },
+                            {
+                                tipo: "texto",
+                                texto: "Palco das refeições, anúncios e cerimônias. O teto encantado reflete o céu do lado de fora — e ocasionalmente o clima emocional de quem o enfeitiçou por último."
+                            },
+                            { tipo: "subtitulo", texto: "Floresta Proibida" },
+                            {
+                                tipo: "texto",
+                                texto: "Tecnicamente fora dos limites para alunos. Na prática, palco recorrente de detenções, apostas idiotas e o ocasional encontro com algo que definitivamente não devia estar ali."
+                            }
+                        ]
+                    },
+                    {
+                        tipo: "acordeao",
+                        titulo: "Hogsmeade",
+                        blocos: [
+                            {
+                                tipo: "texto",
+                                texto: "A única vila inteiramente bruxa da Britânia, visitada em fins de semana liberados a partir do terceiro ano. Three Broomsticks, Dedosdemel e a Casa dos Gritos compõem o roteiro padrão — mas o vilarejo guarda esquinas menos óbvias para quem souber procurar."
+                            },
+                            {
+                                tipo: "lista",
+                                itens: [
+                                    "Saídas a Hogsmeade ocorrem em datas fixas do calendário letivo, anunciadas previamente no mural;",
+                                    "Alunos sem autorização assinada permanecem no castelo;",
+                                    "Comportamento em Hogsmeade ainda está sujeito às regras escolares — o que acontece na vila não fica na vila."
+                                ]
+                            }
+                        ]
+                    },
+                    { tipo: "divisoria" },
+                    {
+                        tipo: "texto",
+                        texto: "Esta seção será expandida conforme novos espaços forem explorados ou criados ao longo do RPG. Sugestões de ambientação podem ser enviadas à administração através dos canais oficiais."
+                    }
+                ]
+            },
+            "tramas": {
+                titulo: "Tramas",
+                blocos: [
+                    { tipo: "titulo", texto: "Tramas" },
+                    {
+                        tipo: "texto",
+                        dropCap: "A",
+                        texto: "s tramas são os fios narrativos que conectam personagens, casas e eventos ao longo da temporada. Algumas são propostas pela administração como pano de fundo geral; outras nascem espontaneamente da interpretação dos próprios jogadores — e ambas são igualmente válidas."
+                    },
+                    { tipo: "divisoria" },
+                    {
+                        tipo: "acordeao",
+                        titulo: "Trama Principal — Sombras sobre o Lago",
+                        blocos: [
+                            {
+                                tipo: "texto",
+                                texto: "Nas últimas semanas, criaturas do Lago Negro têm sido vistas em comportamento anormal durante a madrugada. O professor responsável por Cuidado com Criaturas Mágicas suspeita de interferência externa, mas se recusa a comentar publicamente."
+                            },
+                            {
+                                tipo: "lista",
+                                itens: [
+                                    "Avistamentos devem ser reportados através de fichas de RP nos canais indicados;",
+                                    "Investigações não-autorizadas no Lago após o toque de recolher resultarão em pontos perdidos — e possivelmente em algo pior;",
+                                    "Pistas adicionais serão liberadas periodicamente pela administração conforme o RP avança."
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        tipo: "acordeao",
+                        titulo: "Tramas Secundárias",
+                        blocos: [
+                            { tipo: "subtitulo", texto: "Rivalidade no Time de Quadribol" },
+                            {
+                                tipo: "texto",
+                                texto: "A disputa pela vaga de Apanhador da Lufa-Lufa se tornou pessoal entre dois candidatos. O resultado das próximas seletivas pode render mais do que apenas um lugar no time."
+                            },
+                            { tipo: "subtitulo", texto: "O Diário Perdido" },
+                            {
+                                tipo: "texto",
+                                texto: "Um caderno com anotações estranhas foi encontrado na Seção Restrita da Biblioteca. Quem o perdeu? E por que ele continua aparecendo em lugares onde já foi confiscado?"
+                            }
+                        ]
+                    },
+                    { tipo: "divisoria" },
+                    {
+                        tipo: "texto",
+                        texto: "Jogadores interessados em propor novas tramas — pessoais, de casa ou abertas à comunidade — podem submetê-las à administração para avaliação e integração ao cronograma narrativo."
+                    }
+                ]
+            },
+            "notas": {
+                titulo: "Notas",
+                blocos: [
+                    { tipo: "titulo", texto: "Notas da Administração" },
+                    {
+                        tipo: "texto",
+                        dropCap: "E",
+                        texto: "sta seção reúne avisos gerais, atualizações de regras e comunicados que não se encaixam perfeitamente em nenhuma outra aba do mural. Verifique-a com frequência."
+                    },
+                    { tipo: "divisoria" },
+                    { tipo: "subtitulo", texto: "Atualizações Recentes" },
+                    {
+                        tipo: "lista",
+                        itens: [
+                            "Revisão das regras de Desvios Impossíveis, seção Raio de Alcance, com exemplos adicionais;",
+                            "Nova aba de Cronograma adicionada ao mural, substituindo os avisos soltos antigos;",
+                            "Sistema de Taça das Casas migrado para o novo painel visual — pontos agora são atualizados semanalmente."
+                        ]
+                    },
+                    { tipo: "subtitulo", texto: "Lembretes Gerais" },
+                    {
+                        tipo: "texto",
+                        texto: "Dúvidas sobre qualquer sistema podem ser direcionadas à administração pelos canais oficiais. Por favor, evite enviar a mesma pergunta em múltiplos canais — isso só atrasa todo mundo."
+                    },
+                    {
+                        tipo: "texto",
+                        texto: "Sugestões e críticas construtivas são sempre bem-vindas e ativamente incentivadas. O RPG cresce com a participação de todos."
+                    }
+                ]
+            }
+        };
+
+        // =========================================================================
+        // RENDERIZADOR GENÉRICO DE BLOCOS
+        // =========================================================================
+        function renderBloco(bloco) {
+            switch (bloco.tipo) {
+                case "titulo":
+                    return `<h2 class="bloco-titulo-principal">${bloco.texto}</h2>`;
+
+                case "imagem":
+                    return `
+                        <div class="bloco-imagem">
+                            <img src="${bloco.url}" alt="${bloco.alt || ''}" onerror="this.parentElement.style.display='none'">
+                        </div>
+                    `;
+
+                case "subtitulo":
+                    return `<h4 class="bloco-subtitulo"><span class="mao-indicadora"></span>${bloco.texto}</h4>`;
+
+                case "texto": {
+                    const dropCapHTML = bloco.dropCap
+                        ? `<span class="drop-cap">${bloco.dropCap}</span>`
+                        : '';
+                    return `<p class="bloco-texto">${dropCapHTML}${bloco.texto}</p>`;
+                }
+
+                case "lista": {
+                    const itensHTML = bloco.itens.map(item => `<li>${item}</li>`).join('');
+                    return `<ol class="bloco-lista">${itensHTML}</ol>`;
+                }
+
+                case "divisoria":
+                    return `<img src="src/uidivisoria.png" class="bloco-divisoria" alt="Divisor Rúnico" onerror="this.style.display='none'">`;
+
+                case "acordeao": {
+                    const corpoHTML = bloco.blocos.map(renderBloco).join('');
+                    return `
+                        <div class="acordeao-secao">
+                            <button class="acordeao-cabecalho" type="button">
+                                <span>${bloco.titulo}</span>
+                                <span class="acordeao-icone">+</span>
+                            </button>
+                            <div class="acordeao-corpo">
+                                ${corpoHTML}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                default:
+                    return '';
+            }
+        }
+
+        function renderBlocos(blocos) {
+            return blocos.map(renderBloco).join('');
+        }
+
+        // =========================================================================
+        // CRONOGRAMA — leitura de cronograma.json e renderização do painel
+        // =========================================================================
+        function climaParaIcone(condicaoTexto, iconeForcado) {
+            if (iconeForcado) return iconeForcado;
+            const texto = (condicaoTexto || '').toLowerCase();
+            if (texto.includes('chuva')) return 'chuva';
+            if (texto.includes('nublado') || texto.includes('nuvens')) return 'nublado';
+            return 'sol';
+        }
+
+        async function renderCronograma() {
+            try {
+                const resposta = await fetch('cronograma.json');
+                const dados = await resposta.json();
+
+                const iconeClima = climaParaIcone(dados.clima?.condicao, dados.clima?.icone);
+                const faseLua = (dados.lua?.fase || 'cheia').toLowerCase()
+                    .replace('quarto crescente', 'quarto-crescente')
+                    .replace('quarto minguante', 'quarto-minguante');
+
+                const eventosHTML = (dados.eventos || []).map(ev => `
+                    <div class="cronograma-evento">
+                        <div class="cronograma-evento-data">${ev.data}</div>
+                        <div class="cronograma-evento-titulo">${ev.titulo}</div>
+                        <div class="cronograma-evento-desc">${ev.descricao}</div>
+                    </div>
+                `).join('');
+
+                return `
+                    <h2 class="bloco-titulo-principal">Cronograma</h2>
+
+                    <div class="cronograma-cabecalho">
+                        <div class="cronograma-data">${dados.dataInGame}</div>
+                        <div class="cronograma-diasemana">${dados.diaSemana}</div>
+                        <div class="cronograma-ano">${dados.anoLetivo}</div>
+                    </div>
+
+                    <div class="cronograma-painel-duplo">
+                        <div class="cronograma-card">
+                            <div class="cronograma-card-titulo">Clima</div>
+                            <div class="clima-icone ${iconeClima}"></div>
+                            <div class="cronograma-card-valor">${dados.clima?.condicao || '—'}</div>
+                            <div class="cronograma-card-valor">${dados.clima?.temperatura || ''}</div>
+                        </div>
+                        <div class="cronograma-card">
+                            <div class="cronograma-card-titulo">Fase da Lua</div>
+                            <div class="lua-icone lua-${faseLua}"></div>
+                            <div class="cronograma-card-valor" style="text-transform:capitalize;">${dados.lua?.fase || '—'}</div>
+                            <div class="cronograma-lua-obs">${dados.lua?.observacao || ''}</div>
+                        </div>
+                    </div>
+
+                    <img src="src/uidivisoria.png" class="bloco-divisoria" alt="Divisor Rúnico" onerror="this.style.display='none'">
+
+                    <div class="cronograma-eventos-titulo">Próximos Eventos</div>
+                    ${eventosHTML || '<p class="bloco-texto" style="text-align:center;">Nenhum evento cadastrado.</p>'}
+                `;
+            } catch (erro) {
+                console.warn('Não foi possível carregar cronograma.json:', erro);
+                return `
+                    <h2 class="bloco-titulo-principal">Cronograma</h2>
+                    <p class="bloco-texto">Não foi possível carregar o arquivo <strong>cronograma.json</strong>. Verifique se ele está na mesma pasta deste arquivo.</p>
+                `;
+            }
+        }
+
+        // =========================================================================
+        // TAÇA DAS CASAS — leitura de casas.json e renderização das ampulhetas
+        // =========================================================================
+        async function renderTacaDasCasas() {
+            try {
+                const resposta = await fetch('casas.json');
+                const dados = await resposta.json();
+                const maximo = dados.pontuacaoMaxima || Math.max(...dados.casas.map(c => c.pontos), 1);
+
+                const casasOrdenadas = [...dados.casas].sort((a, b) => b.pontos - a.pontos);
+                const lider = casasOrdenadas[0];
+
+                const ordemPadrao = ['grifinoria', 'sonserina', 'corvinal', 'lufalufa'];
+                const casasParaExibir = [...dados.casas].sort(
+                    (a, b) => ordemPadrao.indexOf(a.id) - ordemPadrao.indexOf(b.id)
+                );
+
+                const casasHTML = casasParaExibir.map(casa => {
+                    const proporcao = Math.max(0, Math.min(1, casa.pontos / maximo));
+                    const alturaMax = 38; // altura máxima útil de cada metade da ampulheta, em px
+                    const alturaBaixo = Math.round(proporcao * alturaMax);
+                    const alturaCima = alturaMax - alturaBaixo;
+
+                    return `
+                        <div class="taca-casa">
+                            <img class="taca-logo" src="${casa.logo}" alt="${casa.nome}" onerror="this.style.display='none'">
+                            <div class="ampulheta">
+                                <div class="ampulheta-cap-topo"></div>
+                                <div class="ampulheta-vidro"></div>
+                                <div class="ampulheta-areia-cima" style="height:${alturaCima}px;"></div>
+                                <div class="ampulheta-areia-baixo" style="height:${alturaBaixo}px;"></div>
+                                <div class="ampulheta-cap-base"></div>
+                            </div>
+                            <div class="taca-nome">${casa.nome}</div>
+                            <div class="taca-pontos">${casa.pontos} pts</div>
+                        </div>
+                    `;
+                }).join('');
+
+                const historicoHTML = (dados.historico || []).map(h => `
+                    <li class="taca-historico-item">
+                        <span class="taca-historico-ano">${h.ano}</span>
+                        <span class="taca-historico-campea">${h.campea}</span>
+                    </li>
+                `).join('');
+
+                return `
+                    <h2 class="bloco-titulo-principal">Taça das Casas</h2>
+
+                    <div class="taca-lider-banner">No momento, lidera a <strong>${lider.nome}</strong></div>
+
+                    <div class="taca-fileira">
+                        ${casasHTML}
+                    </div>
+
+                    <img src="src/uidivisoria.png" class="bloco-divisoria" alt="Divisor Rúnico" onerror="this.style.display='none'">
+
+                    <div class="taca-historico-titulo">Campeãs de Anos Anteriores</div>
+                    <ul class="taca-historico-lista">
+                        ${historicoHTML || '<li class="taca-historico-item">Nenhum histórico cadastrado.</li>'}
+                    </ul>
+                `;
+            } catch (erro) {
+                console.warn('Não foi possível carregar casas.json:', erro);
+                return `
+                    <h2 class="bloco-titulo-principal">Taça das Casas</h2>
+                    <p class="bloco-texto">Não foi possível carregar o arquivo <strong>casas.json</strong>. Verifique se ele está na mesma pasta deste arquivo.</p>
+                `;
+            }
+        }
+
+        // =========================================================================
+        // MOTOR DE ATUALIZAÇÃO DO PERGAMINHO (GSAP INTEGRADO)
+        // =========================================================================
+        const parchmentScrollArea = document.getElementById('parchment-scroll-area');
+        const sistemasContainer = document.getElementById('sistemas-container');
+
+        function setupAcordeoes() {
+            const cabecalhos = sistemasContainer.querySelectorAll('.acordeao-cabecalho');
+            cabecalhos.forEach(cabecalho => {
+                cabecalho.addEventListener('click', () => {
+                    const secao = cabecalho.closest('.acordeao-secao');
+                    const corpo = secao.querySelector('.acordeao-corpo');
+                    const estaAberta = secao.classList.contains('aberta');
+
+                    if (estaAberta) {
+                        secao.classList.remove('aberta');
+                        corpo.style.maxHeight = '0px';
+                    } else {
+                        secao.classList.add('aberta');
+                        corpo.style.maxHeight = corpo.scrollHeight + 'px';
+                    }
+                });
+            });
+        }
+
+        function updateSistema(sistemaId) {
+            const sistemasEspeciais = {
+                cronograma: renderCronograma,
+                taca: renderTacaDasCasas
+            };
+
+            const ehEspecial = Object.prototype.hasOwnProperty.call(sistemasEspeciais, sistemaId);
+            const sistema = sistemasDatabase[sistemaId];
+
+            if (!ehEspecial && !sistema) return;
+
+            gsap.to(sistemasContainer, {
+                opacity: 0,
+                y: 15,
+                duration: 0.22,
+                ease: "power2.in",
+                onComplete: async () => {
+                    const conteudoHTML = ehEspecial
+                        ? await sistemasEspeciais[sistemaId]()
+                        : renderBlocos(sistema.blocos);
+
+                    sistemasContainer.innerHTML = `
+                        ${conteudoHTML}
+                        <div class="pergaminho-footer">MURAL • Hogwarts RPG</div>
+                    `;
+
+                    parchmentScrollArea.scrollTop = 0;
+                    setupAcordeoes();
+
+                    gsap.fromTo(sistemasContainer,
+                        { opacity: 0, y: -15 },
+                        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
+                    );
+                }
+            });
+        }
+
+        // Configuração e interações das abas do menu lateral
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.categoria-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    if (tab.classList.contains('active')) return;
+
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    const sistemaId = tab.getAttribute('data-sistema');
+                    updateSistema(sistemaId);
+                });
+            });
+        }
+
+        // =========================================================================
+        // SISTEMA DE ÁUDIO E TRILHA SONORA DA VITROLA
+        // =========================================================================
+        const vitrola = document.querySelector('.vitrola');
+        const nextBtn = document.querySelector('.vitrola-next');
+        const audio = document.getElementById('vinyl-audio');
+
+        const tracks = ['hogsmeade.mp3', 'becodiagonal.mp3', 'housecup.mp3', 'overtue.mp3'];
+        const trackBasePath = 'src/';
+        let currentTrackIndex = 0;
+
+        function updateNextButton() {
+            if (audio.paused) {
+                nextBtn.classList.remove('visible');
+            } else {
+                nextBtn.classList.add('visible');
+            }
+        }
+
+        function setTrack(index) {
+            currentTrackIndex = ((index % tracks.length) + tracks.length) % tracks.length;
+            const fullPath = `${trackBasePath}${tracks[currentTrackIndex]}`;
+            audio.src = fullPath;
+            audio.load();
+        }
+
+        async function playTrack() {
+            try {
+                await audio.play();
+                vitrola.classList.add('playing');
+                updateNextButton();
+            } catch (err) {
+                console.warn("Autoplay impedido ou áudios locais indisponíveis:", err);
+            }
+        }
+
+        vitrola.addEventListener('click', () => {
+            if (audio.paused) {
+                playTrack();
+            } else {
+                audio.pause();
+                vitrola.classList.remove('playing');
+                updateNextButton();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            setTrack(currentTrackIndex + 1);
+            playTrack();
+        });
+
+        audio.addEventListener('ended', () => {
+            setTrack(currentTrackIndex + 1);
+            playTrack();
+        });
+
+        // =========================================================================
+        // DISPARADORES NO CARREGAMENTO DA PÁGINA
+        // =========================================================================
+        window.addEventListener('DOMContentLoaded', () => {
+            setupTabs();
+            updateSistema('duelos');
+            setTrack(currentTrackIndex);
+
+            gsap.from('.categoria-tab', {
+                opacity: 0,
+                x: -30,
+                duration: 0.65,
+                stagger: 0.07,
+                ease: "power2.out",
+                onComplete: () => {
+                    gsap.set('.categoria-tab', { clearProps: "transform" });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

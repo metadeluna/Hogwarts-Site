@@ -1,0 +1,44 @@
+{
+    "pontuacaoMaxima": 500,
+    "casas": [
+        {
+            "id": "grifinoria",
+            "nome": "Grifinória",
+            "logo": "src/grifinoria.png",
+            "cor": "#740001",
+            "corClara": "#d3a625",
+            "pontos": 320
+        },
+        {
+            "id": "sonserina",
+            "nome": "Sonserina",
+            "logo": "src/sonserina.png",
+            "cor": "#1a472a",
+            "corClara": "#aaaaaa",
+            "pontos": 285
+        },
+        {
+            "id": "corvinal",
+            "nome": "Corvinal",
+            "logo": "src/corvinal.png",
+            "cor": "#0e1a40",
+            "corClara": "#946b2d",
+            "pontos": 260
+        },
+        {
+            "id": "lufalufa",
+            "nome": "Lufa-Lufa",
+            "logo": "src/lufa-lufa.png",
+            "cor": "#ecb939",
+            "corClara": "#372e29",
+            "pontos": 190
+        }
+    ],
+    "historico": [
+        { "ano": "2000–2001", "campea": "Sonserina" },
+        { "ano": "1999–2000", "campea": "Grifinória" },
+        { "ano": "1998–1999", "campea": "Corvinal" },
+        { "ano": "1997–1998", "campea": "Grifinória" },
+        { "ano": "1996–1997", "campea": "Lufa-Lufa" }
+    ]
+}

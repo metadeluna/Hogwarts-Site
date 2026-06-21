@@ -1,0 +1,36 @@
+{
+    "dataInGame": "14 de Outubro de 2001",
+    "diaSemana": "Domingo",
+    "anoLetivo": "Ano Letivo 2001–2002",
+    "clima": {
+        "condicao": "Nublado, com chuva fina ao anoitecer",
+        "temperatura": "9°C",
+        "icone": "nublado"
+    },
+    "lua": {
+        "fase": "crescente",
+        "observacao": "Próxima lua cheia em 6 dias."
+    },
+    "eventos": [
+        {
+            "data": "12 de Outubro",
+            "titulo": "Seletivas de Quadribol — Lufa-Lufa",
+            "descricao": "Disputa acirrada pela vaga de Apanhador. Resultado anunciado no quadro da casa."
+        },
+        {
+            "data": "18 de Outubro",
+            "titulo": "Aula Extra de Poções — 5º ano",
+            "descricao": "Reposição da aula cancelada na semana anterior. Sala de Poções, período da tarde."
+        },
+        {
+            "data": "25 de Outubro",
+            "titulo": "Saída a Hogsmeade",
+            "descricao": "Liberada para alunos do 3º ano em diante, com autorização assinada."
+        },
+        {
+            "data": "31 de Outubro",
+            "titulo": "Festival de Halloween",
+            "descricao": "Banquete especial no Salão Principal. Trajes a fantasia incentivados, não obrigatórios."
+        }
+    ]
+}
