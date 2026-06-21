@@ -12,7 +12,7 @@
         {
             "id": "sonserina",
             "nome": "Sonserina",
-            "logo": "src/sonserina.png",
+            "logo": "https://i.imgur.com/q2ixf3L.png",
             "cor": "#1a472a",
             "corClara": "#aaaaaa",
             "pontos": 0
@@ -28,7 +28,7 @@
         {
             "id": "lufalufa",
             "nome": "Lufa-Lufa",
-            "logo": "src/lufa-lufa.png",
+            "logo": "https://i.imgur.com/7soueb3.png",
             "cor": "#ecb939",
             "corClara": "#372e29",
             "pontos": 0
