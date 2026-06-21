@@ -1,10 +1,10 @@
 {
-    "dataInGame": "14 de Outubro de 2001",
-    "diaSemana": "Domingo",
+    "dataInGame": "1 de Setembro de 2001",
+    "diaSemana": "Sábado",
     "anoLetivo": "Ano Letivo 2001–2002",
     "clima": {
         "condicao": "Nublado, com chuva fina ao anoitecer",
-        "temperatura": "9°C",
+        "temperatura": "15°C",
         "icone": "nublado"
     },
     "lua": {
@@ -13,24 +13,15 @@
     },
     "eventos": [
         {
-            "data": "12 de Outubro",
-            "titulo": "Seletivas de Quadribol — Lufa-Lufa",
-            "descricao": "Disputa acirrada pela vaga de Apanhador. Resultado anunciado no quadro da casa."
-        },
-        {
-            "data": "18 de Outubro",
-            "titulo": "Aula Extra de Poções — 5º ano",
-            "descricao": "Reposição da aula cancelada na semana anterior. Sala de Poções, período da tarde."
-        },
-        {
-            "data": "25 de Outubro",
-            "titulo": "Saída a Hogsmeade",
-            "descricao": "Liberada para alunos do 3º ano em diante, com autorização assinada."
+            "data": "1 de Setembro",
+            "titulo": "Primeiro Ano",
+            "descricao": "Abertura do novo ano letivo de 2001=2002, sejam bem-vindos primeiranistas!"
         },
         {
             "data": "31 de Outubro",
-            "titulo": "Festival de Halloween",
-            "descricao": "Banquete especial no Salão Principal. Trajes a fantasia incentivados, não obrigatórios."
+            "titulo": "Dia das Bruxas",
+            "descricao": "Temos um encontro marcado no Salão Principal de Hogwarts para comemorar o Halloween!"
         }
+
     ]
 }
