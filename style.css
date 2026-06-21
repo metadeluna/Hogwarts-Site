@@ -1,5 +1,3 @@
-
-
 *{
     margin:0;
     padding:0;
@@ -425,11 +423,6 @@ body{
 
 }
 
-.quadro6 .quadro-mask,
-.quadro6 .quadro-frame{
-
-}
-
 /* =========================
    PERGAMINHO
 ========================= */
@@ -476,7 +469,10 @@ body{
     height:75vh;
 
     /* manter a caixa do pergaminho fixa; permitir scroll interno do conteúdo */
-    overflow:auto;
+    overflow-y:auto;
+    overflow-x:hidden;
+    padding-right:15px;
+    scrollbar-gutter:stable;
 }
 
 /* =========================
@@ -608,9 +604,11 @@ body{
 
 .scroll-area::-webkit-scrollbar-thumb{
 
-    background:#8f6d3f;
+    background:#8e6c43;
 
-    border-radius:999px;
+    border-radius:10px;
+
+    border:2px solid transparent;
 }
 
 /* =========================
@@ -620,3 +618,217 @@ body{
 ========================= */
 
 /* debug border removed */
+
+/* =========================
+   BLOCOS DE CONTEÚDO
+   (importado de memorandos.html)
+========================= */
+
+/* Título principal de seção/sistema */
+.bloco-titulo-principal{
+
+    font-family:'Hogwarts-SubTitulo', 'Georgia', serif;
+    font-size:clamp(1.6rem, 2.4vw, 2.6rem);
+    font-weight:bold;
+    color:#120802;
+    text-align:center;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:1.2rem;
+}
+
+/* Subtítulo de seção (não-acordeão) */
+.bloco-subtitulo{
+
+    display:block;
+    font-family:'Hogwarts-SubTitulo', serif;
+    font-size:clamp(1rem, 1.2vw, 1.3rem);
+    font-weight:bold;
+    color:#120802;
+    text-transform:uppercase;
+    letter-spacing:0.6px;
+    margin:1.6rem 0 0.5rem 0;
+}
+
+/* Bloco de texto comum */
+.bloco-texto{
+
+    font-family:'Hogwarts-Paragrafo', 'Georgia', serif;
+    font-size:0.92rem;
+    color:#1e0e03;
+    text-align:justify;
+    line-height:1.6;
+    margin-bottom:0.9rem;
+}
+
+.bloco-texto .drop-cap{
+
+    float:left;
+    font-family:'Georgia', serif;
+    font-size:clamp(3.2rem, 4vw, 4.8rem);
+    line-height:0.75;
+    padding-top:4px;
+    padding-right:10px;
+    padding-left:2px;
+    color:#241906;
+    font-weight:bold;
+    text-shadow:1px 1px 1px rgba(0,0,0,.25);
+}
+
+.bloco-imagem{
+
+    position:relative;
+    width:100%;
+    aspect-ratio:16 / 9;
+    overflow:hidden;
+    margin:0 0 1.4rem 0;
+    line-height:0;
+    font-size:0;
+
+    box-shadow:0 6px 18px rgba(0,0,0,.35);
+}
+
+.bloco-imagem img{
+
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    display:block;
+    margin:0;
+    padding:0;
+}
+
+/* Lista numerada (regras, ações, etc.) */
+.bloco-lista{
+
+    list-style:none;
+    counter-reset:bloco-lista-contador;
+    margin-bottom:0.9rem;
+    padding-left:0;
+}
+
+.bloco-lista li{
+
+    counter-increment:bloco-lista-contador;
+    position:relative;
+    padding-left:2.1rem;
+    margin-bottom:0.85rem;
+    font-family:'Hogwarts-Paragrafo', 'Georgia', serif;
+    font-size:0.92rem;
+    color:#1e0e03;
+    text-align:justify;
+    line-height:1.55;
+}
+
+.bloco-lista li::before{
+
+    content:counter(bloco-lista-contador) ".";
+    position:absolute;
+    left:0;
+    top:0;
+    font-family:'Georgia', serif;
+    font-weight:bold;
+    color:#b38530;
+    font-size:0.95rem;
+}
+
+/* Divisória mágica entre blocos */
+.bloco-divisoria{
+
+    width:70%;
+    max-width:200px;
+    height:auto;
+    margin:1.4rem auto;
+    display:block;
+    opacity:0.85;
+}
+
+/* =========================
+   SEÇÕES EM ACORDEÃO
+   (importado de memorandos.html)
+========================= */
+
+.acordeao-secao{
+
+    margin-bottom:0.9rem;
+    border:1px solid rgba(92,65,46,.35);
+    border-radius:6px;
+    background:rgba(246,237,219,.55);
+    overflow:hidden;
+}
+
+.acordeao-cabecalho{
+
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:0.9rem 1.1rem;
+    background:transparent;
+    border:none;
+    cursor:pointer;
+    text-align:left;
+    font-family:'Hogwarts-SubTitulo', serif;
+    font-size:0.98rem;
+    font-weight:bold;
+    color:#120802;
+    text-transform:uppercase;
+    letter-spacing:0.4px;
+    transition:background .25s ease;
+}
+
+.acordeao-cabecalho:hover{
+
+    background:rgba(179,133,48,.12);
+}
+
+.acordeao-cabecalho .acordeao-icone{
+
+    font-family:'Georgia', serif;
+    font-size:1.2rem;
+    font-weight:bold;
+    color:#b38530;
+    flex-shrink:0;
+    transition:transform .3s ease;
+    display:inline-block;
+}
+
+.acordeao-secao.aberta .acordeao-cabecalho .acordeao-icone{
+
+    transform:rotate(45deg);
+}
+
+.acordeao-corpo{
+
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+    padding:0 1.1rem;
+}
+
+.acordeao-secao.aberta .acordeao-corpo{
+
+    padding:0 1.1rem 1.1rem 1.1rem;
+}
+
+.acordeao-corpo .bloco-texto,
+.acordeao-corpo .bloco-lista,
+.acordeao-corpo .bloco-subtitulo{
+
+    margin-top:0;
+}
+
+.acordeao-corpo .bloco-subtitulo{
+
+    font-size:0.92rem;
+    margin:1.1rem 0 0.4rem 0;
+}
+
+.acordeao-corpo .bloco-subtitulo:first-child{
+
+    margin-top:0;
+}
