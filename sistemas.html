@@ -312,10 +312,9 @@
         /* Título principal do sistema */
         .bloco-titulo-principal {
             font-family: 'Hogwarts-SubTitulo', 'Georgia', serif;
-            font-size: clamp(1.6rem, 2.4vw, 2.6rem);
+            font-size: clamp(1.6rem, 1.4vw, 1.6rem);
             font-weight: bold;
             color: #120802;
-            text-align: center;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 1.2rem;
@@ -412,7 +411,7 @@
             top: 0;
             font-family: 'Georgia', serif;
             font-weight: bold;
-            color: #b38530;
+            color: #1e0e03;
             font-size: 0.95rem;
         }
 
@@ -512,6 +511,9 @@
 
         <!-- MENU DE SISTEMAS (BOTÕES) -->
         <nav class="categorias-sidebar" aria-label="Menu de Sistemas do RPG">
+            <button class="categoria-tab" data-sistema="desenvolvimento">
+                <h3>Desenvolvimento</h3>
+            </button>
             <button class="categoria-tab active" data-sistema="duelos">
                 <h3>Duelos</h3>
             </button>
@@ -794,6 +796,86 @@
                         texto: " onteúdo não encontrado."
                     }
                 ]
+            },
+
+
+            "desenvolvimento": {
+                titulo: "Sistemas",
+                blocos: [
+                    { tipo: "titulo", texto: "Desenvolvimento" },
+                    { tipo: "imagem", url: "https://i.imgur.com/od8VO00.jpg", alt: "Desenvolvimento" },
+                    { tipo: "subtitulo", texto: "Pontos Mágicos, Maestrias e Progressão In-Game" },
+                    {
+                        tipo: "texto",
+                        dropCap: "O",
+                        texto: "poder e o conhecimento de um bruxo em nosso RPG não são estáticos; eles refletem diretamente a sua vivência, presença e dedicação ao mundo mágico. <strong>O Sistema de Desenvolvimento</strong> unifica a sua participação interpretativa à evolução mecânica do seu personagem através de três pilares: <strong>Pontos Mágicos (PMs), Habilidades e Maestrias.</strong>"
+                    },
+                    { tipo: "titulo", texto: "01. Pontos Mágicos (PMs)" },
+                    {
+                        tipo: "texto",
+                        dropCap: "O",
+                        texto: " <strong>Os PMs traduzem a experiência e o poder acumulado. São obtidos através da participação ativa no RPG:</strong>"
+                    },
+                    { tipo: "lista", itens: ["<strong>Aulas Regulares:</strong> Conferem uma base constante de PMs.", "<strong>Tramas e Missões:</strong> Eventos e investigações conferem recompensas maiores devido à complexidade.", "<strong>Destaques:</strong> Narradores e professores podem conceder bônus de PMs por interações de destaque, incentivando a evolução constante."] },
+                    { tipo: "titulo", texto: "02. Gastando seus PMs" },
+                    {
+                        tipo: "texto",
+                        dropCap: "O",
+                        texto: " <strong>s PMs funcionam como uma moeda de evolução. Você acumula os pontos participando do jogo e os gasta diretamente através do comando do bot Chapéu Seletor no Discord para evoluir duas vertentes:</strong>"
+                    },
+                    { tipo: "subtitulo", texto: "A. Habilidades Adquiridas por Roleplay" },
+                    {
+                        tipo: "texto",
+                        dropCap: "S",
+                        texto: "ão ramificações da magia que exigem um desenvolvimento narrativo obrigatório dentro e fora do jogo (como Animagia, Oclumência e Artes das Trevas). Essas são as habilidades que não dependem da linhagem mágica. Regra de Compra: O jogador só pode subir o nível mecânico gastando os PMs correspondentes se tiver demonstrado e desenvolvido esse processo ativamente no roleplay. Por isso, é importante desenvolver os estudos e o interesse pela habilidade que você quer começar a evoluir. O jogador só pode subir o nível mecânico gastando os PMs correspondentes se tiver demonstrado interesse e desenvolvido esse processo ativamente no roleplay."
+                    },
+                    { tipo: "subtitulo", texto: "B. Níveis de Aptidão das Habilidades" },
+                    {
+                        tipo: "texto",
+                        dropCap: "C",
+                        texto: " ada habilidade, inata ou não, possui entre <strong>4 e 5 níveis</strong> de aptidão que determinam justamente o grau da competência e qualidade daquele bruxo naquele dom mágico. Isso quer dizer que um Oclumente no Nível 5 é um verdadeiro Mestre Oclumente que conquistou o estado máximo da habilidade mágica."
+                    },
+                    { tipo: "subtitulo", texto: "C. Maestrias" },
+                    {
+                        tipo: "texto",
+                        dropCap: "T",
+                        texto: " <strong>odo bruxo possui uma área de proficiência natural. A Maestria é escolhida pelo jogador desde a criação do personagem, e ela dita o caminho de especialização que o bruxo irá desenvolver durante os seus sete anos acadêmicos em Hogwarts.</strong>"
+                    },
+                    { tipo: "lista", itens: ["Existem 6 Maestrias disponíveis: <strong>Feitiços, Herbologia, Defesa Contra as Artes das Trevas, Medibruxaria, Poções e Transfiguração.</strong>", 
+                                            "Todos os personagens começam obrigatoriamente no <strong>Nível 1 (de um total de 7)</strong>", 
+                                            "Avançar nesses níveis libera habilidades especiais, técnicas avançadas e feitiços exclusivos daquela área.",
+                                            "Mecanicamentem a progressão exige o pagamento do valor fixo de PMs de cada nível através do <strong>bot “Chapéu Seletor”, no Discord.</strong>"] },
+
+                    { tipo: "titulo", texto: "03. O Fluxo de Progressão e Eventos de Maestria" },
+                    { tipo: "subtitulo", texto: "Tramas e Provações (Bônus de Maestria)" },
+
+                    {
+                        tipo: "texto",
+                        dropCap: "P",
+                        texto: "<strong>ara evitar que o sistema se torne um 'grind' repetitivo e para premiar quem realmente se especializa, o RPG conta com mecânicas de incentivo direto ao vivo:</strong>"
+                    },
+                    { tipo: "subtitulo", texto: "Mini-Tramas de Matéria/Maestrias:" },
+                    {
+                        tipo: "texto",
+                        texto: "Dentro das aulas e encontros relacionados a uma Maestria específica, ocorrerão mini-tramas especiais mediadas pela organização ou professores. Jogadores que se destacarem nessas interações práticas focadas receberão um <strong>bônus substancial de PMs</strong> como forma de incentivo à evolução de suas Maestrias."
+                    },
+                    { tipo: "subtitulo", texto: "As Provações:" },
+                    {
+                        tipo: "texto",
+                        texto: "As Provações: Ao final de cada ano letivo, serão realizadas sequências de ‘provas’ interpretativas no formato de mini-tramas ou rituais de passagem para cada Maestria. Essas provações funcionam como desafios. Alunos destaques, que superarem os desafios ou que demonstrarem um nível de dedicação extraordinário nessa cerimônia de passagem, poderão receber uma quantidade bônus de PM ou a recompensa máxima: <strong>subir para o próximo nível da sua Maestria diretamente.</strong>"
+                    },
+                    { tipo: "subtitulo", texto: "As Provações:" },
+                    {
+                        tipo: "texto",
+                        texto: "<strong>No geral, jogadores destaques que utilizam da sua Maestria com criatividade, inovação e um pouco de rebeldia para buscar soluções de problemas in-game, são recompensados à altura. Dessa forma, o desenvolvimento individual de cada jogador depende exclusivamente de sua performance no jogo, diminuindo drasticamente a quantidade de registros de roleplay fora do RPG que, embora ainda sejam necessários, não determinam exclusivamente a progressão do jogador.</strong>"
+                    },
+                    { tipo: "titulo", texto: "04. Bot do Chapéu Seletor" },
+                    {
+                        tipo: "texto",
+                        dropCap: "T",
+                        texto: "<strong>oda a parte matemática e de ficha é automatizada para que nem você e nem os organizadores percam tempo calculando os Pontos Mágicos.</strong> Para checar seu saldo de PMs, verificar os custos de transição de nível ou efetuar a compra de um novo nível de Maestria/Habilidade, utilize o sistema do bot <strong>Chapéu Seletor</strong> nos canais de comandos do <strong>Discord (#Beco-Diagonal)</strong>."
+                    },
+                ]
             }
         };
 
@@ -982,7 +1064,7 @@
         // =========================================================================
         window.addEventListener('DOMContentLoaded', () => {
             setupTabs();
-            updateSistema('duelos');
+            updateSistema('desenvolvimento');
             setTrack(currentTrackIndex);
 
             gsap.from('.categoria-tab', {
