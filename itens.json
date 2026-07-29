@@ -333,5 +333,119 @@
     "nome": "Mapa do Maroto",
     "descricao": "O Mapa do Maroto é um objeto mágico de notável engenhosidade e utilidade. Criado pelos famosos bruxos James Potter, Sirius Black, Remo Lupin e Pedro Pettigrew durante seus tempos em Hogwarts, esse mapa peculiar possui uma habilidade singular: revelar um detalhado e atualizado plano do castelo e dos arredores, mostrando a localização exata de cada pessoa em Hogwarts. Ao olhar para o mapa e recitar as palavras mágicas corretas, ele se torna interativo, exibindo os movimentos dos indivíduos em tempo real. O Mapa do Maroto também é capaz de identificar passagens secretas e salas ocultas, fornecendo uma valiosa vantagem aos que o possuem. Além de sua funcionalidade prática, o mapa carrega um rico legado de amizade e aventuras compartilhadas entre os Marotos. É um tesouro que evoca nostalgia e recordações de tempos passados, além de oferecer uma ferramenta poderosa para explorar os segredos e a vastidão de Hogwarts.",
     "classe": "inegociavel"
+  },
+
+  "atlas_errante": {
+    "nome": "Atlas Errante",
+    "descricao": "Atlas Errante é uma antiga relíquia pertencente à família Buttonwood. O objeto mágico registra todas os passos dados e lugares frequentados pelo seu portador.",
+    "classe": "inegociavel"
+  },
+
+  "anel_de_Morrigan": {
+    "nome": "Anel de Morrigan",
+    "descricao": "Um anel feito de prata de duende (erroneamente modificado por Morrigan Wolsey durante um acidente de magia infantil) parece se moldar de forma conveniente para auxiliar no uso da varinha. Contudo, a cada dia que passa, uma pulga sussurra ao pé do ouvido de Morrigan que o artefato carrega um poder ainda maior, embora se recuse a vir à tona.",
+    "classe": "inegociavel"
+  },
+
+  "anel_do_horizonte": {
+    "nome": "Anel do Horizonte",
+    "descricao": "O Anel do Horizonte permite que, uma vez a cada 7 turnos, o portador perceba tentativas de aproximação furtiva ou movimentações discretas ao seu redor durante 3 turnos.",
+    "classe": "inegociavel"
+  },
+
+  "anel_do_lince_euroasiatico": {
+    "nome": "Anel do Lince Euroasiático",
+    "descricao": "Uma vez a cada 7 turnos, o anel expande a percepção do portador por 3 turnos, permitindo identificar aproximações furtivas, movimentações discretas e pequenas distrações no ambiente que indiquem a presença de algo ou alguém nas proximidades o efeito não revela a localização exata do alvo, apenas alerta o portador de que algo se move ao seu redor. O portador percebe o início de ataques diretos com um instante de antecedência, permitindo realizar esquivas rápidas e instintivas, semelhantes aos reflexos de um lince. Isso possibilita evitar golpes físicos diretos e feitiços com lampejos. Como um eco de presença: o portador consegue identificar se alguém esteve naquele local recentemente, o anel não revela quem foi nem para onde foi, apenas transmite uma vaga sensação de que o ambiente foi perturbado há pouco tempo.",
+    "classe": "inegociavel"
+  },
+
+  "fragmento_de_carregyllen": {
+    "nome": "Fragmento de Carregyllën",
+    "descricao": "O Fragmento de Carregyllën é uma relíquia de obsidiana negra com uma runa espiralada, esculpida a partir do monólito sagrado do clã Caledryn. Este amuleto canaliza magia ancestral para distorcer a percepção de invasores, fazendo com que ignorem o alvo instintivamente, além de sabotar mapas mágicos e feitiços de rastreamento. Sendo um patrimônio inestimável e sem valor comercial, ele é transmitido de geração em geração para que qualquer membro da família possa proteger segredos, territórios e refúgios em Hogwarts ou em qualquer lugar do mundo bruxo.",
+    "classe": "inegociavel"
+  },
+
+  "lanterna_dos_mil_negocios": {
+    "nome": "Lanterna dos Mil Negócios",
+    "descricao": "A Lanterna dos Mil Negócios da família Wang é um artefato raro que detecta magia sombria por cores de chama e avalia intenções em negociações por tons emocionais. Sem preço oficial, é avaliada em uma mansão ou dois dragões jovens, mas nunca é vendida devido à recusa da família em oferecer garantias.",
+    "classe": "inegociavel"
+  },
+
+  "espelho_do_bisbilhoteiro": {
+    "nome": "Espelho do Bisbilhoteiro",
+    "descricao": "Um pequeno espelho de bolso revestido por prata, com cerca de doze centímetros de diâmetro. Parece um item totalmente comum, mas, quando o usuário aproxima o pequeno espelho de uma parede, porta ou qualquer outro obstáculo, basta pronunciar a palavra de ativação para que o espelho passe a refletir totalmente o que há do outro lado do obstáculo, sem precisar de aberturas visíveis para isso. A imagem permanece estável até que o usuário termine de bisbilhotar. Como é um espelho, transmite apenas imagens, não sons. Não funciona através de lugares protegidos por fortes feitiços de privacidade, a não ser que o usuário encontre um encantamento igualmente poderoso. Não revela pessoas invisíveis ou encantadas por outro tipo de magia de disfarce.",
+    "custo_galeoes": 50,
+    "classe": "compravel"
+  },
+
+  "bolsa_de_extensao_indetectavel": {
+    "nome": "Bolsa de Extensão Indetectável",
+    "descricao": "Uma bolsa de tecido aparentemente comum, enfeitiçada com o Feitiço de Extensão Indetectável. O interior do recipiente possui um espaço vastíssimo. Permite transportar uma enorme quantidade de suprimentos, livros e equipamentos de forma discreta sem alterar o peso ou formato da bolsa. Trata-se de um item estritamente regulamentado pelo Ministério da Magia, sendo sua posse sujeita à fiscalização caso usada para ocultação de artefatos proibidos.",
+    "custo_galeoes": 70,
+    "classe": "compravel"
+  },
+
+  "capa_de_pelos_de_seminviso": {
+    "nome": "Capa de Pelos de Seminviso",
+    "descricao": "Uma capa de invisibilidade tecida com a pelagem prateada de um Seminviso. Quando vestida, oculta completamente o bruxo da visão comum. Diferente de artefatos lendários, o encantamento desta capa desgasta-se gradativamente com o tempo e ela pode ser danificada; a capa torna-se opaca após uso prolongado ou após sustentar muitos danos físicos, e não protege contra detectores de presença ou feitiços reveladores como Homenum Revelio.",
+    "custo_galeoes": 150,
+    "classe": "compravel"
+  },
+
+  "telescopio_esmurrador": {
+    "nome": "Telescópio Esmurrador",
+    "descricao": "Uma famosa criação das Gemialidades Weasley. Disfarçado perfeitamente como um instrumento astronômico de latão, o objeto possui um feitiço de gatilho mecânico. Quando um desavisado aperta o olho na lente para observar algo, o telescópio dispara um pequeno soco acionado por magia, atingindo o rosto da pessoa e deixando um anel arroxeado no olho afetado. O ferimento possui uma magia persistente e é praticamente imune a magias de cura convencionais, demorando dias para sumir.",
+    "custo_galeoes": 20,
+    "classe": "compravel"
+  },
+
+  "bumerangue_de_repeticao": {
+    "nome": "Bumerangue de Repetição",
+    "descricao": "Um brinquedo mágico severamente proibido nos corredores de Hogwarts. Uma vez arremessado e fixado em um alvo, o bumerangue persegue a vítima incessantemente, desferindo golpes contínuos na cabeça e no corpo. O artefato não para até ser agarrado, interceptado por um feitiço ou destruído.",
+    "custo_galeoes": 40,
+    "classe": "compravel"
+  },
+
+  "sabão_de_ovas_de_sapo": {
+    "nome": "Sabão de Ovas de Sapo",
+    "descricao": "Um artigo peculiar de travessura que se assemelha a uma barra de sabonete refinado. Ao entrar em contato com a água, ele não limpa, mas reveste a superfície tocada com uma gosma invisível, impermeável e extremamente escorregadia por várias horas. Se um bruxo desavisado usá-lo para lavar as mãos, será fisicamente incapaz de segurar com firmeza uma varinha, que escorregará a cada tentativa de conjuração. O sabão também pode ser esfregado no chão de corredores para criar armadilhas de escorregamento.",
+    "custo_galeoes": 20,
+    "classe": "compravel"
+  },
+
+  "po_de_arroto": {
+    "nome": "Pó de Arroto",
+    "descricao": "Um pó fino, acinzentado e inodoro. Quando soprado no rosto de um alvo ou atirado no ar em uma área pequena, força quem o inalar a soltar arrotos vulcânicos e espasmos ininterruptos. O bruxo afetado torna-se completamente incapaz de pronunciar encantamentos verbais de forma clara, engasgando-se continuamente. O efeito cessa naturalmente após alguns minutos, quando todo o gás mágico é expelido do estômago do alvo. Como não se trata de um encantamento, não pode ser revertido pelo Contra-Feitiço Geral; é preciso esperar o efeito passar.",
+    "custo_galeoes": 20,
+    "classe": "compravel"
+  },
+
+  "ioio_Berrante": {
+    "nome": "Ioiô Berrante",
+    "descricao": "Um artefato ruidoso que causa dores de cabeça imediatas aos zeladores e monitores. Quando solto para girar, o ioiô emite um grito agudo, constante e apavorante, ecoando a grandes distâncias. É o utensílio perfeito para ser lançado em cômodos escuros ou corredores distantes com o intuito de despistar guardas, afugentar criaturas sensíveis a som ou abafar barulhos de passos e feitiços de arrombamento. Enquanto estiver girando, o estrondo não cessa.",
+    "custo_galeoes": 25,
+    "classe": "compravel"
+  },
+
+  "espelho_de_inimigos": {
+    "nome": "Espelho de Inimigos",
+    "descricao": "Um espelho de aparência antiquada que substitui o reflexo comum por silhuetas embaçadas e fantasmagóricas daqueles que nutrem intenções maliciosas contra o portador. Conforme as ameaças se aproximam fisicamente com propósitos hostis, as sombras ganham nitidez progressiva até revelarem a identidade exata dos opositores. O espelho depende exclusivamente das intenções reais dos alvos; por conta disso, torna-se inútil caso o indivíduo esteja sendo controlado por algum feitiço, além de só expor o rosto do indivíduo quando o perigo já está fisicamente muito próximo. Um Oclumente avançado é capaz de suprimir suas intenções reais e enganar o espelho.",
+    "custo_galeoes": 100,
+    "classe": "compravel"
+  },
+
+  "oculos_espectrais": {
+    "nome": "Óculos Espectrais",
+    "descricao": "Acessório exótico de armação psicodélica oferecido como brinde na revista O Pasquim. Suas lentes coloridas revelam a presença de 'Zonzóbulos' — criaturas invisíveis que flutuam pelos ouvidos e causam confusão mental. Bom, pelo menos é isso que a promoção diz. Ao utilizar os óculos, o bruxo consegue identificar se alguém ao seu redor está sob efeito de alguma perturbação induzida por magia, inclusive se o bruxo em questão estiver oculto, por exemplo sob uma Capa de Invisibilidade.",
+    "custo_galeoes": 15,
+    "classe": "compravel"
+  },
+
+  "luvas_de_couro_de_dragao": {
+    "nome": "Luvas de Couro de Dragão",
+    "descricao": "Peça de vestuário essencial para estudiosos de Herbologia e magizoologistas, presentes na lista de materiais desde o primeiro ano. Estas luvas espessas oferecem uma altíssima resistência a queimaduras severas, secreções ácidas vegetais e mordidas de criaturas. O couro também atua como um isolante mágico, protegendo as mãos de azarações menores. O uso contínuo, porém, sacrifica a sensibilidade tátil, dificultando movimentos sutis de varinha que exijam extrema precisão.",
+    "custo_galeoes": 50,
+    "classe": "compravel"
   }
+
 }
